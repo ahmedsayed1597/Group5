@@ -35,7 +35,7 @@
                     *ngIf="checkErrorInFormAndType('name' , 'required') && checkErrorIfFormTouch('name')">
                     Please fill this field
                   </small>
-                    
+
                   <small class="text-danger text-bold"
                   *ngIf="checkErrorInFormAndType('name' , 'minlength') && checkErrorIfFormTouch('name')">
                   min length of name should be greater than 3 character
@@ -56,7 +56,7 @@
                       placeholder="Enter Last Name"
                       class="form-control form-control-lg"
                     />
-                    
+
                   </div>
                 </div>
               </div>
@@ -71,7 +71,7 @@
                       placeholder="Enter user name"
                       id="username"
                     />
-                    
+
                   </div>
                 </div>
                 <div class="col-md-6 mb-4">
@@ -104,10 +104,10 @@
                 </div>
               </div>
 
-              <div class="col-md-6 mb-4">
-                <h6 class="mb-2 pb-1">Is Admin:</h6>
+              <!-- <div class="col-md-6 mb-4">
+                <h6 class="mb-2 pb-1">Is Admin:</h6> -->
 
-                <div class="form-check form-check-inline">
+                <!-- <div class="form-check form-check-inline">
                   <input
                     class="form-check-input"
                     type="radio"
@@ -119,8 +119,8 @@
                   <label class="form-check-label" for="admin"
                     >Yes</label
                   >
-                </div>
-
+                </div> -->
+<!--
                 <div class="form-check form-check-inline">
                   <input
                     class="form-check-input"
@@ -133,8 +133,8 @@
                     >No</label
                   >
                 </div>
-              </div>
-          
+              </div> -->
+
 
               <div class="row">
                 <div class="col-md-6 mb-4 pb-2">
@@ -144,14 +144,14 @@
                       type="email"
                       id="emailAddress"
                       class="form-control form-control-lg"
-                      formControlName="email" 
+                      formControlName="email"
                       placeholder="Enter your email"
                     />
                     <p class="text-warning text-bold ms-md-3 "
                     *ngIf="registerationForm.controls['email']?.errors?.['required']  && registerationForm.controls['email'].touched">
                     Please enter your email
                 </p>
-                    
+
                   </div>
                 </div>
                 <div class="col-md-6 mb-4 pb-2">
@@ -160,7 +160,7 @@
                     <input
                       type="tel"
                       id="phoneNumber"
-                      formControlName="number" 
+                      formControlName="number"
                       placeholder="Enter your number"
                       class="form-control form-control-lg"
                     />
@@ -168,7 +168,7 @@
                     *ngIf="registerationForm.controls['phone']?.errors?.['required'] !=null && registerationForm.controls.phone.touched">
                     Please fill this field
                 </p> -->
-                    
+
                   </div>
                 </div>
               </div>
@@ -177,15 +177,15 @@
                 <div class="col-md-6 mb-4 pb-2">
                   <div class="form-outline">
                     <label class="form-label" for="password">Password</label>
-                    <input 
+                    <input
                     formControlName="password"
                      type="password"
                       id="password"
                       class="form-control form-control-lg"
                       placeholder="Enter your password"
-                      
+
                     />
-                    
+
                   </div>
                 </div>
                 <div class="col-md-6 mb-4 pb-2">
@@ -198,7 +198,7 @@
                       class="form-control form-control-lg"
                       placeholder="Confirm password"
                     />
-                    
+
                   </div>
                 </div>
               </div>
