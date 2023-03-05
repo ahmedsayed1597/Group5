@@ -1,3 +1,3 @@
-# Group5-ITI-E-Commercee
+# Group5-ITI-E-Commerce
 E-Commerce web applcation
 
