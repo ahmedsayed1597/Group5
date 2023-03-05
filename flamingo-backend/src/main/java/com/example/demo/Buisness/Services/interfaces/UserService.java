@@ -1,15 +1,20 @@
 package com.example.demo.Buisness.Services.interfaces;
 
-import com.example.demo.Presentation.DTOs.RequestDTOs.UserRequestDto;
 import com.example.demo.Repository.Dao.interfaces.UserDao;
 import com.example.demo.Repository.Entities.User;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 @Service
-public interface UserService {
+public class UserService {
+
+    @Autowired
+    private UserDao userDao;
 
 
-    public void addUser(UserRequestDto user);
+     public void addUser(User user){
+
+         userDao.save(user);
+     }
 }

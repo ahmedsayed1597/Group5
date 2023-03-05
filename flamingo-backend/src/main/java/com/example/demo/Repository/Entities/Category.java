@@ -1,14 +1,11 @@
 package com.example.demo.Repository.Entities;
-// default package
-// Generated Mar 3, 2023, 8:43:28 PM by Hibernate Tools 6.2.0.CR1
+// Generated Mar 5, 2023, 5:09:22 PM by Hibernate Tools 6.2.0.CR1
 
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.util.HashSet;
@@ -25,11 +22,9 @@ public class Category  implements java.io.Serializable {
 
 
      private int id;
-     private Category category;
      private String categoryName;
      private String image;
      private Set<Product> products = new HashSet<Product>(0);
-     private Set<Category> categories = new HashSet<Category>(0);
 
     public Category() {
     }
@@ -40,13 +35,11 @@ public class Category  implements java.io.Serializable {
         this.categoryName = categoryName;
         this.image = image;
     }
-    public Category(int id, Category category, String categoryName, String image, Set<Product> products, Set<Category> categories) {
+    public Category(int id, String categoryName, String image, Set<Product> products) {
        this.id = id;
-       this.category = category;
        this.categoryName = categoryName;
        this.image = image;
        this.products = products;
-       this.categories = categories;
     }
    
      @Id 
@@ -59,16 +52,6 @@ public class Category  implements java.io.Serializable {
     
     public void setId(int id) {
         this.id = id;
-    }
-
-@ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="parent_id")
-    public Category getCategory() {
-        return this.category;
-    }
-    
-    public void setCategory(Category category) {
-        this.category = category;
     }
 
     
@@ -98,15 +81,6 @@ public class Category  implements java.io.Serializable {
     
     public void setProducts(Set<Product> products) {
         this.products = products;
-    }
-
-@OneToMany(fetch=FetchType.LAZY, mappedBy="category")
-    public Set<Category> getCategories() {
-        return this.categories;
-    }
-    
-    public void setCategories(Set<Category> categories) {
-        this.categories = categories;
     }
 
 

@@ -1,6 +1,5 @@
 package com.example.demo.Repository.Entities;
-// default package
-// Generated Mar 3, 2023, 8:43:28 PM by Hibernate Tools 6.2.0.CR1
+// Generated Mar 5, 2023, 5:09:22 PM by Hibernate Tools 6.2.0.CR1
 
 
 import jakarta.persistence.AttributeOverride;
@@ -36,7 +35,8 @@ public class OrderDetails  implements java.io.Serializable {
      private String status;
      private String paymentMethod;
      private String totalPrice;
-     private Set<OrderItems> orderItemses = new HashSet<OrderItems>(0);
+     private Short numberOfItems;
+     private Set<OrderProducts> orderProductses = new HashSet<OrderProducts>(0);
 
     public OrderDetails() {
     }
@@ -49,7 +49,7 @@ public class OrderDetails  implements java.io.Serializable {
         this.orderDate = orderDate;
         this.status = status;
     }
-    public OrderDetails(OrderDetailsId id, User user, Timestamp deleverDate, Timestamp orderDate, String status, String paymentMethod, String totalPrice, Set<OrderItems> orderItemses) {
+    public OrderDetails(OrderDetailsId id, User user, Timestamp deleverDate, Timestamp orderDate, String status, String paymentMethod, String totalPrice, Short numberOfItems, Set<OrderProducts> orderProductses) {
        this.id = id;
        this.user = user;
        this.deleverDate = deleverDate;
@@ -57,7 +57,8 @@ public class OrderDetails  implements java.io.Serializable {
        this.status = status;
        this.paymentMethod = paymentMethod;
        this.totalPrice = totalPrice;
-       this.orderItemses = orderItemses;
+       this.numberOfItems = numberOfItems;
+       this.orderProductses = orderProductses;
     }
    
      @EmbeddedId
@@ -134,13 +135,23 @@ public class OrderDetails  implements java.io.Serializable {
         this.totalPrice = totalPrice;
     }
 
-@OneToMany(fetch=FetchType.LAZY, mappedBy="orderDetails")
-    public Set<OrderItems> getOrderItemses() {
-        return this.orderItemses;
+    
+    @Column(name="number_of_items")
+    public Short getNumberOfItems() {
+        return this.numberOfItems;
     }
     
-    public void setOrderItemses(Set<OrderItems> orderItemses) {
-        this.orderItemses = orderItemses;
+    public void setNumberOfItems(Short numberOfItems) {
+        this.numberOfItems = numberOfItems;
+    }
+
+@OneToMany(fetch=FetchType.LAZY, mappedBy="orderDetails")
+    public Set<OrderProducts> getOrderProductses() {
+        return this.orderProductses;
+    }
+    
+    public void setOrderProductses(Set<OrderProducts> orderProductses) {
+        this.orderProductses = orderProductses;
     }
 
 

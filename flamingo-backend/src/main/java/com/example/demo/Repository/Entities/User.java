@@ -1,20 +1,9 @@
 package com.example.demo.Repository.Entities;
-// default package
-// Generated Mar 3, 2023, 8:43:28 PM by Hibernate Tools 6.2.0.CR1
+// Generated Mar 5, 2023, 5:09:22 PM by Hibernate Tools 6.2.0.CR1
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
+import jakarta.persistence.*;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -38,47 +27,43 @@ public class User  implements java.io.Serializable {
      private String email;
      private String phone;
      private byte isAdmin;
-     private String addressStreetName;
-     private String addressCityName;
-     private String addreessCountryName;
-     private Set<CreditCards> creditCardses = new HashSet<CreditCards>(0);
-     private Set<Product> products = new HashSet<Product>(0);
+     private String adrdressStreetName;
+     private String adrdressCitytName;
+     private String adrdressCountryName;
+     private Set<UserReviewProduct> userReviewProducts = new HashSet<UserReviewProduct>(0);
      private Set<OrderDetails> orderDetailses = new HashSet<OrderDetails>(0);
 
     public User() {
     }
 
 	
-    public User( String username, String password, String firstName,String lastNAme, String gender, String email, String phone, byte isAdmin) {
+    public User(String username, String password, String firstName, String lastName, String gender, String email, String phone) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
-        this.lastName = lastNAme;
-
+        this.lastName = lastName;
         this.gender = gender;
         this.email = email;
         this.phone = phone;
-        this.isAdmin = isAdmin;
     }
-    public User( String username, String password, String name, String gender, String email, String phone, byte isAdmin, String addressStreetName, String addressCityName, String addreessCountryName, Set<CreditCards> creditCardses, Set<Product> products, Set<OrderDetails> orderDetailses) {
+    public User( String username, String password, String firstName, String lastName, String gender, String email, String phone, String adrdressStreetName, String adrdressCitytName, String adrdressCountryName, Set<UserReviewProduct> userReviewProducts, Set<OrderDetails> orderDetailses) {
        this.username = username;
        this.password = password;
-       this.name = name;
+       this.firstName = firstName;
+       this.lastName = lastName;
        this.gender = gender;
        this.email = email;
        this.phone = phone;
-       this.isAdmin = isAdmin;
-       this.addressStreetName = addressStreetName;
-       this.addressCityName = addressCityName;
-       this.addreessCountryName = addreessCountryName;
-       this.creditCardses = creditCardses;
-       this.products = products;
+       this.adrdressStreetName = adrdressStreetName;
+       this.adrdressCitytName = adrdressCitytName;
+       this.adrdressCountryName = adrdressCountryName;
+       this.userReviewProducts = userReviewProducts;
        this.orderDetailses = orderDetailses;
     }
    
      @Id 
-
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    
     @Column(name="id", unique=true, nullable=false)
     public int getId() {
         return this.id;
@@ -109,13 +94,23 @@ public class User  implements java.io.Serializable {
     }
 
     
-    @Column(name="name", nullable=false, length=45)
-    public String getName() {
-        return this.name;
+    @Column(name="first_name", nullable=false, length=45)
+    public String getFirstName() {
+        return this.firstName;
     }
     
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    
+    @Column(name="last_name", nullable=false, length=45)
+    public String getLastName() {
+        return this.lastName;
+    }
+    
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     
@@ -159,54 +154,42 @@ public class User  implements java.io.Serializable {
     }
 
     
-    @Column(name="address_street_name", length=45)
-    public String getAddressStreetName() {
-        return this.addressStreetName;
+    @Column(name="adrdress_street_name", length=45)
+    public String getAdrdressStreetName() {
+        return this.adrdressStreetName;
     }
     
-    public void setAddressStreetName(String addressStreetName) {
-        this.addressStreetName = addressStreetName;
-    }
-
-    
-    @Column(name="address_city_name", length=45)
-    public String getAddressCityName() {
-        return this.addressCityName;
-    }
-    
-    public void setAddressCityName(String addressCityName) {
-        this.addressCityName = addressCityName;
+    public void setAdrdressStreetName(String adrdressStreetName) {
+        this.adrdressStreetName = adrdressStreetName;
     }
 
     
-    @Column(name="addreess_country_name", length=45)
-    public String getAddreessCountryName() {
-        return this.addreessCountryName;
+    @Column(name="adrdress_cityt_name", length=45)
+    public String getAdrdressCitytName() {
+        return this.adrdressCitytName;
     }
     
-    public void setAddreessCountryName(String addreessCountryName) {
-        this.addreessCountryName = addreessCountryName;
+    public void setAdrdressCitytName(String adrdressCitytName) {
+        this.adrdressCitytName = adrdressCitytName;
+    }
+
+    
+    @Column(name="adrdress_country_name", length=45)
+    public String getAdrdressCountryName() {
+        return this.adrdressCountryName;
+    }
+    
+    public void setAdrdressCountryName(String adrdressCountryName) {
+        this.adrdressCountryName = adrdressCountryName;
     }
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="user")
-    public Set<CreditCards> getCreditCardses() {
-        return this.creditCardses;
+    public Set<UserReviewProduct> getUserReviewProducts() {
+        return this.userReviewProducts;
     }
     
-    public void setCreditCardses(Set<CreditCards> creditCardses) {
-        this.creditCardses = creditCardses;
-    }
-
-@ManyToMany(fetch=FetchType.LAZY)
-    @JoinTable(name="user_review_product", catalog="flamingoo", joinColumns = { 
-        @JoinColumn(name="user_id", nullable=false, updatable=false) }, inverseJoinColumns = { 
-        @JoinColumn(name="product_id", nullable=false, updatable=false) })
-    public Set<Product> getProducts() {
-        return this.products;
-    }
-    
-    public void setProducts(Set<Product> products) {
-        this.products = products;
+    public void setUserReviewProducts(Set<UserReviewProduct> userReviewProducts) {
+        this.userReviewProducts = userReviewProducts;
     }
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="user")
