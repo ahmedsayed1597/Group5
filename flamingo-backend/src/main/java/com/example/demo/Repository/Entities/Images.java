@@ -40,7 +40,7 @@ public class Images  implements java.io.Serializable {
 
     @Id
 	@GenericGenerator(name="ImagesIdGenerator", strategy = "foreign", 
-    parameters = @Parameter(name = "property", value = "stock"))
+    parameters = @Parameter(name = "property", value = "product_id"))
     
     @Column(name="product_id", unique=true, nullable=false)
     public int getProductId() {
