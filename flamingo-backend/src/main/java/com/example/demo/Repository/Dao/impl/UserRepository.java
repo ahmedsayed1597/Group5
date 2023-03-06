@@ -166,21 +166,4 @@ public class UserRepository implements UserDao {
         return null;
     }
 
-
-    public boolean isEmailExsist(User user) {
-        List<User> users = findAll();
-        for (User u : users) {
-            if ((u.getEmail()).equals(user.getEmail())) {
-                if (((u.getPassword()).equals(user.getPassword()))) {
-                    return true;
-                }
-                return false;
-            } else {
-                return false;
-            }
-            
-        }
-        return false;
-
-    }
 }
