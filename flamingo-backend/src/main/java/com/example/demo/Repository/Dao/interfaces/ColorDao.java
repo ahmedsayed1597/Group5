@@ -1,4 +1,4 @@
 package com.example.demo.Repository.Dao.interfaces;
 
-public interface CategoryDao {
+public interface ColorDao {
 }

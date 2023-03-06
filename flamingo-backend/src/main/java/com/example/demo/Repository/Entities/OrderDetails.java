@@ -25,7 +25,6 @@ import java.util.Set;
 @Table(name="order_details"
     ,catalog="flamingoo"
 )
-
 public class OrderDetails  implements java.io.Serializable {
 
 
@@ -35,7 +34,7 @@ public class OrderDetails  implements java.io.Serializable {
      private Timestamp orderDate;
      private String status;
      private String paymentMethod;
-     private double totalPrice;
+     private String totalPrice;
      private Short numberOfItems;
      private Set<OrderProducts> orderProductses = new HashSet<OrderProducts>(0);
 
@@ -50,8 +49,7 @@ public class OrderDetails  implements java.io.Serializable {
         this.orderDate = orderDate;
         this.status = status;
     }
-    public OrderDetails(OrderDetailsId id, User user, Timestamp deleverDate, Timestamp orderDate,
-     String status, String paymentMethod, double totalPrice, Short numberOfItems, Set<OrderProducts> orderProductses) {
+    public OrderDetails(OrderDetailsId id, User user, Timestamp deleverDate, Timestamp orderDate, String status, String paymentMethod, String totalPrice, Short numberOfItems, Set<OrderProducts> orderProductses) {
        this.id = id;
        this.user = user;
        this.deleverDate = deleverDate;
@@ -129,11 +127,11 @@ public class OrderDetails  implements java.io.Serializable {
 
     
     @Column(name="total_price", length=45)
-    public double getTotalPrice() {
+    public String getTotalPrice() {
         return this.totalPrice;
     }
     
-    public void setTotalPrice(double totalPrice) {
+    public void setTotalPrice(String totalPrice) {
         this.totalPrice = totalPrice;
     }
 
