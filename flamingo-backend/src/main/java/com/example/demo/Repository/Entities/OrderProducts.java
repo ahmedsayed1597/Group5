@@ -9,6 +9,7 @@ import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinColumns;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
@@ -58,8 +59,9 @@ public class OrderProducts  implements java.io.Serializable {
     }
 
 @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="order_details_id", nullable=false, insertable=false, updatable=false)
-    @JoinColumn(name="product_id", nullable=false, insertable=false, updatable=false)
+@JoinColumns({
+    @JoinColumn(name="order_details_id", nullable=false, insertable=false, updatable=false),
+    @JoinColumn(name="order_details_user_id", nullable=false, insertable=false, updatable=false)})
     public OrderDetails getOrderDetails() {
         return this.orderDetails;
     }
