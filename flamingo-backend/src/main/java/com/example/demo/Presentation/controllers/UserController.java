@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 
 import com.example.demo.presentation.mappers.UserMapper;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

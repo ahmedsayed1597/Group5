@@ -8,7 +8,7 @@ import com.example.demo.repository.entities.User;
 
 @Mapper(componentModel = "spring")
 public interface UserMapper {
-    // UserMapper INSTANCE = Mappers.getMapper( UserMapper.class );
+    
     User fromDtoToEntity(UserRequestDto user);
 
     UserRequestDto fromModelToDto(User user);

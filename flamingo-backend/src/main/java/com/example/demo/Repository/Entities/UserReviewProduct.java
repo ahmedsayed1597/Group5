@@ -1,13 +1,11 @@
 package com.example.demo.repository.entities;
-// Generated Mar 5, 2023, 5:09:22 PM by Hibernate Tools 6.2.0.CR1
+// Generated Mar 7, 2023, 7:21:08 PM by Hibernate Tools 6.2.0.CR1
 
 
-import jakarta.persistence.AttributeOverride;
-import jakarta.persistence.AttributeOverrides;
 import jakarta.persistence.Column;
-import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
@@ -22,7 +20,7 @@ import jakarta.persistence.Table;
 public class UserReviewProduct  implements java.io.Serializable {
 
 
-     private UserReviewProductId id;
+     private int reviewId;
      private Product product;
      private User user;
      private Short reviewRating;
@@ -32,35 +30,33 @@ public class UserReviewProduct  implements java.io.Serializable {
     }
 
 	
-    public UserReviewProduct(UserReviewProductId id, Product product, User user) {
-        this.id = id;
+    public UserReviewProduct(int reviewId, Product product, User user) {
+        this.reviewId = reviewId;
         this.product = product;
         this.user = user;
     }
-    public UserReviewProduct(UserReviewProductId id, Product product, User user, Short reviewRating, String reviewDescription) {
-       this.id = id;
+    public UserReviewProduct(int reviewId, Product product, User user, Short reviewRating, String reviewDescription) {
+       this.reviewId = reviewId;
        this.product = product;
        this.user = user;
        this.reviewRating = reviewRating;
        this.reviewDescription = reviewDescription;
     }
    
-     @EmbeddedId
+     @Id 
 
     
-    @AttributeOverrides( {
-        @AttributeOverride(name="productId", column=@Column(name="product_id", nullable=false) ), 
-        @AttributeOverride(name="userId", column=@Column(name="user_id", nullable=false) ) } )
-    public UserReviewProductId getId() {
-        return this.id;
+    @Column(name="review_id", unique=true, nullable=false)
+    public int getReviewId() {
+        return this.reviewId;
     }
     
-    public void setId(UserReviewProductId id) {
-        this.id = id;
+    public void setReviewId(int reviewId) {
+        this.reviewId = reviewId;
     }
 
 @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="product_id", nullable=false, insertable=false, updatable=false)
+    @JoinColumn(name="product_id", nullable=false)
     public Product getProduct() {
         return this.product;
     }
@@ -70,7 +66,7 @@ public class UserReviewProduct  implements java.io.Serializable {
     }
 
 @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="user_id", nullable=false, insertable=false, updatable=false)
+    @JoinColumn(name="user_id", nullable=false)
     public User getUser() {
         return this.user;
     }
