@@ -1,19 +1,23 @@
-package com.example.demo.Presentation.controllers;
+package com.example.demo.presentation.controllers;
 
-import com.example.demo.Buisness.DTOs.RequestDTOs.UserRequestDto;
-import com.example.demo.Buisness.Services.interfaces.UserService;
-import com.example.demo.Presentation.Mappers.impl.UserMapperImpl;
-import com.example.demo.Presentation.ResponseViewModel.UserResponse;
+import com.example.demo.buisness.dtos.requestDTOs.UserRequestDto;
+import com.example.demo.buisness.services.interfaces.UserService;
+import com.example.demo.presentation.responseViewModel.UserResponse;
+
+import lombok.RequiredArgsConstructor;
+
+import com.example.demo.presentation.mappers.UserMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequiredArgsConstructor
 public class UserController {
 
-    @Autowired
-    private UserService userService;
-    
+    private final UserService userService;
+    private final UserMapper userMapper;
+
     @GetMapping("/")
     public String test(){
         return "hello";
@@ -21,13 +25,13 @@ public class UserController {
 
     @PostMapping("/Register")
     public UserResponse addUser(@RequestBody UserRequestDto user){
-        return userService.addUser(UserMapperImpl.fromDtoToEntity(user));
+        return userService.addUser(userMapper.fromDtoToEntity(user));
 
     }
 
     @PostMapping("/Login")
     public UserResponse login(@RequestBody UserRequestDto user){   
-        return userService.getEmailAndPassword(UserMapperImpl.fromDtoToEntity(user));
+        return userService.getEmailAndPassword(userMapper.fromDtoToEntity(user));
                    
     }
 

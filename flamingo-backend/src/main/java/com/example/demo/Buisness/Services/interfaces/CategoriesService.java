@@ -1,13 +1,13 @@
-package com.example.demo.Buisness.Services.interfaces;
+package com.example.demo.buisness.services.interfaces;
 
 import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.Presentation.ResponseViewModel.CategoryResponse;
-import com.example.demo.Repository.Dao.interfaces.CategoryDao;
-import com.example.demo.Repository.Entities.Category;
+import com.example.demo.presentation.responseViewModel.CategoryResponse;
+import com.example.demo.repository.dao.interfaces.CategoryDao;
+import com.example.demo.repository.entities.Category;
 
 @Service
 public class CategoriesService {

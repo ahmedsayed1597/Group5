@@ -1,7 +1,8 @@
-package com.example.demo.Repository.Dao.interfaces;
+package com.example.demo.repository.dao.interfaces;
 
-import com.example.demo.Repository.Entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.example.demo.repository.entities.User;
 
 public interface UserDao extends JpaRepository<User,Integer> {
 

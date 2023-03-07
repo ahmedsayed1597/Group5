@@ -1,4 +1,4 @@
-package com.example.demo.Presentation.ResponseViewModel;
+package com.example.demo.presentation.responseViewModel;
 
 public class UserResponse {
 

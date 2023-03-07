@@ -1,4 +1,4 @@
-package com.example.demo.Repository.Entities;
+package com.example.demo.repository.entities;
 // Generated Mar 5, 2023, 5:09:22 PM by Hibernate Tools 6.2.0.CR1
 
 

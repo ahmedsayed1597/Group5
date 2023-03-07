@@ -1,10 +1,9 @@
-package com.example.demo.Presentation.controllers;
+package com.example.demo.presentation.controllers;
 
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,21 +12,23 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.Buisness.DTOs.RequestDTOs.CategoryRequestDto;
-import com.example.demo.Buisness.DTOs.RequestDTOs.UserRequestDto;
-import com.example.demo.Buisness.Services.interfaces.CategoriesService;
-import com.example.demo.Presentation.Mappers.impl.CategoryMapperImpl;
-import com.example.demo.Presentation.ResponseViewModel.CategoryResponse;
-import com.example.demo.Repository.Dao.interfaces.CategoryDao;
-import com.example.demo.Repository.Entities.Category;
+import com.example.demo.buisness.dtos.requestDTOs.CategoryRequestDto;
+import com.example.demo.buisness.services.interfaces.CategoriesService;
+import com.example.demo.presentation.mappers.CategoryMapper;
+import com.example.demo.presentation.responseViewModel.CategoryResponse;
+import com.example.demo.repository.entities.Category;
+
+import lombok.RequiredArgsConstructor;
 
 
 @RestController
 @RequestMapping("categories")
+@RequiredArgsConstructor
 public class CategoriesController {
 
-    @Autowired
-    private CategoriesService categoriesService;
+    
+    private final CategoriesService categoriesService;
+    private final CategoryMapper categoryMapper;
 
     @GetMapping("/all")
     public List<Category> getAllCategries() {
@@ -37,7 +38,7 @@ public class CategoriesController {
 
     @PostMapping("/insert")
     public CategoryResponse insertCategory(@RequestBody CategoryRequestDto category){
-        return categoriesService.insertCategory(CategoryMapperImpl.fromDtoToEntity(category));
+        return categoriesService.insertCategory(categoryMapper.fromDtoToEntity(category));
     }
 
     @GetMapping("/{id}")

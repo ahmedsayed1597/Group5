@@ -1,21 +1,22 @@
-package com.example.demo.Presentation.controllers;
+package com.example.demo.presentation.controllers;
 
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.Buisness.Services.interfaces.ProductService;
-import com.example.demo.Repository.Entities.Product;
+import com.example.demo.buisness.services.interfaces.ProductService;
+import com.example.demo.repository.entities.Product;
+
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("products")
+@RequiredArgsConstructor
 public class ProductController {
-    @Autowired
-    private ProductService productService;
+    private final ProductService productService;
 
     @GetMapping("/all")
     public String getAllProduct(){

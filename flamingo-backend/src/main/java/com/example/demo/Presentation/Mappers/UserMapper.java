@@ -1,13 +1,15 @@
-package com.example.demo.Presentation.Mappers;
+package com.example.demo.presentation.mappers;
 
-import org.mapstruct.factory.Mappers;
+import org.mapstruct.Mapper;
 
-import com.example.demo.Buisness.DTOs.RequestDTOs.UserRequestDto;
-import com.example.demo.Repository.Entities.User;
 
+import com.example.demo.buisness.dtos.requestDTOs.UserRequestDto;
+import com.example.demo.repository.entities.User;
+
+@Mapper(componentModel = "spring")
 public interface UserMapper {
-    UserMapper instance =Mappers.getMapper(UserMapper.class);
-    User fromUserDtoToUser(UserRequestDto user);
+    // UserMapper INSTANCE = Mappers.getMapper( UserMapper.class );
+    User fromDtoToEntity(UserRequestDto user);
 
     UserRequestDto fromModelToDto(User user);
 }

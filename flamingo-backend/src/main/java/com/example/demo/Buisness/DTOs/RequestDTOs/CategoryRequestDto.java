@@ -1,4 +1,4 @@
-package com.example.demo.Buisness.DTOs.RequestDTOs;
+package com.example.demo.buisness.dtos.requestDTOs;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

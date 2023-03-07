@@ -1,6 +1,5 @@
-package com.example.demo.Buisness.DTOs.RequestDTOs;
+package com.example.demo.buisness.dtos.requestDTOs;
 
-import com.example.demo.Repository.Entities.Category;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

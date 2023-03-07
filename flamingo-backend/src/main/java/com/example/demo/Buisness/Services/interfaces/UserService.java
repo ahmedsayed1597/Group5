@@ -1,8 +1,8 @@
-package com.example.demo.Buisness.Services.interfaces;
+package com.example.demo.buisness.services.interfaces;
 
-import com.example.demo.Presentation.ResponseViewModel.UserResponse;
-import com.example.demo.Repository.Dao.interfaces.UserDao;
-import com.example.demo.Repository.Entities.User;
+import com.example.demo.presentation.responseViewModel.UserResponse;
+import com.example.demo.repository.dao.interfaces.UserDao;
+import com.example.demo.repository.entities.User;
 
 import java.util.ArrayList;
 import java.util.Iterator;

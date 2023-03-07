@@ -1,11 +1,12 @@
-package com.example.demo.Buisness.Services.interfaces;
+package com.example.demo.buisness.services.interfaces;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.Repository.Dao.interfaces.ProductDao;
+import com.example.demo.repository.dao.interfaces.ProductDao;
+import com.example.demo.repository.entities.Product;
+
 import java.util.*;
-import com.example.demo.Repository.Entities.Product;
 
 @Service
 public class ProductService {

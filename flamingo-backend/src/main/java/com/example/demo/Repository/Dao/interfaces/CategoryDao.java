@@ -1,8 +1,8 @@
-package com.example.demo.Repository.Dao.interfaces;
+package com.example.demo.repository.dao.interfaces;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.example.demo.Repository.Entities.Category;
+import com.example.demo.repository.entities.Category;
 
 public interface CategoryDao  extends JpaRepository<Category,Integer> {
 }
