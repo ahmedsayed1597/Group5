@@ -1,9 +1,12 @@
 package com.example.demo.repository.entities;
 // Generated Mar 5, 2023, 5:09:22 PM by Hibernate Tools 6.2.0.CR1
 
+import jakarta.annotation.Generated;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -44,7 +47,7 @@ public class Category implements java.io.Serializable {
     }
 
     @Id
-
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
     public int getId() {
         return this.id;
@@ -72,7 +75,7 @@ public class Category implements java.io.Serializable {
         this.image = image;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "category")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "category")
     public Set<Product> getProducts() {
         return this.products;
     }

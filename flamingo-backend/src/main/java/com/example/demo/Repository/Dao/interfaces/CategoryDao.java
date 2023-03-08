@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface CategoryDao  extends JpaRepository<Category,Integer> {
 
-//    @Query("select c from Category c where c.categoryName = ?1")
+   @Query("select c from Category c where c.categoryName = ?1")
     public Category getCategoryByCategoryName(String categoryName);
 }

@@ -25,10 +25,10 @@ public class CategoriesService {
         CategoryResponse response = new CategoryResponse();
         List<Category> categires = new ArrayList<>();
         categires = getAllCategories();
-        Iterator iterator = categires.iterator();
+        Iterator<Category> iterator = categires.iterator();
         while(iterator.hasNext()){
-            String categotyItem = (String) iterator.next();
-            if(categotyItem.toLowerCase().equals(category.getCategoryName().toLowerCase())){
+            Category categotyItem = iterator.next();
+            if(categotyItem.getCategoryName().toLowerCase().equals(category.getCategoryName().toLowerCase())){
                 response.setMessage("Category id already exist");
                 return response;
             }
@@ -64,7 +64,8 @@ public class CategoriesService {
     }
 
     public Category getCategoryByName(String categoryName){
-        return categoryDao.getCategoryByCategoryName(categoryName);
+         return categoryDao.getCategoryByCategoryName(categoryName);
+        
     }
     
 }

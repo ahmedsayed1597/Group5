@@ -22,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 
 
 @RestController
-@RequestMapping("categories")
+@RequestMapping
 @RequiredArgsConstructor
 public class CategoriesController {
 
@@ -30,34 +30,32 @@ public class CategoriesController {
     private final CategoriesService categoriesService;
     private final CategoryMapper categoryMapper;
 
-    @GetMapping("/all")
+    @GetMapping("/categories")
     public List<Category> getAllCategries() {
 
         return categoriesService.getAllCategories();
     }
 
 
-
-    @PostMapping("/insert")
+    @PostMapping("/categories")
     public CategoryResponse insertCategory(@RequestBody CategoryRequestDto category){
         return categoriesService.insertCategory(categoryMapper.fromDtoToEntity(category));
     }
 
-//    @GetMapping("/{id}")
-//    public Optional <Category> getCategorybyid(@PathVariable int id){
-//        return categoriesService.getByID(id);
-//    }
+   @GetMapping("/categoriesid/{id}")
+   public Optional <Category> getCategorybyid(@PathVariable int id){
+       return categoriesService.getByID(id);
+   }
 
-    @GetMapping("/{categoryName}")
-    public Category getCategorybyid(@PathVariable String categoryName){
+    @GetMapping("/categoriesname/{categoryName}")
+    public Category getCategorybyname(@PathVariable String categoryName){
         return categoriesService.getCategoryByName(categoryName);
     }
 
-    @DeleteMapping("/delete/{id}")
-    public CategoryResponse insertCategory(@PathVariable int id){
+    @DeleteMapping("/categories/{id}")
+    public CategoryResponse deleteCategory(@PathVariable int id){
 
         return categoriesService.delete(id);
     }
-
 
 }

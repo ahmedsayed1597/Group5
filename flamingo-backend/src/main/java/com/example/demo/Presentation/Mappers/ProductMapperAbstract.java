@@ -32,7 +32,6 @@ public abstract class ProductMapperAbstract {
     @Named("getCategory")
     public Category getByID(int dto){
         return categoriesService.getByID(dto).get();
-
     }
  
     
