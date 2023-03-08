@@ -25,6 +25,7 @@ public abstract class ProductMapperAbstract{
     public Product fromDtoToEntity(ProductRequestDto dto){
         Product product = productMapper.fromDtoToEntity(dto);
         product.setCategory(categoriesService.getByID(dto.getCategoryid()).get());
+        
         return product;
 
     }

@@ -36,14 +36,21 @@ public class CategoriesController {
         return categoriesService.getAllCategories();
     }
 
+
+
     @PostMapping("/insert")
     public CategoryResponse insertCategory(@RequestBody CategoryRequestDto category){
         return categoriesService.insertCategory(categoryMapper.fromDtoToEntity(category));
     }
 
-    @GetMapping("/{id}")
-    public Optional <Category> getCategorybyid(@PathVariable int id){
-        return categoriesService.getByID(id);
+//    @GetMapping("/{id}")
+//    public Optional <Category> getCategorybyid(@PathVariable int id){
+//        return categoriesService.getByID(id);
+//    }
+
+    @GetMapping("/{categoryName}")
+    public Category getCategorybyid(@PathVariable String categoryName){
+        return categoriesService.getCategoryByName(categoryName);
     }
 
     @DeleteMapping("/delete/{id}")
@@ -51,4 +58,6 @@ public class CategoriesController {
 
         return categoriesService.delete(id);
     }
+
+
 }

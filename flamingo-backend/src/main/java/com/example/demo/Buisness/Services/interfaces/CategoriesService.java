@@ -37,6 +37,7 @@ public class CategoriesService {
 
         categoryDao.save(category);
         response.setMessage("Category added successful");
+        
         return response;
 
     }
@@ -62,5 +63,8 @@ public class CategoriesService {
         return categoryDao.findById(id);
     }
 
+    public Category getCategoryByName(String categoryName){
+        return categoryDao.getCategoryByCategoryName(categoryName);
+    }
     
 }
