@@ -3,8 +3,10 @@ package com.example.demo.buisness.services.interfaces;
 import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 
+import com.example.demo.buisness.exceptions.ProductNotFoundException;
 import com.example.demo.presentation.responseViewModel.CategoryResponse;
 import com.example.demo.repository.dao.interfaces.CategoryDao;
 import com.example.demo.repository.entities.Category;
@@ -19,6 +21,12 @@ public class CategoriesService {
         List<Category> categories = new ArrayList<>();
         categories = categoryDao.findAll();
         return categories;
+    }
+
+    public  List<Category> getAllCategoriesPaged(int start , int size){
+        if(categoryDao.findAll().size()>size)
+        return categoryDao.findAll().subList(start, size);
+        throw new ProductNotFoundException("out of bounds exception");
     }
 
     public CategoryResponse insertCategory(Category category){

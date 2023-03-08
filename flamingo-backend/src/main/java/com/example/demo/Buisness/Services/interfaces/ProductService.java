@@ -3,6 +3,7 @@ package com.example.demo.buisness.services.interfaces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.buisness.exceptions.ProductNotFoundException;
 import com.example.demo.repository.dao.interfaces.ProductDao;
 import com.example.demo.repository.entities.Product;
 
@@ -19,8 +20,8 @@ public class ProductService {
     }
 
 
-    public Optional <Product> getByID(int id){
-        return productDao.findById(id);
+    public Product getByID(int id){
+        return productDao.findById(id).orElseThrow(()->new ProductNotFoundException("no such product"));
     }
 
 
