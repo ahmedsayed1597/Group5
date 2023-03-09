@@ -1,25 +1,18 @@
 package com.example.demo.presentation.responseViewModel;
 
+import java.util.List;
+
+import com.example.demo.buisness.dtos.responseDTOs.CategoryResponseDto;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class CategoryResponse {
 
     private String message;
-
-    public CategoryResponse(){
-
-    }
-    
-    public CategoryResponse(String message) {
-        this.message = message;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-
-    
+    private List<CategoryResponseDto>  categories;
 }

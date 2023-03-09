@@ -1,9 +1,8 @@
 package com.example.demo.buisness.services.interfaces;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.example.demo.buisness.exceptions.ProductNotFoundException;
 import com.example.demo.presentation.responseViewModel.ProductResponse;
 import com.example.demo.repository.dao.interfaces.ProductDao;
 import com.example.demo.repository.entities.Product;
@@ -24,14 +23,13 @@ public class ProductService {
     }
 
 
-    public Optional <Product> getByID(int id){
-        return productDao.findById(id);
+    public Product getByID(int id){
+        return productDao.findById(id).orElseThrow(()->new ProductNotFoundException("no such product"));
     }
 
     public ProductResponse insertproduct(Product product){
         ProductResponse response = new ProductResponse();
-        List<Product> products = new ArrayList<>();
-        products = getAllProduct();
+        List<Product> products = getAllProduct();
         Iterator<Product> iterator = products.iterator();
         while(iterator.hasNext()){
             Product productItem = iterator.next();

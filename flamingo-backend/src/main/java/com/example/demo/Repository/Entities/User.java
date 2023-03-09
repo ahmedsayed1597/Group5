@@ -1,8 +1,10 @@
 package com.example.demo.repository.entities;
-// Generated Mar 5, 2023, 5:09:22 PM by Hibernate Tools 6.2.0.CR1
+// Generated Mar 9, 2023, 7:47:10 AM by Hibernate Tools 6.2.0.CR1
 
 
 import jakarta.persistence.*;
+
+import static jakarta.persistence.GenerationType.IDENTITY;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -18,7 +20,7 @@ import java.util.Set;
 public class User  implements java.io.Serializable {
 
 
-     private int id;
+     private Integer id;
      private String username;
      private String password;
      private String firstName;
@@ -32,12 +34,13 @@ public class User  implements java.io.Serializable {
      private String adrdressCountryName;
      private Set<UserReviewProduct> userReviewProducts = new HashSet<UserReviewProduct>(0);
      private Set<OrderDetails> orderDetailses = new HashSet<OrderDetails>(0);
+     private Set<Role> roles = new HashSet<Role>(0);
 
     public User() {
     }
 
 	
-    public User(String username, String password, String firstName, String lastName, String gender, String email, String phone) {
+    public User(String username, String password, String firstName, String lastName, String gender, String email, String phone, byte isAdmin) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
@@ -45,8 +48,9 @@ public class User  implements java.io.Serializable {
         this.gender = gender;
         this.email = email;
         this.phone = phone;
+        this.isAdmin = isAdmin;
     }
-    public User( String username, String password, String firstName, String lastName, String gender, String email, String phone, String adrdressStreetName, String adrdressCitytName, String adrdressCountryName, Set<UserReviewProduct> userReviewProducts, Set<OrderDetails> orderDetailses) {
+    public User(String username, String password, String firstName, String lastName, String gender, String email, String phone, byte isAdmin, String adrdressStreetName, String adrdressCitytName, String adrdressCountryName, Set<UserReviewProduct> userReviewProducts, Set<OrderDetails> orderDetailses, Set<Role> roles) {
        this.username = username;
        this.password = password;
        this.firstName = firstName;
@@ -54,22 +58,24 @@ public class User  implements java.io.Serializable {
        this.gender = gender;
        this.email = email;
        this.phone = phone;
+       this.isAdmin = isAdmin;
        this.adrdressStreetName = adrdressStreetName;
        this.adrdressCitytName = adrdressCitytName;
        this.adrdressCountryName = adrdressCountryName;
        this.userReviewProducts = userReviewProducts;
        this.orderDetailses = orderDetailses;
+       this.roles = roles;
     }
    
-     @Id 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+     @Id @GeneratedValue(strategy= IDENTITY)
+
     
     @Column(name="id", unique=true, nullable=false)
-    public int getId() {
+    public Integer getId() {
         return this.id;
     }
     
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -199,6 +205,18 @@ public class User  implements java.io.Serializable {
     
     public void setOrderDetailses(Set<OrderDetails> orderDetailses) {
         this.orderDetailses = orderDetailses;
+    }
+
+@ManyToMany(fetch=FetchType.LAZY)
+    @JoinTable(name="user_has_roles", catalog="flamingoo", joinColumns = { 
+        @JoinColumn(name="user_id", nullable=false, updatable=false) }, inverseJoinColumns = { 
+        @JoinColumn(name="roles_id", nullable=false, updatable=false) })
+    public Set<Role> getRoles() {
+        return this.roles;
+    }
+    
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
 

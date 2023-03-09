@@ -1,5 +1,5 @@
 package com.example.demo.repository.entities;
-// Generated Mar 7, 2023, 7:21:08 PM by Hibernate Tools 6.2.0.CR1
+// Generated Mar 9, 2023, 7:47:10 AM by Hibernate Tools 6.2.0.CR1
 
 
 import jakarta.persistence.Column;
