@@ -1,12 +1,10 @@
 package com.example.demo.repository.entities;
-// Generated Mar 7, 2023, 7:21:08 PM by Hibernate Tools 6.2.0.CR1
+// Generated Mar 9, 2023, 7:47:10 AM by Hibernate Tools 6.2.0.CR1
 
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import static jakarta.persistence.GenerationType.IDENTITY;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -26,7 +24,7 @@ import java.sql.Timestamp;
 public class OrderDetails  implements java.io.Serializable {
 
 
-     private Integer id;
+     private int id;
      private User user;
      private Timestamp deleverDate;
      private Timestamp orderDate;
@@ -40,12 +38,15 @@ public class OrderDetails  implements java.io.Serializable {
     }
 
 	
-    public OrderDetails(User user, Timestamp orderDate, String status) {
+    public OrderDetails(int id, User user, Timestamp deleverDate, Timestamp orderDate, String status) {
+        this.id = id;
         this.user = user;
+        this.deleverDate = deleverDate;
         this.orderDate = orderDate;
         this.status = status;
     }
-    public OrderDetails(User user, Timestamp deleverDate, Timestamp orderDate, String status, String paymentMethod, String totalPrice, Short numberOfItems, OrderProducts orderProducts) {
+    public OrderDetails(int id, User user, Timestamp deleverDate, Timestamp orderDate, String status, String paymentMethod, String totalPrice, Short numberOfItems, OrderProducts orderProducts) {
+       this.id = id;
        this.user = user;
        this.deleverDate = deleverDate;
        this.orderDate = orderDate;
@@ -56,15 +57,15 @@ public class OrderDetails  implements java.io.Serializable {
        this.orderProducts = orderProducts;
     }
    
-     @Id @GeneratedValue(strategy=IDENTITY)
+     @Id 
 
     
     @Column(name="id", unique=true, nullable=false)
-    public Integer getId() {
+    public int getId() {
         return this.id;
     }
     
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -79,7 +80,7 @@ public class OrderDetails  implements java.io.Serializable {
     }
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="delever_date", length=19)
+    @Column(name="delever_date", nullable=false, length=19)
     public Timestamp getDeleverDate() {
         return this.deleverDate;
     }

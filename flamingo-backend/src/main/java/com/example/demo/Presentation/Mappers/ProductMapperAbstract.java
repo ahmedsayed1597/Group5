@@ -1,5 +1,7 @@
 package com.example.demo.presentation.mappers;
 
+import java.util.List;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
@@ -20,6 +22,8 @@ public abstract class ProductMapperAbstract {
     @Mapping(source = "category",target = "categoryid" , qualifiedByName = "getID")
     public abstract ProductRequestDto fromEntityToDto(Product Product);
 
+    public abstract List<ProductRequestDto> fromEntityToDto(List<Product> Product);
+
     @Mapping(source = "categoryid",target = "category" , qualifiedByName = "getCategory")
     public abstract Product fromDtoToEntity(ProductRequestDto Product);
 
@@ -30,9 +34,8 @@ public abstract class ProductMapperAbstract {
     }
 
     @Named("getCategory")
-    public Category getByID(int dto){
+    public Category geCategoryByID(int dto){
         return categoriesService.getByID(dto).get();
-
     }
  
     

@@ -15,15 +15,15 @@ public class DemoApplication {
 		SpringApplication.run(DemoApplication.class, args);
 	}
 
-	@Bean
-	public WebMvcConfigurer cors(){
-		return new WebMvcConfigurer() {
+	// @Bean
+	// public WebMvcConfigurer cors(){
+	// 	return new WebMvcConfigurer() {
 			
 
-			public void addCorsMappings(CorsRegistry registry){
-				registry.addMapping("/**").allowedOrigins("http://localhost:4200/");
-			}
-		};
-	}
+	// 		public void addCorsMappings(CorsRegistry registry){
+	// 			registry.addMapping("/**").allowedOrigins("http://localhost:4200/");
+	// 		}
+	// 	};
+	// }
 
 }
