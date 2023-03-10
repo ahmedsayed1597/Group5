@@ -7,6 +7,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import com.flamingo.buisness.exception.APIException;
 import com.flamingo.buisness.exception.ResourceNotFoundException;
 import com.flamingo.buisness.services.servicesinteface.CartService;
@@ -34,7 +35,7 @@ public class CartServiceImp implements CartService {
     @Autowired
     private CartItemRepo cartItemRepo;
 
-    @Autowired
+    // @Autowired
     private ModelMapper modelMapper;
 
     @Override
