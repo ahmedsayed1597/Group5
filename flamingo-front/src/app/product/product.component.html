@@ -1,19 +1,56 @@
-<p>product works!</p>
-<mat-toolbar color="primary">
-  <mat-toolbar-row>
-    <span>Custom Toolbar</span>
-  </mat-toolbar-row>
-
-  <mat-toolbar-row>
-    <span>Second Line</span>
-    <span class="example-spacer"></span>
-    <mat-icon class="example-icon" aria-hidden="false" aria-label="Example user verified icon">verified_user</mat-icon>
-  </mat-toolbar-row>
-
-  <mat-toolbar-row>
-    <span>Third Line</span>
-    <span class="example-spacer"></span>
-    <mat-icon class="example-icon" aria-hidden="false" aria-label="Example heart icon">favorite</mat-icon>
-    <mat-icon class="example-icon" aria-hidden="false" aria-label="Example delete icon">delete</mat-icon>
-  </mat-toolbar-row>
+<mat-toolbar color="primary" class="d-flex justify-content-between">
+  <button mat-raised-button color="primary" routerLink="/home">Home</button>
+  <span class="text-center">Add Products</span>
+  <span class="space-buttons"></span>
 </mat-toolbar>
+<div class="container mt-5">
+  <div class="card p-2">
+    <div class="row">
+      <div class="col-6">
+        <form #productForm="ngForm" (ngSubmit)="addProduct(productForm)">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Category ID</mat-label>
+            <input matInput placeholder="categoryId"
+                    [(ngModel)]="product.categoryId"
+                    name="categoryId">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Product Name</mat-label>
+            <input matInput placeholder="Product Name"
+                    [(ngModel)]="product.productName"
+                    name="productName">
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Product Description</mat-label>
+            <input matInput placeholder="Product Description"
+                    [(ngModel)]="product.description"
+                    name="description">
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Product Quantity</mat-label>
+            <input matInput placeholder="Product Quantity"
+                    [(ngModel)]="product.quantity"
+                    name="quantity">
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Product Price</mat-label>
+            <input matInput placeholder="Product Price"
+                    [(ngModel)]="product.price"
+                    name="price">
+          </mat-form-field>
+          <div class="d-flex justify-content-between">
+            <button mat-stroked-button color="primary">clear</button>
+            <button type="submit" mat-stroked-button color="primary">Add Product</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="col-6">
+        <input type="file" value="select" #selectFile
+            (change)="onFileSelected($event)">
+      </div>
+    </div>
+
+  </div>
+</div>
