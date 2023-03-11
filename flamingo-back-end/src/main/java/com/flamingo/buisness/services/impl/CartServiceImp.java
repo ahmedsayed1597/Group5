@@ -1,4 +1,4 @@
-package com.flamingo.buisness.services.servicesimp;
+package com.flamingo.buisness.services.impl;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.flamingo.buisness.exception.APIException;
 import com.flamingo.buisness.exception.ResourceNotFoundException;
-import com.flamingo.buisness.services.servicesinteface.CartService;
+import com.flamingo.buisness.services.interfaces.CartService;
 import com.flamingo.persistence.dao.CartItemRepo;
 import com.flamingo.persistence.dao.CartRepo;
 import com.flamingo.persistence.dao.ProductRepo;
@@ -18,7 +18,7 @@ import com.flamingo.persistence.entities.Cart;
 import com.flamingo.persistence.entities.CartItem;
 import com.flamingo.persistence.entities.Product;
 import com.flamingo.presentation.dto.CartDTO;
-import com.flamingo.presentation.dto.ProductDTO;
+import com.flamingo.presentation.dto.ProductDto;
 
 import jakarta.transaction.Transactional;
 
@@ -66,18 +66,18 @@ public class CartServiceImp implements CartService {
         newCartItem.setProduct(product);
         newCartItem.setCart(cart);
         newCartItem.setQuantity(quantity);
-        newCartItem.setProductPrice(product.getSpecialPrice());
+        newCartItem.setProductPrice(product.getPrice());
 
         cartItemRepo.save(newCartItem);
 
         product.setQuantity(product.getQuantity() - quantity);
 
-        cart.setTotalPrice(cart.getTotalPrice() + (product.getSpecialPrice() * quantity));
+        cart.setTotalPrice(cart.getTotalPrice() + (product.getPrice() * quantity));
 
         CartDTO cartDTO = modelMapper.map(cart, CartDTO.class);
 
-        List<ProductDTO> productDTOs = cart.getCartItems().stream()
-                .map(p -> modelMapper.map(p.getProduct(), ProductDTO.class)).collect(Collectors.toList());
+        List<ProductDto> productDTOs = cart.getCartItems().stream()
+                .map(p -> modelMapper.map(p.getProduct(), ProductDto.class)).collect(Collectors.toList());
 
         cartDTO.setProducts(productDTOs);
 
@@ -96,8 +96,8 @@ public class CartServiceImp implements CartService {
         List<CartDTO> cartDTOs = carts.stream().map(cart -> {
             CartDTO cartDTO = modelMapper.map(cart, CartDTO.class);
 
-            List<ProductDTO> products = cart.getCartItems().stream()
-                    .map(p -> modelMapper.map(p.getProduct(), ProductDTO.class)).collect(Collectors.toList());
+            List<ProductDto> products = cart.getCartItems().stream()
+                    .map(p -> modelMapper.map(p.getProduct(), ProductDto.class)).collect(Collectors.toList());
 
             cartDTO.setProducts(products);
 
@@ -118,8 +118,8 @@ public class CartServiceImp implements CartService {
 
         CartDTO cartDTO = modelMapper.map(cart, CartDTO.class);
 
-        List<ProductDTO> products = cart.getCartItems().stream()
-                .map(p -> modelMapper.map(p.getProduct(), ProductDTO.class)).collect(Collectors.toList());
+        List<ProductDto> products = cart.getCartItems().stream()
+                .map(p -> modelMapper.map(p.getProduct(), ProductDto.class)).collect(Collectors.toList());
 
         cartDTO.setProducts(products);
 
@@ -153,7 +153,7 @@ public class CartServiceImp implements CartService {
 
         product.setQuantity(product.getQuantity() + cartItem.getQuantity() - quantity);
 
-        cartItem.setProductPrice(product.getSpecialPrice());
+        cartItem.setProductPrice(product.getPrice());
         cartItem.setQuantity(quantity);
 
         cart.setTotalPrice(cartPrice + (cartItem.getProductPrice() * quantity));
@@ -162,8 +162,8 @@ public class CartServiceImp implements CartService {
 
         CartDTO cartDTO = modelMapper.map(cart, CartDTO.class);
 
-        List<ProductDTO> productDTOs = cart.getCartItems().stream()
-                .map(p -> modelMapper.map(p.getProduct(), ProductDTO.class)).collect(Collectors.toList());
+        List<ProductDto> productDTOs = cart.getCartItems().stream()
+                .map(p -> modelMapper.map(p.getProduct(), ProductDto.class)).collect(Collectors.toList());
 
         cartDTO.setProducts(productDTOs);
 
@@ -186,7 +186,7 @@ public class CartServiceImp implements CartService {
 
         double cartPrice = cart.getTotalPrice() - (cartItem.getProductPrice() * cartItem.getQuantity());
 
-        cartItem.setProductPrice(product.getSpecialPrice());
+        cartItem.setProductPrice(product.getPrice());
 
         cart.setTotalPrice(cartPrice + (cartItem.getProductPrice() * cartItem.getQuantity()));
 

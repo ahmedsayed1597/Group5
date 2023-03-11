@@ -37,27 +37,12 @@ public class Product {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long productId;
-
-
 	private String productName;
-	
 	private String image;
-	
-
 	private String description;
-	
 	private Integer quantity;
 	private double price;
-
-	public Product(String productName, String description, Integer quantity, double price) {
-		this.productName = productName;
-		this.description = description;
-		this.quantity = quantity;
-		this.price = price;
-	}
 	
-	private double specialPrice;
-
 	@ManyToOne
 	@JoinColumn(name = "category_id")
 	private Category category;
@@ -67,5 +52,13 @@ public class Product {
 	
 	@OneToMany(mappedBy = "product", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	private List<OrderItem> orderItems = new ArrayList<>();
+
+	public Product(String productName, String description, Integer quantity, double price) {
+		this.productName = productName;
+		this.description = description;
+		this.quantity = quantity;
+		this.price = price;
+	}
+	
 
 }

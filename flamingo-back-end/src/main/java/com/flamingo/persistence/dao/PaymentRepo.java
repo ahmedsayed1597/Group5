@@ -1,6 +1,5 @@
 package com.flamingo.persistence.dao;
 
-<<<<<< khames
 
 import org.springframework.stereotype.Repository;
 

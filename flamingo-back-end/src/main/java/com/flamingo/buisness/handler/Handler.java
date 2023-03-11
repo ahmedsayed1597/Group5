@@ -11,7 +11,7 @@ import com.flamingo.buisness.exception.notFoundException;
 
 @ControllerAdvice
 public class Handler {
-    
+
     @ExceptionHandler(notFoundException.class)
     public ResponseEntity<ErrorMessage> handler(notFoundException ex){
 
@@ -25,7 +25,7 @@ public class Handler {
         return new ResponseEntity<ErrorMessage>(new ErrorMessage(HttpStatus.NOT_FOUND.value(), ex.getMessage()),HttpStatus.NOT_FOUND);
     }
 
-    
+
 
     @ExceptionHandler(Exception.class)
 
