@@ -76,10 +76,10 @@ public class CartServiceImp implements CartService {
 
         CartDTO cartDTO = modelMapper.map(cart, CartDTO.class);
 
-        List<ProductDto> productDTOs = cart.getCartItems().stream()
+        List<ProductDto> ProductDTOs = cart.getCartItems().stream()
                 .map(p -> modelMapper.map(p.getProduct(), ProductDto.class)).collect(Collectors.toList());
 
-        cartDTO.setProducts(productDTOs);
+        cartDTO.setProducts(ProductDTOs);
 
         return cartDTO;
     }
@@ -162,10 +162,10 @@ public class CartServiceImp implements CartService {
 
         CartDTO cartDTO = modelMapper.map(cart, CartDTO.class);
 
-        List<ProductDto> productDTOs = cart.getCartItems().stream()
+        List<ProductDto> ProductDTOs = cart.getCartItems().stream()
                 .map(p -> modelMapper.map(p.getProduct(), ProductDto.class)).collect(Collectors.toList());
 
-        cartDTO.setProducts(productDTOs);
+        cartDTO.setProducts(ProductDTOs);
 
         return cartDTO;
     }
