@@ -27,19 +27,34 @@ export class LoginComponent implements OnInit {
   onLogin(){
     if(this.logInForm.valid == true){
       console.log(this.logInForm.value)
-      //let user = new User(this.registerationForm.value['name'],this.registerationForm.value['email'],this.registerationForm.value['password'],this.registerationForm.value['avatar'])
       this._UserService.signIn(this.logInForm.value).subscribe({
         next: (response) => {
           console.log(this.logInForm.value);
-          this.responseMessage = response;
+          this.responseMessage = response.message;
           console.log(this.responseMessage)
-          // if(response.message == 'User created'){
-          //   this._Router.navigate(['Home'])
-          // }
+          if(response.message == 'Succesfull Login'){
+            this._Router.navigate(['Home'])
+          }
         }
       ,
       error: (err) => {console.log(err);}
      });
      }
   }
+
+  checkErrorInForm(input:string){
+    if(this.logInForm.controls[input].errors) return true;
+    else return false;   
+  }
+
+  checkErrorInFormAndType(input:string, errorType:string){
+    if(this.logInForm.controls[input].hasError(errorType)) return true;
+    else return false;
+  }
+
+  checkErrorIfFormTouch(input:string){
+    if(this.logInForm.controls[input].touched) return true;
+    else return false;
+  }
+
 }

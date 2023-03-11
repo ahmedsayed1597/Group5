@@ -27,36 +27,53 @@
               <div class="row">
                 <div class="col-md-6 mb-4">
                   <div class="form-outline">
-                    <label class="form-label" for="Name">First Name</label>
-                    <input formControlName="name" type="text"  class="form-control form-control-lg" [class.is-valid]="!checkErrorInForm('name')"[class.is-invalid]="checkErrorInForm('name')&& checkErrorIfFormTouch('name')"
+                    <label class="form-label" for="firstName">First Name</label>
+                    <input formControlName="firstName" type="text"  class="form-control form-control-lg" [class.is-valid]="!checkErrorInForm('firstName')"[class.is-invalid]="checkErrorInForm('firstName')&& checkErrorIfFormTouch('firstName')"
                     placeholder="Enter First Name">
 
                     <small class="text-danger text-bold"
-                    *ngIf="checkErrorInFormAndType('name' , 'required') && checkErrorIfFormTouch('name')">
-                    Please fill this field
+                    *ngIf="checkErrorInFormAndType('firstName' , 'required') && checkErrorIfFormTouch('firstName')">
+                    Please enter first name
                   </small>
-
+                    
                   <small class="text-danger text-bold"
-                  *ngIf="checkErrorInFormAndType('name' , 'minlength') && checkErrorIfFormTouch('name')">
-                  min length of name should be greater than 3 character
+                  *ngIf="checkErrorInFormAndType('firstName' , 'minlength') && checkErrorIfFormTouch('firstName')">
+                  min length of firstName should be greater than 3 character
                 </small>
 
                 <small class="text-danger text-bold"
-                *ngIf="checkErrorInFormAndType('name' , 'maxlength') && checkErrorIfFormTouch('name')">
-                max length of name should be lesser than 30 character
+                *ngIf="checkErrorInFormAndType('firstName' , 'maxlength') && checkErrorIfFormTouch('firstName')">
+                max length of firstName should be lesser than 30 character
               </small>
                   </div>
                 </div>
                 <div class="col-md-6 mb-4">
                   <div class="form-outline">
-                    <label class="form-label" for="lastName">Last Name</label>
+                    <label class="form-label" for="lastName">
+                    Last Name</label>
                     <input
                       type="text"
                       id="lastName"
                       placeholder="Enter Last Name"
                       class="form-control form-control-lg"
+                      formControlName="lastName"
+                      [class.is-valid]="!checkErrorInForm('lastName')" [class.is-invalid]="checkErrorInForm('lastName')&& checkErrorIfFormTouch('lastName')"
                     />
+                    <small class="text-danger text-bold"
+                    *ngIf="checkErrorInFormAndType('lastName' , 'required') && checkErrorIfFormTouch('lastName')">
+                    Please enter last name
+                  </small>
+                    
+                  <small class="text-danger text-bold"
+                  *ngIf="checkErrorInFormAndType('lastName' , 'minlength') && checkErrorIfFormTouch('lastName')">
+                  min length of lastName should be greater than 3 character
+                </small>
 
+                <small class="text-danger text-bold"
+                *ngIf="checkErrorInFormAndType('lastName' , 'maxlength') && checkErrorIfFormTouch('lastName')">
+                max length of lastName should be lesser than 30 character
+              </small>
+                    
                   </div>
                 </div>
               </div>
@@ -68,10 +85,28 @@
                     <input
                       type="text"
                       class="form-control form-control-lg"
+                      formControlName="username"
+                      [class.is-valid]="!checkErrorInForm('username')" [class.is-invalid]="checkErrorInForm('username')&& checkErrorIfFormTouch('username')"
                       placeholder="Enter user name"
                       id="username"
                     />
 
+                    <small class="text-danger text-bold"
+                    *ngIf="checkErrorInFormAndType('username' , 'required') && checkErrorIfFormTouch('username')">
+                    Please enter your username
+                  </small>
+                    
+                  <small class="text-danger text-bold"
+                  *ngIf="checkErrorInFormAndType('username' , 'minlength') && checkErrorIfFormTouch('username')">
+                  min length of username should be greater than 3 character
+                </small>
+
+                <small class="text-danger text-bold"
+                *ngIf="checkErrorInFormAndType('username' , 'maxlength') && checkErrorIfFormTouch('username')">
+                max length of username should be lesser than 30 character
+              </small>
+
+                    
                   </div>
                 </div>
                 <div class="col-md-6 mb-4">
@@ -80,10 +115,12 @@
                   <div class="form-check form-check-inline">
                     <input
                       class="form-check-input"
+                      formControlName="gender"
+                      
                       type="radio"
-                      name="inlineRadioOptions"
+                      name="gender"
                       id="femaleGender"
-                      value="option1"
+                      value="Female"
                       checked
                     />
                     <label class="form-check-label" for="femaleGender">Female</label>
@@ -91,11 +128,12 @@
 
                   <div class="form-check form-check-inline">
                     <input
+                    formControlName="gender"
                       class="form-check-input"
                       type="radio"
-                      name="inlineRadioOptions"
+                      name="gender"
                       id="maleGender"
-                      value="option2"
+                      value="Male"
                     />
                     <label class="form-check-label" for="maleGender"
                       >Male</label
@@ -103,39 +141,7 @@
                   </div>
                 </div>
               </div>
-
-              <!-- <div class="col-md-6 mb-4">
-                <h6 class="mb-2 pb-1">Is Admin:</h6> -->
-
-                <!-- <div class="form-check form-check-inline">
-                  <input
-                    class="form-check-input"
-                    type="radio"
-                    name="inlineRadioOptions"
-                    id="admin"
-                    value="option1"
-                    checked
-                  />
-                  <label class="form-check-label" for="admin"
-                    >Yes</label
-                  >
-                </div> -->
-<!--
-                <div class="form-check form-check-inline">
-                  <input
-                    class="form-check-input"
-                    type="radio"
-                    name="inlineRadioOptions"
-                    id="customer"
-                    value="option2"
-                  />
-                  <label class="form-check-label" for="customer"
-                    >No</label
-                  >
-                </div>
-              </div> -->
-
-
+          
               <div class="row">
                 <div class="col-md-6 mb-4 pb-2">
                   <div class="form-outline">
@@ -144,14 +150,20 @@
                       type="email"
                       id="emailAddress"
                       class="form-control form-control-lg"
-                      formControlName="email"
+                      formControlName="email" 
+                      [class.is-valid]="!checkErrorInForm('email')" [class.is-invalid]="checkErrorInForm('email')&& checkErrorIfFormTouch('email')"
                       placeholder="Enter your email"
                     />
-                    <p class="text-warning text-bold ms-md-3 "
-                    *ngIf="registerationForm.controls['email']?.errors?.['required']  && registerationForm.controls['email'].touched">
+                    <small class="text-danger text-bold"
+                    *ngIf="checkErrorInFormAndType('email' , 'required') && checkErrorIfFormTouch('email')">
                     Please enter your email
-                </p>
-
+                  </small>
+                    
+                  <small class="text-danger text-bold"
+                  *ngIf="checkErrorInFormAndType('email' , 'email') && checkErrorIfFormTouch('email')">
+                  please enter vaild email
+                </small>
+                    
                   </div>
                 </div>
                 <div class="col-md-6 mb-4 pb-2">
@@ -160,15 +172,22 @@
                     <input
                       type="tel"
                       id="phoneNumber"
-                      formControlName="number"
+                      formControlName="phone" 
                       placeholder="Enter your number"
+                      [class.is-valid]="!checkErrorInForm('phone')" [class.is-invalid]="checkErrorInForm('phone')&& checkErrorIfFormTouch('phone')"
                       class="form-control form-control-lg"
                     />
-                    <!-- <p class="text-warning text-bold ms-md-3 "
-                    *ngIf="registerationForm.controls['phone']?.errors?.['required'] !=null && registerationForm.controls.phone.touched">
-                    Please fill this field
-                </p> -->
 
+                    <small class="text-danger text-bold"
+                    *ngIf="checkErrorInFormAndType('phone' , 'required') && checkErrorIfFormTouch('phone')">
+                    Please enter your phone
+                  </small>
+                    
+                  <small class="text-danger text-bold"
+                  *ngIf="checkErrorInFormAndType('phone' , 'pattern') && checkErrorIfFormTouch('phone')">
+                  please enter vaild phone
+                </small>
+                    
                   </div>
                 </div>
               </div>
@@ -177,15 +196,19 @@
                 <div class="col-md-6 mb-4 pb-2">
                   <div class="form-outline">
                     <label class="form-label" for="password">Password</label>
-                    <input
+                    <input 
                     formControlName="password"
                      type="password"
                       id="password"
                       class="form-control form-control-lg"
                       placeholder="Enter your password"
-
+                      [class.is-valid]="!checkErrorInForm('password')" [class.is-invalid]="checkErrorInForm('password')&& checkErrorIfFormTouch('password')"
+                      
                     />
-
+                    <small class="text-danger text-bold"
+                    *ngIf="checkErrorInFormAndType('password' , 'required') && checkErrorIfFormTouch('password')">
+                    Please enter your password
+                  </small>
                   </div>
                 </div>
                 <div class="col-md-6 mb-4 pb-2">
@@ -196,8 +219,18 @@
                       type="password"
                       id="conpassword"
                       class="form-control form-control-lg"
+                      [class.is-valid]="!checkErrorInForm('password_repeat') &&checkPassswordConfirmation()" [class.is-invalid]="checkErrorInForm('password_repeat')&& checkErrorIfFormTouch('password_repeat') &&!checkPassswordConfirmation()"
                       placeholder="Confirm password"
                     />
+                    <small class="text-danger text-bold"
+                    *ngIf="checkErrorInFormAndType('password_repeat' , 'required') && checkErrorIfFormTouch('password_repeat')">
+                    Please confirm your password
+                  </small>
+
+                  <small class="text-danger text-bold"
+                  *ngIf="!checkPassswordConfirmation() && checkErrorIfFormTouch('password_repeat') &&!checkErrorInFormAndType('password_repeat' , 'required')">
+                  your password does't match
+                </small>
 
                   </div>
                 </div>

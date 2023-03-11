@@ -36,11 +36,11 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private AddressRepo addressRepo;
 
-    // @Autowired
-    // private CartService cartService;
+    @Autowired
+    private CartService cartService;
 
-    // @Autowired
-    // private PasswordEncoder passwordEncoder;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private ModelMapper modelMapper;

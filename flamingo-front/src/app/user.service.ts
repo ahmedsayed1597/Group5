@@ -10,10 +10,10 @@ export class UserService {
   constructor(private _HttpClient: HttpClient) { }
 
   signUp(userData: any): Observable<any> {
-    return this._HttpClient.post('http://localhost:9090/flamingo/users', userData,{headers: {'Content-Type':'application/json; charset=UTF-8'}});
+    return this._HttpClient.post('http://localhost:9090/flamingo/Register', userData);
   }
 
   signIn(userData: any): Observable<any> {
-    return this._HttpClient.post('https://api.storerestapi.com/auth/login', userData,{headers: {'Content-Type':'application/json; charset=UTF-8'}});
+    return this._HttpClient.post('http://localhost:9090/flamingo/Login', userData,{headers: {'Content-Type':'application/json; charset=UTF-8'}});
   }
 }
