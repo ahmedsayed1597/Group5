@@ -1,21 +1,15 @@
-<mat-toolbar class="bg-dark text-light p-1" >
-<button mat-icon-button (click)="routeToRegister()"
-color="white"
 
->
-  <mat-icon>account_circle</mat-icon>
-  <span>Account</span>
-</button>
+<mat-toolbar class="justify-between  mx-auto bg-dark text-light">
+
+
+  <button class="ms-1" mat-icon-button (click)="routeToRegister()"color="white">
+      <mat-icon>account_circle</mat-icon>
+      Account
+    </button>
 
 </mat-toolbar>
-<!-- <mat-mini-fab class="bg-dark " >
-  <mat-icon class="text-light">account</mat-icon>
 
-  <mat-icon class="text-light me-3"
-      matBadgeColor="warn">account_circle<span class="text-light mt-2">account</span></mat-icon>
-</mat-mini-fab> -->
-
-<mat-toolbar class="justify-between max-w-7xl mx-auto border-x bg">
+<mat-toolbar class="justify-between  mx-auto border-x bg">
   <a routerLink="home">Flamigoo</a>
   <button mat-icon-button [matMenuTriggerFor]="menu">
     <mat-icon
@@ -62,4 +56,50 @@ color="white"
       </div>
     </div>
   </mat-menu>
+  
 </mat-toolbar>
+
+<section id="home_upper">
+  <div id="carouselExampleIndicators" class="carousel slide  banner d-flex justify-content-center align-items-center align-content-center" data-bs-ride="true" >
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+      </div>
+      <div class="carousel-inner">
+        <div class="carousel-item active ">
+          <!-- <img src="/assets/images/banner2.jpg" class="d-block w-100" alt="..."> -->
+          <div class="row">
+            <div class="col-sm-12">
+               <h1 class="banner_taital line-space">Get Start <br > Your favriot shoping</h1>
+               <div class="buynow_bt"><a href="#">Buy Now</a></div>
+            </div>
+         </div>
+        </div>
+        <div class="carousel-item">
+          <div class="row">
+            <div class="col-sm-12">
+               <h1 class="banner_taital line-space">What you  <br>need for shoping</h1>
+               <div class="buynow_bt"><a href="#">Buy Now</a></div>
+            </div>
+         </div>
+        </div>
+        <div class="carousel-item">
+          <div class="row">
+            <div class="col-sm-12">
+               <h1 class="banner_taital line-space">Get Fast <br>shoping</h1>
+               <div class="buynow_bt"><a href="#">Buy Now</a></div>
+            </div>
+         </div>
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </section>

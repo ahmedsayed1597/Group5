@@ -31,6 +31,7 @@ import { StoreService } from './services/store.service';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatSliderModule } from '@angular/material/slider';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     BrowserAnimationsModule,
     HttpClientModule,
     ReactiveFormsModule,
+    MatSliderModule
   ],
   providers: [CartService, StoreService],
   bootstrap: [AppComponent],
