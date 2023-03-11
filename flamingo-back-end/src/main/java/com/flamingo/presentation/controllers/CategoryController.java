@@ -4,7 +4,7 @@ import com.flamingo.presentation.responseviewmodel.CategoryResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.flamingo.presentation.dto.CategoryDto;
+import com.flamingo.presentation.dto.CategoryDTO;
 
 import com.flamingo.buisness.services.interfaces.CategoryService;
 import com.flamingo.persistence.entities.Category;
@@ -18,7 +18,7 @@ public class CategoryController {
 
     private final CategoryService categoryService;
     @PostMapping("/admin/categories")
-    public ResponseEntity<CategoryDto> createCategory(@RequestBody Category category){
+    public ResponseEntity<CategoryDTO> createCategory(@RequestBody Category category){
 
         return new ResponseEntity<>(categoryService.createCategory(category), HttpStatus.CREATED);
     }
@@ -36,7 +36,7 @@ public class CategoryController {
     }
 
     @PutMapping("/admin/categories/{categoryId}")
-    public ResponseEntity<CategoryDto> updateCategory(@RequestBody Category category  ,@PathVariable Long categoryId ){
+    public ResponseEntity<CategoryDTO> updateCategory(@RequestBody Category category  ,@PathVariable Long categoryId ){
 
         return  new ResponseEntity<>(categoryService.updateCategory(category,categoryId),HttpStatus.OK);
     }

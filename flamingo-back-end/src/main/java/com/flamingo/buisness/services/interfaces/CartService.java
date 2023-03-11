@@ -1,4 +1,4 @@
-package com.flamingo.buisness.services.servicesinteface;
+package com.flamingo.buisness.services.interfaces;
 
 import java.util.List;
 

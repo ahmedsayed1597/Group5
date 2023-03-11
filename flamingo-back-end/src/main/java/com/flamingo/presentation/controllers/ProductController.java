@@ -2,7 +2,7 @@ package com.flamingo.presentation.controllers;
 
 import com.flamingo.buisness.services.interfaces.ProductService;
 import com.flamingo.persistence.entities.Product;
-import com.flamingo.presentation.dto.ProductDto;
+import com.flamingo.presentation.dto.ProductDTO;
 import com.flamingo.presentation.responseviewmodel.ProductResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,20 +23,20 @@ public class ProductController {
     final ProductService productService;
 
     @PostMapping(value = "/admin/categories/{categoryId}/product")
-    public ResponseEntity<ProductDto> addProduct(@PathVariable Long categoryId, @RequestBody Product product) {
+    public ResponseEntity<ProductDTO> addProduct(@PathVariable Long categoryId, @RequestBody Product product) {
 
         return new ResponseEntity<>(productService.addProduct(categoryId, product), HttpStatus.CREATED);
     }
 
     @PostMapping(value = "/admin/categories/{categoryId}/productWithJSon",
                             consumes = {MediaType.MULTIPART_FORM_DATA_VALUE ,"application/json","application/octet-stream"})
-    public ResponseEntity<ProductDto> addProductWithImageJSon(@PathVariable Long categoryId, @RequestPart("product") Product product ,
+    public ResponseEntity<ProductDTO> addProductWithImageJSon(@PathVariable Long categoryId, @RequestPart("product") Product product ,
                                                               @RequestPart("image")MultipartFile image ) throws IOException {
 
         return new ResponseEntity<>(productService.addProductWithImageWithJson(categoryId, product,image), HttpStatus.CREATED);
     }
     @PostMapping(value="/admin/categories/{categoryId}/productWithImage" , consumes = {MediaType.MULTIPART_FORM_DATA_VALUE })
-    public ResponseEntity<ProductDto> addProductWithImage(@PathVariable Long categoryId
+    public ResponseEntity<ProductDTO> addProductWithImage(@PathVariable Long categoryId
                                                         , @RequestParam("productName") String productName,
                                                           @RequestParam("description") String description,
                                                           @RequestParam("price") double price,
@@ -90,16 +90,16 @@ public class ProductController {
     }
 
     @PutMapping("/admin/products/{productId}")
-    public ResponseEntity<ProductDto> updateProduct(@RequestBody Product product,
+    public ResponseEntity<ProductDTO> updateProduct(@RequestBody Product product,
                                                     @PathVariable Long productId) {
 
-        return new ResponseEntity<ProductDto>(productService.updateProduct(productId, product), HttpStatus.OK);
+        return new ResponseEntity<ProductDTO>(productService.updateProduct(productId, product), HttpStatus.OK);
     }
 
     @PutMapping(value = "/admin/products/{productId}/image",consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<ProductDto> updateProductImage(@PathVariable Long productId, @RequestPart MultipartFile image) throws IOException {
+    public ResponseEntity<ProductDTO> updateProductImage(@PathVariable Long productId, @RequestPart MultipartFile image) throws IOException {
 
-        return new ResponseEntity<ProductDto>(productService.updateProductImage(productId, image), HttpStatus.OK);
+        return new ResponseEntity<ProductDTO>(productService.updateProductImage(productId, image), HttpStatus.OK);
     }
 
     @DeleteMapping("/admin/products/{productId}")

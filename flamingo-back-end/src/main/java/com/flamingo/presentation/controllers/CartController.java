@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.flamingo.buisness.services.servicesinteface.CartService;
+import com.flamingo.buisness.services.interfaces.CartService;
 import com.flamingo.presentation.dto.CartDTO;
 
 @RestController

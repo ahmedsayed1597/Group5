@@ -2,7 +2,7 @@ package com.flamingo.presentation.responseviewmodel;
 
 import java.util.List;
 
-import com.flamingo.presentation.dto.CategoryDto;
+import com.flamingo.presentation.dto.CategoryDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CategoryResponse {
 
-	private List<CategoryDto> Data;
+	private List<CategoryDTO> Data;
 	private Integer pageNumber;
 	private Integer pageSize;
 	private Long totalElements;

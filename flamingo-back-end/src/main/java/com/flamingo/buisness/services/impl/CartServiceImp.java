@@ -1,4 +1,4 @@
-package com.flamingo.buisness.services.servicesimp;
+package com.flamingo.buisness.services.impl;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.flamingo.buisness.exception.APIException;
 import com.flamingo.buisness.exception.ResourceNotFoundException;
-import com.flamingo.buisness.services.servicesinteface.CartService;
+import com.flamingo.buisness.services.interfaces.CartService;
 import com.flamingo.persistence.dao.CartItemRepo;
 import com.flamingo.persistence.dao.CartRepo;
 import com.flamingo.persistence.dao.ProductRepo;
