@@ -11,6 +11,13 @@ import { HomeComponent } from './home/home.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FooterComponent } from './footer/footer.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { ProductComponent } from './product/product.component';
+import {MatButtonModule} from '@angular/material/button';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { AdminModule } from './admin/admin.module';
+
 
 
 @NgModule({
@@ -21,14 +28,21 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     NavbarComponent,
     HomeComponent,
     FooterComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    ProductComponent,
 
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatToolbarModule,
+    MatInputModule,
+    MatFormFieldModule,
+    AdminModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]

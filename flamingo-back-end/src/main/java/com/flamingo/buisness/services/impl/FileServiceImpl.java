@@ -6,7 +6,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.UUID;
 
 import com.flamingo.buisness.services.interfaces.FileService;
@@ -19,17 +21,8 @@ public class FileServiceImpl implements FileService {
     @Override
     public String uploadImage(String path, MultipartFile file) throws IOException {
 
-        String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
-
-        String filePath = path + File.separator + fileName;
-
-        File folder = new File(filePath);
-        if(!folder.exists()) {
-            folder.mkdir();
-        }
-
-        Files.copy(file.getInputStream(), Paths.get(filePath));
-
+        String fileName =  file.getOriginalFilename();
+        Files.copy(file.getInputStream(),Paths.get(path+File.separator+file.getOriginalFilename()), StandardCopyOption.REPLACE_EXISTING);
         return fileName;
     }
 
@@ -40,6 +33,12 @@ public class FileServiceImpl implements FileService {
         InputStream inputStream = new FileInputStream(filePath);
 
         return inputStream;
+    }
+
+    public byte[] downloadImage(String imagePath)throws IOException{
+
+        return Files.readAllBytes(new File(imagePath).toPath());
+
     }
 
 }

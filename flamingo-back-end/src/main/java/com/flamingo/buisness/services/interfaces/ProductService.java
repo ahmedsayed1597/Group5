@@ -2,6 +2,7 @@ package com.flamingo.buisness.services.interfaces;
 
 import java.io.IOException;
 
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.flamingo.persistence.entities.Product;
@@ -11,6 +12,18 @@ import com.flamingo.presentation.responseviewmodel.ProductResponse;
 public interface ProductService{
 
     ProductDto addProduct(Long categoryId, Product product);
+
+
+	ProductDto addProductWithImage(Long categoryId
+			, @RequestParam("productName") String productName,
+								   String description,
+								   int quantity,
+								   double price,
+								   MultipartFile image) throws IOException;
+
+	ProductDto addProductWithImageWithJson(Long categoryId
+			, Product product,
+										   MultipartFile image) throws IOException;
 
 	ProductResponse getAllProducts(Integer pageNumber, Integer pageSize, String field, String orderBy);
 
@@ -25,4 +38,6 @@ public interface ProductService{
 			String sortOrder);
 
 	String deleteProduct(Long productId);
+
+	public byte[] downloadImages(Long productId) throws IOException;
 }

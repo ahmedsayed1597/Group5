@@ -10,7 +10,6 @@ import com.flamingo.persistence.entities.Category;
 import com.flamingo.persistence.entities.Product;
 import com.flamingo.presentation.dto.ProductDto;
 import com.flamingo.presentation.responseviewmodel.ProductResponse;
-import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,7 +24,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 @Service
 @RequiredArgsConstructor
@@ -59,16 +57,19 @@ public class ProductServiceImpl implements ProductService {
 
         boolean isProductExist = false;
 
-        for(Product p1 : products){
-            if(p1.getProductName().equals(product.getProductName())
-               && p1.getDescription().equals(product.getDescription() )) {
+        for (int i = 0; i < products.size(); i++) {
+            if (products.get(i).getProductName().equals(product.getProductName())
+                    && products.get(i).getDescription().equals(product.getDescription())) {
+
                 isProductExist = true;
                 break;
             }
         }
 
         if (!isProductExist) {
-            product.setImage("default.png");
+            if (product.getImage()==null) {
+                product.setImage("default.png");
+            }
 
             product.setCategory(category);
 
@@ -79,6 +80,90 @@ public class ProductServiceImpl implements ProductService {
 
     }
 
+    @Override
+    public ProductDto addProductWithImage(Long categoryId
+                                        ,  String productName,
+                                          String description,
+                                          int quantity,
+                                          double price,
+                                          MultipartFile image) throws IOException{
+
+
+    Category category= categoryRepository.findById(categoryId).orElseThrow(()->new notFoundException("no such category exists ! "));
+        List<Product> products = category.getProducts();
+        boolean isProductExist = false;
+        Product product = new Product(productName, description, quantity, price);
+
+
+        for (int i = 0; i < products.size(); i++) {
+            if (products.get(i).getProductName().equals(product.getProductName())
+                    && products.get(i).getDescription().equals(product.getDescription())) {
+
+                isProductExist = true;
+                break;
+            }
+        }
+
+
+
+
+        if (!isProductExist) {
+            String fileName = fileService.uploadImage(path, image);
+            if (fileName != null) {
+                product.setImage(fileName);
+            }
+            if (product.getImage()==null) {
+                product.setImage("default.png");
+            }
+
+            product.setCategory(category);
+
+            return modelMapper.map(productRepository.save(product), ProductDto.class);
+        } else {
+            throw new AlreadyExist("Product already exists !!!");
+        }
+
+    }
+
+    @Override
+    public ProductDto addProductWithImageWithJson(Long categoryId
+                                         , Product product, MultipartFile image) throws IOException{
+
+
+        Category category= categoryRepository.findById(categoryId).orElseThrow(()->new notFoundException("no such category exists ! "));
+        List<Product> products = category.getProducts();
+        boolean isProductExist = false;
+
+
+        for (int i = 0; i < products.size(); i++) {
+            if (products.get(i).getProductName().equals(product.getProductName())
+                    && products.get(i).getDescription().equals(product.getDescription())) {
+
+                isProductExist = true;
+                break;
+            }
+        }
+
+
+
+
+        if (!isProductExist) {
+            String fileName = fileService.uploadImage(path, image);
+            if (fileName != null) {
+                product.setImage(fileName);
+            }
+            if (product.getImage()==null) {
+                product.setImage("default.png");
+            }
+
+            product.setCategory(category);
+
+            return modelMapper.map(productRepository.save(product), ProductDto.class);
+        } else {
+            throw new AlreadyExist("Product already exists !!!");
+        }
+
+    }
     @Override
     public ProductResponse getAllProducts(Integer pageNumber, Integer pageSize, String field, String orderBy) {
 
@@ -190,15 +275,10 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductDto updateProductImage(Long productId, MultipartFile image) throws IOException {
         Product productFromDB = productRepository.findById(productId).orElseThrow(()->new notFoundException("no such product Exist ! "));
-
         String fileName = fileService.uploadImage(path, image);
-
         productFromDB.setImage(fileName);
-
         return modelMapper.map(productRepository.save(productFromDB), ProductDto.class);
     }
-
-
 
     @Override
     public String deleteProduct(Long productId) {
@@ -211,5 +291,12 @@ public class ProductServiceImpl implements ProductService {
         productRepository.delete(productFromDB);
 
         return "produt is succefuly deleted ! ";
+    }
+
+
+    public byte[] downloadImages(Long productId) throws IOException {
+        Product productFromDB = productRepository.findById(productId).orElseThrow(()->new notFoundException("no such product Exist ! "));
+        return fileService.downloadImage(productFromDB.getImage());
+
     }
 }

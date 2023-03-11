@@ -17,6 +17,7 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 @Table(name = "products")
@@ -40,6 +41,12 @@ public class Product {
 	private Integer quantity;
 	private double price;
 
+	public Product(String productName, String description, Integer quantity, double price) {
+		this.productName = productName;
+		this.description = description;
+		this.quantity = quantity;
+		this.price = price;
+	}
 
 	@ManyToOne
 	@JoinColumn(name = "category_id")
@@ -50,5 +57,6 @@ public class Product {
 	
 	@OneToMany(mappedBy = "product", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	private List<OrderItem> orderItems = new ArrayList<>();
+
 
 }
