@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.flamingo.buisness.services.AddressService;
+import com.flamingo.buisness.services.interfaces.AddressService;
 import com.flamingo.persistence.entities.Address;
 import com.flamingo.presentation.dto.AddressDTO;
 

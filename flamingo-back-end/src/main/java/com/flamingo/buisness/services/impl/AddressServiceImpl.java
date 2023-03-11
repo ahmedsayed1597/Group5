@@ -1,4 +1,4 @@
-package com.flamingo.buisness.services;
+package com.flamingo.buisness.services.impl;
 
 import java.util.stream.Collectors;
 
@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import com.flamingo.buisness.exception.APIException;
 import com.flamingo.buisness.exception.ResourceNotFoundException;
+import com.flamingo.buisness.services.interfaces.AddressService;
 import com.flamingo.persistence.dao.AddressRepo;
 import com.flamingo.persistence.entities.Address;
 import com.flamingo.presentation.dto.AddressDTO;
