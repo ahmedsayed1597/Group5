@@ -66,13 +66,13 @@ public class CartServiceImp implements CartService {
         newCartItem.setProduct(product);
         newCartItem.setCart(cart);
         newCartItem.setQuantity(quantity);
-        newCartItem.setProductPrice(product.getSpecialPrice());
+        newCartItem.setProductPrice(product.getPrice());
 
         cartItemRepo.save(newCartItem);
 
         product.setQuantity(product.getQuantity() - quantity);
 
-        cart.setTotalPrice(cart.getTotalPrice() + (product.getSpecialPrice() * quantity));
+        cart.setTotalPrice(cart.getTotalPrice() + (product.getPrice() * quantity));
 
         CartDTO cartDTO = modelMapper.map(cart, CartDTO.class);
 
@@ -153,7 +153,7 @@ public class CartServiceImp implements CartService {
 
         product.setQuantity(product.getQuantity() + cartItem.getQuantity() - quantity);
 
-        cartItem.setProductPrice(product.getSpecialPrice());
+        cartItem.setProductPrice(product.getPrice());
         cartItem.setQuantity(quantity);
 
         cart.setTotalPrice(cartPrice + (cartItem.getProductPrice() * quantity));
@@ -186,7 +186,7 @@ public class CartServiceImp implements CartService {
 
         double cartPrice = cart.getTotalPrice() - (cartItem.getProductPrice() * cartItem.getQuantity());
 
-        cartItem.setProductPrice(product.getSpecialPrice());
+        cartItem.setProductPrice(product.getPrice());
 
         cart.setTotalPrice(cartPrice + (cartItem.getProductPrice() * cartItem.getQuantity()));
 
