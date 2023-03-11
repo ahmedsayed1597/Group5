@@ -7,6 +7,7 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
+
 public class DisableCors {
     
     @Bean
@@ -25,4 +26,5 @@ public class DisableCors {
 	public ModelMapper modelMapper(){
 		return new ModelMapper();
 	}
+
 }

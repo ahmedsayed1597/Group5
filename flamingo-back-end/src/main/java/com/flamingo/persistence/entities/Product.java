@@ -14,10 +14,18 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.web.multipart.MultipartFile;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 
 @Entity
 @Table(name = "products")
@@ -47,6 +55,8 @@ public class Product {
 		this.quantity = quantity;
 		this.price = price;
 	}
+	
+	private double specialPrice;
 
 	@ManyToOne
 	@JoinColumn(name = "category_id")
@@ -57,6 +67,5 @@ public class Product {
 	
 	@OneToMany(mappedBy = "product", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	private List<OrderItem> orderItems = new ArrayList<>();
-
 
 }

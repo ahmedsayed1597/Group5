@@ -1,7 +1,9 @@
 package com.flamingo.buisness.exception;
 
-public class ResourceNotFoundException  extends RuntimeException{
-    String resourceName;
+public class ResourceNotFoundException extends RuntimeException{
+    private static final long serialVersionUID = 1L;
+
+	String resourceName;
 	String field;
 	String fieldName;
 	Long fieldId;
@@ -22,5 +24,5 @@ public class ResourceNotFoundException  extends RuntimeException{
 		this.field = field;
 		this.fieldId = fieldId;
 	}
-    
+
 }
