@@ -35,6 +35,8 @@ import { RegisterComponent } from './register/register.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ProductComponent } from './product/product.component';
 import { MatInputModule } from '@angular/material/input';
+import { ShowProductComponent } from './show-product/show-product.component';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -48,6 +50,7 @@ import { MatInputModule } from '@angular/material/input';
     LoginComponent,
     RegisterComponent,
     ProductComponent,
+    ShowProductComponent,
   ],
   imports: [
     BrowserModule,
@@ -71,6 +74,8 @@ import { MatInputModule } from '@angular/material/input';
     MatFormFieldModule,
     MatInputModule,
     FormsModule,
+    MatPaginatorModule,
+
 
   ],
   providers: [CartService, StoreService],
