@@ -21,7 +21,7 @@ import com.flamingo.presentation.dto.AddressDTO;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("admin/addresses")
+@RequestMapping("api")
 // @SecurityRequirement(name = "E-Commerce Application")
 public class AddressController {
 
