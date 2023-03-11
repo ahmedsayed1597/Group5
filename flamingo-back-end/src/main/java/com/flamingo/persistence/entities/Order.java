@@ -26,7 +26,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Order {
-    
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long orderId;
@@ -46,4 +46,4 @@ public class Order {
 	
 	private Double totalAmount;
 	private String orderStatus;
-}
+

@@ -3,9 +3,16 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "FlamingoE-Commerce": {
+    "ecommerce-store": {
       "projectType": "application",
-      "schematics": {},
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        },
+        "@schematics/angular:application": {
+          "strict": true
+        }
+      },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -13,24 +20,24 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/flamingo-e-commerce",
+            "outputPath": "dist/ecommerce-store",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
+              
               "src/assets"
             ],
             "styles": [
-              
+
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
-              "src/styles.css"
+              "src/styles.scss"
             ],
-            "scripts": ["node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
-            "node_modules/@fortawesome/fontawesome-free/js/all.min.js",
-          "node_modules/jquery/dist/jquery.min.js"]
+            "scripts": ["node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"]
           },
           "configurations": {
             "production": {
@@ -69,12 +76,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "FlamingoE-Commerce:build:production",
-              "proxyConfig": "src/proxy.conf.json"
+              "browserTarget": "ecommerce-store:build:production"
             },
             "development": {
-              "browserTarget": "FlamingoE-Commerce:build:development"
-              
+              "browserTarget": "ecommerce-store:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -82,7 +87,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "FlamingoE-Commerce:build"
+            "browserTarget": "ecommerce-store:build"
           }
         },
         "test": {
@@ -92,12 +97,14 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
+            "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+              "src/styles.scss"
             ],
             "scripts": []
           }
@@ -106,6 +113,6 @@
     }
   },
   "cli": {
-    "analytics": "caa7d2ae-06b3-4427-89ef-5091f7ed3eeb"
+    "analytics": "8b47a005-5b54-45c5-869f-f8018cf76604"
   }
 }

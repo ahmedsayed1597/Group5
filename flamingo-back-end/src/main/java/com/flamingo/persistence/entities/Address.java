@@ -21,6 +21,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Address {
+
     @Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long addressId;

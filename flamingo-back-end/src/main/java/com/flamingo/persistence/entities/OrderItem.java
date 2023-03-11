@@ -17,7 +17,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderItem {
-    
+
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long orderItemId;
@@ -33,4 +34,5 @@ public class OrderItem {
 	private Integer quantity;
 	private double discount;
 	private double orderedProductPrice;
+
 }
