@@ -12,7 +12,7 @@ import com.flamingo.persistence.entities.Cart;
 import com.flamingo.persistence.entities.Category;
 import com.flamingo.persistence.entities.Product;
 import com.flamingo.presentation.dto.CartDTO;
-import com.flamingo.presentation.dto.ProductDto;
+import com.flamingo.presentation.dto.productDto;
 import com.flamingo.presentation.responseviewmodel.ProductResponse;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -57,7 +57,7 @@ public class ProductServiceImpl implements ProductService {
     
 
     @Override
-    public ProductDto addProduct(Long categoryId
+    public productDto addProduct(Long categoryId
                                          , Product product, MultipartFile image) throws IOException{
 
 
@@ -89,7 +89,7 @@ public class ProductServiceImpl implements ProductService {
 
             product.setCategory(category);
 
-            return modelMapper.map(productRepository.save(product), ProductDto.class);
+            return modelMapper.map(productRepository.save(product), productDto.class);
         } else {
             throw new AlreadyExist("Product already exists !!!");
         }
@@ -116,10 +116,10 @@ public class ProductServiceImpl implements ProductService {
 
 
         //maping products to productsd Dtos
-        List<ProductDto> productsDto = new ArrayList<>();
+        List<productDto> productsDto = new ArrayList<>();
 
         for(Product mappedProduct:products){
-            productsDto.add(modelMapper.map(mappedProduct,ProductDto.class));
+            productsDto.add(modelMapper.map(mappedProduct,productDto.class));
         }
         //creating product response object
 
@@ -145,8 +145,8 @@ public class ProductServiceImpl implements ProductService {
         List<Product>products = productsPage.getContent();
 
 
-        List<ProductDto>productDtos = products.stream()
-                                        .map(p->modelMapper.map(p,ProductDto.class))
+        List<productDto>productDtos = products.stream()
+                                        .map(p->modelMapper.map(p,productDto.class))
                                         .collect(Collectors.toList());
 
         return new ProductResponse(productDtos,productsPage.getNumber(),productsPage.getSize()
@@ -167,8 +167,8 @@ public class ProductServiceImpl implements ProductService {
         if (products == null)
             throw new notFoundException("no products found for this keyword ! ");
 
-        List<ProductDto> productDtos = products.stream()
-                .map(product -> modelMapper.map(product,ProductDto.class)).collect(Collectors.toList());
+        List<productDto> productDtos = products.stream()
+                .map(product -> modelMapper.map(product,productDto.class)).collect(Collectors.toList());
 
 
         return new ProductResponse(productDtos,productPage.getNumber(),productPage.getSize()
@@ -176,7 +176,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDto updateProduct(Long productId, Product product) {
+    public productDto updateProduct(Long productId, Product product) {
 
         Product updatedProduct = productRepository.findById(productId).orElseThrow(()->new notFoundException("no such product Exist ! "));
 
@@ -189,8 +189,8 @@ public class ProductServiceImpl implements ProductService {
        List<CartDTO> cartDTOs = carts.stream().map(cart -> {
            CartDTO cartDTO = modelMapper.map(cart, CartDTO.class);
 
-           List<ProductDto> products = cart.getCartItems().stream()
-                   .map(p -> modelMapper.map(p.getProduct(), ProductDto.class)).collect(Collectors.toList());
+           List<productDto> products = cart.getCartItems().stream()
+                   .map(p -> modelMapper.map(p.getProduct(), productDto.class)).collect(Collectors.toList());
 
            cartDTO.setProducts(products);
 
@@ -200,15 +200,15 @@ public class ProductServiceImpl implements ProductService {
 
        cartDTOs.forEach(cart -> cartService.updateProductInCarts(cart.getCartId(), productId));
 
-        return modelMapper.map(productRepository.save(product),ProductDto.class);
+        return modelMapper.map(productRepository.save(product),productDto.class);
     }
 
     @Override
-    public ProductDto updateProductImage(Long productId, MultipartFile image) throws IOException {
+    public productDto updateProductImage(Long productId, MultipartFile image) throws IOException {
         Product productFromDB = productRepository.findById(productId).orElseThrow(()->new notFoundException("no such product Exist ! "));
         String fileName = fileService.uploadImage(path, image);
         productFromDB.setImage(fileName);
-        return modelMapper.map(productRepository.save(productFromDB), ProductDto.class);
+        return modelMapper.map(productRepository.save(productFromDB), productDto.class);
     }
 
     @Override

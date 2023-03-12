@@ -2,7 +2,7 @@ package com.flamingo.presentation.controllers;
 
 import com.flamingo.buisness.services.interfaces.ProductService;
 import com.flamingo.persistence.entities.Product;
-import com.flamingo.presentation.dto.ProductDto;
+import com.flamingo.presentation.dto.productDto;
 import com.flamingo.presentation.responseviewmodel.ProductResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -26,7 +26,7 @@ public class ProductController {
 
     @PostMapping(value = "/admin/categories/{categoryId}/product",
                             consumes = {MediaType.MULTIPART_FORM_DATA_VALUE ,"application/json"})
-    public ResponseEntity<ProductDto> addProductWithImageJSon(@PathVariable Long categoryId, @RequestPart("product") Product product ,
+    public ResponseEntity<productDto> addProductWithImageJSon(@PathVariable Long categoryId, @RequestPart("product") Product product ,
                                                               @RequestPart("image")MultipartFile image ) throws IOException {
 
         return new ResponseEntity<>(productService.addProduct(categoryId, product,image), HttpStatus.CREATED);
@@ -76,16 +76,16 @@ public class ProductController {
     }
 
     @PutMapping("/admin/products/{productId}")
-    public ResponseEntity<ProductDto> updateProduct(@RequestBody Product product,
+    public ResponseEntity<productDto> updateProduct(@RequestBody Product product,
                                                     @PathVariable Long productId) {
 
-        return new ResponseEntity<ProductDto>(productService.updateProduct(productId, product), HttpStatus.OK);
+        return new ResponseEntity<productDto>(productService.updateProduct(productId, product), HttpStatus.OK);
     }
 
     @PutMapping(value = "/admin/products/{productId}/image",consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<ProductDto> updateProductImage(@PathVariable Long productId, @RequestPart MultipartFile image) throws IOException {
+    public ResponseEntity<productDto> updateProductImage(@PathVariable Long productId, @RequestPart MultipartFile image) throws IOException {
 
-        return new ResponseEntity<ProductDto>(productService.updateProductImage(productId, image), HttpStatus.OK);
+        return new ResponseEntity<productDto>(productService.updateProductImage(productId, image), HttpStatus.OK);
     }
 
     @DeleteMapping("/admin/products/{productId}")
