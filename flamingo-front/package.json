@@ -22,10 +22,7 @@
     "@angular/router": "^14.2.0",
     "@stripe/stripe-js": "^1.35.0",
     "bootstrap": "^5.2.3",
-<<<<<<< HEAD
-=======
     "ngx-pagination": "^6.0.3",
->>>>>>> 56764417ce7a4ed01ea5cb60a15cd4688d574bb1
     "rxjs": "~7.5.0",
     "stripe": "^10.7.0",
     "tslib": "^2.3.0",
