@@ -1,6 +1,8 @@
 package com.flamingo.presentation.dto;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,7 +11,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CartDTO {
-    private Long cartId;
+	
+	private Long cartId;
 	private Double totalPrice = 0.0;
 	private List<productDDDTO> products = new ArrayList<>();
+	
 }

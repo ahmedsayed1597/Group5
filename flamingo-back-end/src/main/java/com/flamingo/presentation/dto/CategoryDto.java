@@ -1,5 +1,4 @@
 package com.flamingo.presentation.dto;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,7 +6,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CategoryDto {
+public class CategoryDTO {
     private Long categoryId;
     private String categoryName;
 }

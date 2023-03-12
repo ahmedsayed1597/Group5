@@ -30,7 +30,7 @@ public class AddressController {
 	private AddressService addressService;
 
 
-
+    // @PreAuthorize("hasRole('admin')")
     @GetMapping("/addresses")
 	public ResponseEntity<List<AddressDTO>> getAddresses() {
 		List<AddressDTO> addressDTOs = addressService.getAddresses();

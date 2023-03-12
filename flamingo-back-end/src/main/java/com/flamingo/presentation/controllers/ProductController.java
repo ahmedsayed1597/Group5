@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,6 +25,7 @@ public class ProductController {
 
 
 
+    @PreAuthorize("hasRole('admin')")
     @PostMapping(value = "/admin/categories/{categoryId}/product",
                             consumes = {MediaType.MULTIPART_FORM_DATA_VALUE ,"application/json"})
     public ResponseEntity<productDDDTO> addProductWithImageJSon(@PathVariable Long categoryId, @RequestPart("product") Product product ,
@@ -74,7 +76,7 @@ public class ProductController {
     public ResponseEntity<?> getImages(@PathVariable Long productId) throws IOException {
         return ResponseEntity.ok().contentType(MediaType.valueOf(MediaType.IMAGE_PNG_VALUE)).body(productService.downloadImages(productId));
     }
-
+    // @PreAuthorize("hasRole('admin')")
     @PutMapping("/admin/products/{productId}")
     public ResponseEntity<productDDDTO> updateProduct(@RequestBody Product product,
                                                     @PathVariable Long productId) {
@@ -82,11 +84,15 @@ public class ProductController {
         return new ResponseEntity<productDDDTO>(productService.updateProduct(productId, product), HttpStatus.OK);
     }
 
+        // @PreAuthorize("hasRole('admin')")
+
     @PutMapping(value = "/admin/products/{productId}/image",consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<productDDDTO> updateProductImage(@PathVariable Long productId, @RequestPart MultipartFile image) throws IOException {
 
         return new ResponseEntity<productDDDTO>(productService.updateProductImage(productId, image), HttpStatus.OK);
     }
+
+        // @PreAuthorize("hasRole('admin')")
 
     @DeleteMapping("/admin/products/{productId}")
     public ResponseEntity<String> deleteProductByCategory(@PathVariable Long productId) {
