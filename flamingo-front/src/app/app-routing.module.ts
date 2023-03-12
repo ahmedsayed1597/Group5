@@ -21,7 +21,10 @@ const routes: Routes = [
 
   {path:'Login' , component:LoginComponent},
   {path:'product' , component:ProductComponent},
+<<<<<<< HEAD
+=======
   {path:'showProduct' , component:ShowProductComponent},
+>>>>>>> 56764417ce7a4ed01ea5cb60a15cd4688d574bb1
 
 ];
 
