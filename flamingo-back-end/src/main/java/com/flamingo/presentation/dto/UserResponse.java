@@ -1,8 +1,5 @@
-package com.flamingo.presentation.responseviewmodel;
-
+package com.flamingo.presentation.dto;
 import java.util.List;
-
-import com.flamingo.presentation.dto.CategoryDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,9 +8,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CategoryResponse {
-
-	private List<CategoryDTO> Data;
+public class UserResponse {
+	
+	private List<UserDTO> content;
 	private Integer pageNumber;
 	private Integer pageSize;
 	private Long totalElements;

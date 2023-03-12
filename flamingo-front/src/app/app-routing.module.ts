@@ -20,7 +20,7 @@ const routes: Routes = [
   {path: 'Register', component:RegisterComponent},
 
   {path:'Login' , component:LoginComponent},
-  {path:'product' , component:ProductComponent },
+  {path:'product' , component:ProductComponent},
   {path:'showProduct' , component:ShowProductComponent},
 
 ];

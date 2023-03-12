@@ -25,7 +25,7 @@ public class ProductController {
 
 
 
-    // @PreAuthorize("hasRole('admin')")
+    @PreAuthorize("hasRole('admin')")
     @PostMapping(value = "/admin/categories/{categoryId}/product",
                             consumes = {MediaType.MULTIPART_FORM_DATA_VALUE ,"application/json"})
     public ResponseEntity<productDDDTO> addProductWithImageJSon(@PathVariable Long categoryId, @RequestPart("product") Product product ,

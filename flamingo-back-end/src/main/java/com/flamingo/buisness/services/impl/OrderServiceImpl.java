@@ -1,7 +1,5 @@
 package com.flamingo.buisness.services.impl;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,8 +17,7 @@ import com.flamingo.buisness.exception.ResourceNotFoundException;
 import com.flamingo.buisness.services.interfaces.OrderService;
 import com.flamingo.persistence.dao.OrderItemRepo;
 import com.flamingo.persistence.dao.OrderRepo;
-import com.flamingo.persistence.entities.OrderItem;
-import com.flamingo.persistence.entities.Payment;
+
 import com.flamingo.presentation.dto.OrderDTO;
 import com.flamingo.presentation.responseviewmodel.OrderResponse;
 

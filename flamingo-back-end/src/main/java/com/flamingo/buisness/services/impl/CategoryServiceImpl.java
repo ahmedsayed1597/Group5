@@ -1,7 +1,6 @@
 package com.flamingo.buisness.services.impl;
 
 import com.flamingo.persistence.entities.Product;
-import jakarta.annotation.PostConstruct;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,14 +14,13 @@ import com.flamingo.buisness.services.interfaces.CategoryService;
 import com.flamingo.buisness.services.interfaces.ProductService;
 import com.flamingo.persistence.dao.CategoryRepository;
 import com.flamingo.persistence.entities.Category;
-import com.flamingo.presentation.dto.CategoryDto;
+import com.flamingo.presentation.dto.CategoryDTO;
 import com.flamingo.presentation.responseviewmodel.CategoryResponse;
 
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 @Service
 @RequiredArgsConstructor
@@ -41,11 +39,11 @@ public class CategoryServiceImpl implements CategoryService {
 //         categoryRepository.saveAll(categories);
 //     }
     @Override
-    public CategoryDto createCategory(Category category) {
+    public CategoryDTO createCategory(Category category) {
 
         Category checkedCategory = getCategoryByName(category.getCategoryName());
         if (checkedCategory == null) {
-       return modelMapper.map(categoryRepository.save(category),CategoryDto.class);
+       return modelMapper.map(categoryRepository.save(category),CategoryDTO.class);
         }
         throw new AlreadyExist("the category u are trying to add already exists" + category.getCategoryName());
     }
@@ -68,12 +66,12 @@ public class CategoryServiceImpl implements CategoryService {
             throw new notFoundException("No categories created till now");
         }
 
-        List<CategoryDto> categoryDtos = categories.stream()
-                .map(category -> modelMapper.map(category, CategoryDto.class)).collect(Collectors.toList());
+        List<CategoryDTO> CategoryDtos = categories.stream()
+                .map(category -> modelMapper.map(category, CategoryDTO.class)).collect(Collectors.toList());
 
         CategoryResponse categoryResponse = new CategoryResponse();
 
-        categoryResponse.setData(categoryDtos);
+        categoryResponse.setData(CategoryDtos);
         categoryResponse.setPageNumber(categoriesPage.getNumber());
         categoryResponse.setPageSize(categoriesPage.getSize());
         categoryResponse.setTotalElements(categoriesPage.getTotalElements());
@@ -84,12 +82,12 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryDto updateCategory(Category category, Long categoryId) {
+    public CategoryDTO updateCategory(Category category, Long categoryId) {
 
         Category categoryToSave=categoryRepository.findById(categoryId)
                                     .orElseThrow(()->new notFoundException("not such category exists" + category.getCategoryName()));
         category.setCategoryId(categoryId);
-        return modelMapper.map( categoryRepository.save(category),CategoryDto.class);
+        return modelMapper.map( categoryRepository.save(category),CategoryDTO.class);
     }
 
     @Override

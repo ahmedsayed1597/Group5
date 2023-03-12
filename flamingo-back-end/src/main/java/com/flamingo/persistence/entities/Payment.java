@@ -1,6 +1,5 @@
 package com.flamingo.persistence.entities;
 
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,7 +21,6 @@ import lombok.NoArgsConstructor;
 public class Payment {
 
 	@Id
-
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long paymentId;
 

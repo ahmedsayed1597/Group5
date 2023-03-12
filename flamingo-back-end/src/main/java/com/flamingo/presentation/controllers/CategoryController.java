@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import com.flamingo.presentation.dto.CategoryDto;
+import com.flamingo.presentation.dto.CategoryDTO;
 
 import com.flamingo.buisness.services.interfaces.CategoryService;
 import com.flamingo.persistence.entities.Category;
@@ -19,10 +19,9 @@ public class CategoryController {
 
     private final CategoryService categoryService;
 
-        @PreAuthorize("hasRole('admin')")
-
+    @PreAuthorize("hasRole('admin')")
     @PostMapping("/admin/categories")
-    public ResponseEntity<CategoryDto> createCategory(@RequestBody Category category){
+    public ResponseEntity<CategoryDTO> createCategory(@RequestBody Category category){
 
         return new ResponseEntity<>(categoryService.createCategory(category), HttpStatus.CREATED);
     }
@@ -30,26 +29,23 @@ public class CategoryController {
     @GetMapping("/public/categories")
     public ResponseEntity<CategoryResponse> getAllCategories(
             @RequestParam(name = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
-            @RequestParam(name = "pageSize", defaultValue = "10", required = false) Integer pageSize,
+            @RequestParam(name = "pageSize", defaultValue = "2", required = false) Integer pageSize,
             @RequestParam(name = "field", defaultValue = "categoryId", required = false) String field,
             @RequestParam(name = "orderBy", defaultValue = "asc", required = false) String orderBy) {
 
         CategoryResponse categoryResponse = categoryService.getCategories(pageNumber, pageSize, field, orderBy);
 
-        return new ResponseEntity<>(categoryResponse, HttpStatus.OK);
+        return new ResponseEntity<>(categoryResponse, HttpStatus.FOUND);
     }
 
-        // @PreAuthorize("hasRole('admin')")
-
+    @PreAuthorize("hasRole('admin')")
     @PutMapping("/admin/categories/{categoryId}")
-    public ResponseEntity<CategoryDto> updateCategory(@RequestBody Category category  ,@PathVariable Long categoryId ){
+    public ResponseEntity<CategoryDTO> updateCategory(@RequestBody Category category  ,@PathVariable Long categoryId ){
 
         return  new ResponseEntity<>(categoryService.updateCategory(category,categoryId),HttpStatus.OK);
     }
 
-        // @PreAuthorize("hasRole('admin')")
-
-
+    @PreAuthorize("hasRole('admin')")
     @DeleteMapping ("/admin/categories/{categoryId}")
     public ResponseEntity<String> deleteCategory(@PathVariable Long categoryId ){
 
