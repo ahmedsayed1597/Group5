@@ -26,13 +26,13 @@ public class CategoryController {
     @GetMapping("/public/categories")
     public ResponseEntity<CategoryResponse> getAllCategories(
             @RequestParam(name = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
-            @RequestParam(name = "pageSize", defaultValue = "2", required = false) Integer pageSize,
+            @RequestParam(name = "pageSize", defaultValue = "10", required = false) Integer pageSize,
             @RequestParam(name = "field", defaultValue = "categoryId", required = false) String field,
             @RequestParam(name = "orderBy", defaultValue = "asc", required = false) String orderBy) {
 
         CategoryResponse categoryResponse = categoryService.getCategories(pageNumber, pageSize, field, orderBy);
 
-        return new ResponseEntity<>(categoryResponse, HttpStatus.FOUND);
+        return new ResponseEntity<>(categoryResponse, HttpStatus.OK);
     }
 
     @PutMapping("/admin/categories/{categoryId}")

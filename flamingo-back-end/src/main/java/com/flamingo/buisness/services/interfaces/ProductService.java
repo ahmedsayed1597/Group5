@@ -11,17 +11,8 @@ import com.flamingo.presentation.responseviewmodel.ProductResponse;
 
 public interface ProductService{
 
-    ProductDto addProduct(Long categoryId, Product product);
 
-
-	ProductDto addProductWithImage(Long categoryId
-			, @RequestParam("productName") String productName,
-								   String description,
-								   int quantity,
-								   double price,
-								   MultipartFile image) throws IOException;
-
-	ProductDto addProductWithImageWithJson(Long categoryId
+	ProductDto addProduct(Long categoryId
 			, Product product,
 										   MultipartFile image) throws IOException;
 

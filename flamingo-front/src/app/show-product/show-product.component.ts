@@ -14,8 +14,13 @@ export class ShowProductComponent implements OnInit {
 
   page: number = 1;
   count: number = 0;
-  tableSize: number = 7;
   tableSizes: any = [5, 10, 25, 50];
+
+  pageNumber:number=0;
+  field:string= "productId";
+  orderBy:string = "asc";
+  pageSize: number = 7;
+
   response:any;
   displayedColumns: string[] = ['product Id', 'productName','image', 'description', 'quantity', 'price'];
 
@@ -27,7 +32,7 @@ export class ShowProductComponent implements OnInit {
 
   public getAllProducts(){
 
-    this.productService.getAllProducts().subscribe(
+    this.productService.getAllProducts(this.pageNumber,this.pageSize,this.field,this.orderBy).subscribe(
       (resp) => {
         console.log(resp);
         this.productDetails=resp.data;
@@ -38,5 +43,17 @@ export class ShowProductComponent implements OnInit {
       }
     )
   }
+
+  onTableDataChange(event: any) {
+    this.page = event;
+    this.getAllProducts();
+  }
+  onTableSizeChange(event: any): void {
+    this.pageSize = event.target.value;
+    this.page = 1;
+    this.getAllProducts();
+  }
+
+
 
 }
