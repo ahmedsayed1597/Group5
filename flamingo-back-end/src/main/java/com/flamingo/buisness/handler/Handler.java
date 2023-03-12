@@ -30,7 +30,7 @@ public class Handler {
     @ExceptionHandler(Exception.class)
 
     public ResponseEntity<ErrorMessage> handler(Exception ex){
-
+        ex.printStackTrace();
         return new ResponseEntity<ErrorMessage>(new ErrorMessage(HttpStatus.NOT_FOUND.value(), ex.getMessage()),HttpStatus.NOT_FOUND);
     }
 }

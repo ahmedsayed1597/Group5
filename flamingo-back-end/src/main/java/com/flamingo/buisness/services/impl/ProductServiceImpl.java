@@ -2,13 +2,17 @@ package com.flamingo.buisness.services.impl;
 
 import com.flamingo.buisness.exception.AlreadyExist;
 import com.flamingo.buisness.exception.notFoundException;
+import com.flamingo.buisness.services.interfaces.CartService;
 import com.flamingo.buisness.services.interfaces.FileService;
 import com.flamingo.buisness.services.interfaces.ProductService;
+import com.flamingo.persistence.dao.CartRepo;
 import com.flamingo.persistence.dao.CategoryRepository;
 import com.flamingo.persistence.dao.ProductRepository;
+import com.flamingo.persistence.entities.Cart;
 import com.flamingo.persistence.entities.Category;
 import com.flamingo.persistence.entities.Product;
-import com.flamingo.presentation.dto.ProductDto;
+import com.flamingo.presentation.dto.CartDTO;
+import com.flamingo.presentation.dto.productDDDTO;
 import com.flamingo.presentation.responseviewmodel.ProductResponse;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -35,9 +39,9 @@ public class ProductServiceImpl implements ProductService {
 
     private final FileService fileService;
 
-//    private final CartRepo cartRepo;
-//
-//    private final CartService cartService;
+   private final CartRepo cartRepo;
+
+   private final CartService cartService;
 
     @Value("${project.image}")
     private String path;
@@ -48,85 +52,12 @@ public class ProductServiceImpl implements ProductService {
 //                .collect(Collectors.toList());
 //        productRepository.saveAll(products);
 //    }
-    @Override
-    public ProductDto addProduct(Long categoryId, Product product) {
+    
 
-
-        Category category= categoryRepository.findById(categoryId).orElseThrow(()->new notFoundException("no such category exists ! "));
-        List<Product> products = category.getProducts();
-
-        boolean isProductExist = false;
-
-        for (int i = 0; i < products.size(); i++) {
-            if (products.get(i).getProductName().equals(product.getProductName())
-                    && products.get(i).getDescription().equals(product.getDescription())) {
-
-                isProductExist = true;
-                break;
-            }
-        }
-
-        if (!isProductExist) {
-            if (product.getImage()==null) {
-                product.setImage("default.png");
-            }
-
-            product.setCategory(category);
-
-            return modelMapper.map(productRepository.save(product), ProductDto.class);
-        } else {
-            throw new AlreadyExist("Product already exists !!!");
-        }
-
-    }
+    
 
     @Override
-    public ProductDto addProductWithImage(Long categoryId
-                                        ,  String productName,
-                                          String description,
-                                          int quantity,
-                                          double price,
-                                          MultipartFile image) throws IOException{
-
-
-    Category category= categoryRepository.findById(categoryId).orElseThrow(()->new notFoundException("no such category exists ! "));
-        List<Product> products = category.getProducts();
-        boolean isProductExist = false;
-        Product product = new Product(productName, description, quantity, price);
-
-
-        for (int i = 0; i < products.size(); i++) {
-            if (products.get(i).getProductName().equals(product.getProductName())
-                    && products.get(i).getDescription().equals(product.getDescription())) {
-
-                isProductExist = true;
-                break;
-            }
-        }
-
-
-
-
-        if (!isProductExist) {
-            String fileName = fileService.uploadImage(path, image);
-            if (fileName != null) {
-                product.setImage(fileName);
-            }
-            if (product.getImage()==null) {
-                product.setImage("default.png");
-            }
-
-            product.setCategory(category);
-
-            return modelMapper.map(productRepository.save(product), ProductDto.class);
-        } else {
-            throw new AlreadyExist("Product already exists !!!");
-        }
-
-    }
-
-    @Override
-    public ProductDto addProductWithImageWithJson(Long categoryId
+    public productDDDTO addProduct(Long categoryId
                                          , Product product, MultipartFile image) throws IOException{
 
 
@@ -158,7 +89,7 @@ public class ProductServiceImpl implements ProductService {
 
             product.setCategory(category);
 
-            return modelMapper.map(productRepository.save(product), ProductDto.class);
+            return modelMapper.map(productRepository.save(product), productDDDTO.class);
         } else {
             throw new AlreadyExist("Product already exists !!!");
         }
@@ -185,10 +116,10 @@ public class ProductServiceImpl implements ProductService {
 
 
         //maping products to productsd Dtos
-        List<ProductDto> productsDto = new ArrayList<>();
+        List<productDDDTO> productsDto = new ArrayList<>();
 
         for(Product mappedProduct:products){
-            productsDto.add(modelMapper.map(mappedProduct,ProductDto.class));
+            productsDto.add(modelMapper.map(mappedProduct,productDDDTO.class));
         }
         //creating product response object
 
@@ -214,11 +145,11 @@ public class ProductServiceImpl implements ProductService {
         List<Product>products = productsPage.getContent();
 
 
-        List<ProductDto>productDtos = products.stream()
-                                        .map(p->modelMapper.map(p,ProductDto.class))
+        List<productDDDTO>productDDDTOs = products.stream()
+                                        .map(p->modelMapper.map(p,productDDDTO.class))
                                         .collect(Collectors.toList());
 
-        return new ProductResponse(productDtos,productsPage.getNumber(),productsPage.getSize()
+        return new ProductResponse(productDDDTOs,productsPage.getNumber(),productsPage.getSize()
                                     ,productsPage.getTotalElements(),productsPage.getTotalPages(),productsPage.isLast());
     }
 
@@ -236,16 +167,16 @@ public class ProductServiceImpl implements ProductService {
         if (products == null)
             throw new notFoundException("no products found for this keyword ! ");
 
-        List<ProductDto> productDtos = products.stream()
-                .map(product -> modelMapper.map(product,ProductDto.class)).collect(Collectors.toList());
+        List<productDDDTO> productDDDTOs = products.stream()
+                .map(product -> modelMapper.map(product,productDDDTO.class)).collect(Collectors.toList());
 
 
-        return new ProductResponse(productDtos,productPage.getNumber(),productPage.getSize()
+        return new ProductResponse(productDDDTOs,productPage.getNumber(),productPage.getSize()
                     ,productPage.getTotalElements(),productPage.getTotalPages(),productPage.isLast());
     }
 
     @Override
-    public ProductDto updateProduct(Long productId, Product product) {
+    public productDDDTO updateProduct(Long productId, Product product) {
 
         Product updatedProduct = productRepository.findById(productId).orElseThrow(()->new notFoundException("no such product Exist ! "));
 
@@ -253,44 +184,44 @@ public class ProductServiceImpl implements ProductService {
         product.setImage(updatedProduct.getImage());
         product.setCategory(updatedProduct.getCategory());
 
-//        List<Cart> carts = cartRepo.findCartsByProductId(productId);
-//
-//        List<CartDTO> cartDTOs = carts.stream().map(cart -> {
-//            CartDTO cartDTO = modelMapper.map(cart, CartDTO.class);
-//
-//            List<ProductDTO> products = cart.getCartItems().stream()
-//                    .map(p -> modelMapper.map(p.getProduct(), ProductDTO.class)).collect(Collectors.toList());
-//
-//            cartDTO.setProducts(products);
-//
-//            return cartDTO;
-//
-//        }).collect(Collectors.toList());
-//
-//        cartDTOs.forEach(cart -> cartService.updateProductInCarts(cart.getCartId(), productId));
+       List<Cart> carts = cartRepo.findCartsByProductId(productId);
 
-        return modelMapper.map(productRepository.save(product),ProductDto.class);
+       List<CartDTO> cartDTOs = carts.stream().map(cart -> {
+           CartDTO cartDTO = modelMapper.map(cart, CartDTO.class);
+
+           List<productDDDTO> products = cart.getCartItems().stream()
+                   .map(p -> modelMapper.map(p.getProduct(), productDDDTO.class)).collect(Collectors.toList());
+
+           cartDTO.setProducts(products);
+
+           return cartDTO;
+
+       }).collect(Collectors.toList());
+
+       cartDTOs.forEach(cart -> cartService.updateProductInCarts(cart.getCartId(), productId));
+
+        return modelMapper.map(productRepository.save(product),productDDDTO.class);
     }
 
     @Override
-    public ProductDto updateProductImage(Long productId, MultipartFile image) throws IOException {
+    public productDDDTO updateProductImage(Long productId, MultipartFile image) throws IOException {
         Product productFromDB = productRepository.findById(productId).orElseThrow(()->new notFoundException("no such product Exist ! "));
         String fileName = fileService.uploadImage(path, image);
         productFromDB.setImage(fileName);
-        return modelMapper.map(productRepository.save(productFromDB), ProductDto.class);
+        return modelMapper.map(productRepository.save(productFromDB), productDDDTO.class);
     }
 
     @Override
     public String deleteProduct(Long productId) {
         Product productFromDB = productRepository.findById(productId).orElseThrow(()->new notFoundException("no such product Exist ! "));
 
-//        List<Cart> carts = cartRepo.findCartsByProductId(productId);
-//
-//        carts.forEach(cart -> cartService.deleteProductFromCart(cart.getCartId(), productId));
+       List<Cart> carts = cartRepo.findCartsByProductId(productId);
+
+       carts.forEach(cart -> cartService.deleteProductFromCart(cart.getCartId(), productId));
 
         productRepository.delete(productFromDB);
 
-        return "produt is succefuly deleted ! ";
+        return "product is succefuly deleted ! ";
     }
 
 
@@ -299,4 +230,6 @@ public class ProductServiceImpl implements ProductService {
         return fileService.downloadImage(productFromDB.getImage());
 
     }
+
+
 }
