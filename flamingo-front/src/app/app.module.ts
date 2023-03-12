@@ -39,6 +39,8 @@ import { ShowProductComponent } from './show-product/show-product.component';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatSelectModule} from '@angular/material/select';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { AddCategoryComponent } from './categories/add-category/add-category.component';
+import { EditCategoryComponent } from './categories/edit-category/edit-category.component';
 
 
 
@@ -55,6 +57,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     RegisterComponent,
     ProductComponent,
     ShowProductComponent,
+    AddCategoryComponent,
+    EditCategoryComponent,
   ],
   imports: [
     BrowserModule,
