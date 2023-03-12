@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,6 +28,8 @@ public class OrderController {
 	public OrderService orderService;
 
 
+
+	    @PreAuthorize("hasRole('admin')")
 
     @GetMapping("/admin/orders")
 	public ResponseEntity<OrderResponse> getAllOrders(
@@ -53,7 +56,8 @@ public class OrderController {
 		
 		return new ResponseEntity<OrderDTO>(order, HttpStatus.FOUND);
 	}
-	
+	    // @PreAuthorize("hasRole('admin')")
+
 	@PutMapping("admin/users/{emailId}/orders/{orderId}/orderStatus/{orderStatus}")
 	public ResponseEntity<OrderDTO> updateOrderByUser(@PathVariable String emailId, @PathVariable Long orderId, @PathVariable String orderStatus) {
 		OrderDTO order = orderService.updateOrder(emailId, orderId, orderStatus);

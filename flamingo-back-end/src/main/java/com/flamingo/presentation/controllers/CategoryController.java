@@ -3,6 +3,7 @@ package com.flamingo.presentation.controllers;
 import com.flamingo.presentation.responseviewmodel.CategoryResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import com.flamingo.presentation.dto.CategoryDto;
 
@@ -17,6 +18,9 @@ import lombok.RequiredArgsConstructor;
 public class CategoryController {
 
     private final CategoryService categoryService;
+
+        @PreAuthorize("hasRole('admin')")
+
     @PostMapping("/admin/categories")
     public ResponseEntity<CategoryDto> createCategory(@RequestBody Category category){
 
@@ -35,11 +39,16 @@ public class CategoryController {
         return new ResponseEntity<>(categoryResponse, HttpStatus.OK);
     }
 
+        // @PreAuthorize("hasRole('admin')")
+
     @PutMapping("/admin/categories/{categoryId}")
     public ResponseEntity<CategoryDto> updateCategory(@RequestBody Category category  ,@PathVariable Long categoryId ){
 
         return  new ResponseEntity<>(categoryService.updateCategory(category,categoryId),HttpStatus.OK);
     }
+
+        // @PreAuthorize("hasRole('admin')")
+
 
     @DeleteMapping ("/admin/categories/{categoryId}")
     public ResponseEntity<String> deleteCategory(@PathVariable Long categoryId ){
