@@ -1,44 +1,43 @@
-<div class="container mt-5">
-<table mat-table [dataSource]="productDetails" class="mat-elevation-z8">
+<section>
+  <header>Number of products {{response.totalElements}}</header>
 
 
-  <ng-container matColumnDef="product Id">
-    <th mat-header-cell *matHeaderCellDef> product Id </th>
-    <td mat-cell *matCellDef="let element"> {{element.productId}} </td>
-  </ng-container>
+  <table class="table">
+    <caption>List of products</caption>
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">image</th>
+        <th scope="col">description</th>
+        <th scope="col">quantity</th>
+        <th scope="col">price</th>
+        <th  scope="col">Action</th>
+        <th  scope="col">Edit</th>
 
-  <!-- Name Column -->
-  <ng-container matColumnDef="productName">
-    <th mat-header-cell *matHeaderCellDef> productName </th>
-    <td mat-cell *matCellDef="let element"> {{element.productName}} </td>
-  </ng-container>
 
-  <!-- Weight Column -->
-  <ng-container matColumnDef="image">
-    <th mat-header-cell *matHeaderCellDef> image </th>
-    <td mat-cell *matCellDef="let element"><img src="../../assets/images/{{element.image}}"  ></td>
-  </ng-container>
 
-  <!-- Symbol Column -->
-  <ng-container matColumnDef="description">
-    <th mat-header-cell *matHeaderCellDef> description </th>
-    <td mat-cell *matCellDef="let element"> {{element.description}} </td>
-  </ng-container>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of productDetails ;let currentIndex = index"  >
+        <td >
+          <!-- <a routerLink="/details/{{productDetails[currentIndex].ID}} "> -->
+           {{item.productId}}
+          <!-- </a> -->
+        </td>
+        <td >{{item.productName}}</td>
+        <td ><img src="../../assets/images/{{item.image}}"></td>
+        <td >{{item.description}}</td>
+        <td>{{item.quantity}}</td>
+        <td >{{item.price}}</td>
 
-    <!-- Symbol Column -->
-    <ng-container matColumnDef="quantity">
-      <th mat-header-cell *matHeaderCellDef> quantity </th>
-      <td mat-cell *matCellDef="let element"> {{element.quantity}} </td>
-    </ng-container>
+        <td  ><button class="btn btn-danger" (click)="productDetails(item.ID)" >Delete</button></td>
+        <td  ><a routerLink="/edit/{{item.ID}}"><button class="btn btn-warning"  >Edit</button></a></td>
 
-        <!-- Symbol Column -->
-        <ng-container matColumnDef="price">
-          <th mat-header-cell *matHeaderCellDef> price </th>
-          <td mat-cell *matCellDef="let element"> {{element.price}} </td>
-        </ng-container>
+      </tr>
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
-</div>
-<mat-paginator [pageSizeOptions]="[5,10,20]" showFirstLastButtons=""></mat-paginator>
+    </tbody>
+  </table>
+</section>
+  <mat-paginator [pageSizeOptions]="[5,10,20]" showFirstLastButtons=""></mat-paginator>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductViewModel } from '../models/product-view-model.module';
+import { ProductViewModel } from '../models/product-view-model';
 import { ProductService } from '../services/product.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { ResponseViewModel } from '../models/Response-View-Model';
@@ -10,9 +10,14 @@ import { ResponseViewModel } from '../models/Response-View-Model';
   styleUrls: ['./show-product.component.scss']
 })
 export class ShowProductComponent implements OnInit {
-productDetails : ResponseViewModel["data"];
+  productDetails : ResponseViewModel["data"];
 
-displayedColumns: string[] = ['product Id', 'productName','image', 'description', 'quantity', 'price'];
+  page: number = 1;
+  count: number = 0;
+  tableSize: number = 7;
+  tableSizes: any = [5, 10, 25, 50];
+  response:any;
+  displayedColumns: string[] = ['product Id', 'productName','image', 'description', 'quantity', 'price'];
 
   constructor(private productService :ProductService) { }
 
@@ -26,6 +31,7 @@ displayedColumns: string[] = ['product Id', 'productName','image', 'description'
       (resp) => {
         console.log(resp);
         this.productDetails=resp.data;
+        this.response=resp;
       },
       (err:Error)=>{
         console.log(err);

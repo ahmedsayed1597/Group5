@@ -1,6 +1,6 @@
 import { FileHandle } from "./file-handle-model";
 
-export interface ProductToAdd {
+export class ProductToAdd {
   productName: string;
   description: string;
   price: number;

@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
+import { CategoryView } from '../models/Category-view.model';
 import { FileHandle } from '../models/file-handle-model';
 import { ProductToAdd } from '../models/ProductToAdd.model';
+import { ResponseViewModel } from '../models/Response-View-Model';
+import { CategoryService } from '../services/category.service';
 import { ProductService } from '../services/product.service';
 
 @Component({
@@ -12,22 +15,46 @@ import { ProductService } from '../services/product.service';
 })
 export class ProductComponent implements OnInit {
 
-  product:ProductToAdd  ={
-    productName:"asd",
-    description:"qweqw",
-    price:4786,
-    quantity:65415,
-    categoryId:0,
-    image:""
-    }
-  constructor(private productService:ProductService
-            ,private sanitizer:DomSanitizer) { }
+  categories: CategoryView[]=[];
 
-  ngOnInit(): void {
+  selectedFile: File;
+
+
+  product=new ProductToAdd();
+
+
+  //bind with changing the image
+  onFileSelected(event:any){
+
+    this.selectedFile=event.target.files[0];
+    console.log(this.selectedFile)
+
   }
 
-  addProduct(productForm :NgForm){
-    this.productService.addProduct(this.product.categoryId,this.product).
+    build(productName: string ,Description: string ,Price: number ,
+      Quantity: number  ,selectedOption: number ){
+
+        this.product.productName=productName;
+        this.product.description =Description;
+        this.product.price =Price;
+        this.product.quantity =Quantity;
+        this.product.categoryId =selectedOption;
+        console.log(this.product);
+
+        this.addProduct(this.product,this.selectedFile)
+
+
+    }
+  constructor(private productService:ProductService
+            ,private sanitizer:DomSanitizer
+            ,private categoryService : CategoryService) { }
+
+  ngOnInit(): void {
+    this.getCategories();
+  }
+
+  addProduct(product: any, image: File){
+    this.productService.addProduct(this.product.categoryId,this.product,this.selectedFile).
       subscribe(
         (product:ProductToAdd) => {console.log(product);
         },
@@ -35,17 +62,13 @@ export class ProductComponent implements OnInit {
           );
   }
 
-  onFileSelected(event: any){
-    console.log(event);
-    if(event.target.files){
-      const file = event.target.files[0];
-      const fileHandle:FileHandle={
-        file:file,
-        url:this.sanitizer.bypassSecurityTrustUrl(
-          window.URL.createObjectURL(file)
-        )
-      }
-    }
+
+
+
+  getCategories(){
+     this.categoryService.getCategories()
+    .subscribe((response)=>this.categories=response.data );
+
 
   }
 
