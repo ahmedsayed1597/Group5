@@ -37,21 +37,21 @@ public class OrderController {
 		
 		OrderResponse orderResponse = orderService.getAllOrders(pageNumber, pageSize, sortBy, sortOrder);
 
-		return new ResponseEntity<OrderResponse>(orderResponse, HttpStatus.FOUND);
+		return new ResponseEntity<OrderResponse>(orderResponse, HttpStatus.OK);
 	}
 
     @GetMapping("public/users/{emailId}/orders")
 	public ResponseEntity<List<OrderDTO>> getOrdersByUser(@PathVariable String emailId) {
 		List<OrderDTO> orders = orderService.getOrdersByUser(emailId);
 		
-		return new ResponseEntity<List<OrderDTO>>(orders, HttpStatus.FOUND);
+		return new ResponseEntity<List<OrderDTO>>(orders, HttpStatus.OK);
 	}
 
     @GetMapping("public/users/{emailId}/orders/{orderId}")
 	public ResponseEntity<OrderDTO> getOrderByUser(@PathVariable String emailId, @PathVariable Long orderId) {
 		OrderDTO order = orderService.getOrder(emailId, orderId);
 		
-		return new ResponseEntity<OrderDTO>(order, HttpStatus.FOUND);
+		return new ResponseEntity<OrderDTO>(order, HttpStatus.OK);
 	}
 	
 	@PutMapping("admin/users/{emailId}/orders/{orderId}/orderStatus/{orderStatus}")

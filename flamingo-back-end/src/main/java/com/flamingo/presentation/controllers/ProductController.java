@@ -67,7 +67,7 @@ public class ProductController {
 
 
         return new ResponseEntity<ProductResponse>( productService.searchProductByKeyword(keyword, pageNumber, pageSize, sortBy,
-                sortOrder), HttpStatus.FOUND);
+                sortOrder), HttpStatus.OK);
     }
 
     @GetMapping("/public/products/{productId}/image")
