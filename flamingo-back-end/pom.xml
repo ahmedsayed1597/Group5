@@ -13,6 +13,7 @@
 	<artifactId>flamingo-back-end</artifactId>
 
 	<version>0.0.1-SNAPSHOT</version>
+	
 	<name>flamingo-back-end</name>
 	<description>Demo project for flamingo-back-end</description>
 	<properties>

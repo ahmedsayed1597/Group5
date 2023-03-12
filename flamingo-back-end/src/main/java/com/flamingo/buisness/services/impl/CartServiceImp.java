@@ -18,7 +18,7 @@ import com.flamingo.persistence.entities.Cart;
 import com.flamingo.persistence.entities.CartItem;
 import com.flamingo.persistence.entities.Product;
 import com.flamingo.presentation.dto.CartDTO;
-import com.flamingo.presentation.dto.ProductDTO;
+import com.flamingo.presentation.dto.productDDDTO;
 
 import jakarta.transaction.Transactional;
 
@@ -76,10 +76,10 @@ public class CartServiceImp implements CartService {
 
         CartDTO cartDTO = modelMapper.map(cart, CartDTO.class);
 
-        List<ProductDTO> ProductDTOs = cart.getCartItems().stream()
-                .map(p -> modelMapper.map(p.getProduct(), ProductDTO.class)).collect(Collectors.toList());
+        List<productDDDTO> productDDDTOs = cart.getCartItems().stream()
+                .map(p -> modelMapper.map(p.getProduct(), productDDDTO.class)).collect(Collectors.toList());
 
-        cartDTO.setProducts(ProductDTOs);
+        cartDTO.setProducts(productDDDTOs);
 
         return cartDTO;
     }
@@ -96,8 +96,8 @@ public class CartServiceImp implements CartService {
         List<CartDTO> cartDTOs = carts.stream().map(cart -> {
             CartDTO cartDTO = modelMapper.map(cart, CartDTO.class);
 
-            List<ProductDTO> products = cart.getCartItems().stream()
-                    .map(p -> modelMapper.map(p.getProduct(), ProductDTO.class)).collect(Collectors.toList());
+            List<productDDDTO> products = cart.getCartItems().stream()
+                    .map(p -> modelMapper.map(p.getProduct(), productDDDTO.class)).collect(Collectors.toList());
 
             cartDTO.setProducts(products);
 
@@ -118,8 +118,8 @@ public class CartServiceImp implements CartService {
 
         CartDTO cartDTO = modelMapper.map(cart, CartDTO.class);
 
-        List<ProductDTO> products = cart.getCartItems().stream()
-                .map(p -> modelMapper.map(p.getProduct(), ProductDTO.class)).collect(Collectors.toList());
+        List<productDDDTO> products = cart.getCartItems().stream()
+                .map(p -> modelMapper.map(p.getProduct(), productDDDTO.class)).collect(Collectors.toList());
 
         cartDTO.setProducts(products);
 
@@ -162,10 +162,10 @@ public class CartServiceImp implements CartService {
 
         CartDTO cartDTO = modelMapper.map(cart, CartDTO.class);
 
-        List<ProductDTO> ProductDTOs = cart.getCartItems().stream()
-                .map(p -> modelMapper.map(p.getProduct(), ProductDTO.class)).collect(Collectors.toList());
+        List<productDDDTO> productDDDTOs = cart.getCartItems().stream()
+                .map(p -> modelMapper.map(p.getProduct(), productDDDTO.class)).collect(Collectors.toList());
 
-        cartDTO.setProducts(ProductDTOs);
+        cartDTO.setProducts(productDDDTOs);
 
         return cartDTO;
     }

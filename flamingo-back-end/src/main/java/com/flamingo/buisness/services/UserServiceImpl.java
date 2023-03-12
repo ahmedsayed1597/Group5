@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+
+import com.flamingo.buisness.services.interfaces.CartService;
 import com.flamingo.exception.APIException;
 import com.flamingo.exception.ResourceNotFoundException;
 import com.flamingo.persistence.dao.AddressRepo;
@@ -25,7 +27,7 @@ import com.flamingo.persistence.entities.Role;
 import com.flamingo.persistence.entities.User;
 import com.flamingo.presentation.dto.AddressDTO;
 import com.flamingo.presentation.dto.CartDTO;
-import com.flamingo.presentation.dto.ProductDTO;
+import com.flamingo.presentation.dto.productDDDTO;
 import com.flamingo.presentation.dto.UserDTO;
 import com.flamingo.presentation.dto.UserResponse;
 
@@ -46,8 +48,8 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private AddressRepo addressRepo;
 
-    // @Autowired
-    // private CartService cartService;
+    @Autowired
+    private CartService cartService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -124,8 +126,8 @@ public class UserServiceImpl implements UserService {
 
 			CartDTO cart = modelMapper.map(user.getCart(), CartDTO.class);
 
-			List<ProductDTO> products = user.getCart().getCartItems().stream()
-					.map(item -> modelMapper.map(item.getProduct(), ProductDTO.class)).collect(Collectors.toList());
+			List<productDDDTO> products = user.getCart().getCartItems().stream()
+					.map(item -> modelMapper.map(item.getProduct(), productDDDTO.class)).collect(Collectors.toList());
 
 			dto.setCart(cart);
 
@@ -158,8 +160,8 @@ public class UserServiceImpl implements UserService {
 
 		CartDTO cart = modelMapper.map(user.getCart(), CartDTO.class);
 
-		List<ProductDTO> products = user.getCart().getCartItems().stream()
-				.map(item -> modelMapper.map(item.getProduct(), ProductDTO.class)).collect(Collectors.toList());
+		List<productDDDTO> products = user.getCart().getCartItems().stream()
+				.map(item -> modelMapper.map(item.getProduct(), productDDDTO.class)).collect(Collectors.toList());
 
 		userDTO.setCart(cart);
 
@@ -207,8 +209,8 @@ public class UserServiceImpl implements UserService {
 
 		CartDTO cart = modelMapper.map(user.getCart(), CartDTO.class);
 
-		List<ProductDTO> products = user.getCart().getCartItems().stream()
-				.map(item -> modelMapper.map(item.getProduct(), ProductDTO.class)).collect(Collectors.toList());
+		List<productDDDTO> products = user.getCart().getCartItems().stream()
+				.map(item -> modelMapper.map(item.getProduct(), productDDDTO.class)).collect(Collectors.toList());
 
 		userDTO.setCart(cart);
 

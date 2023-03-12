@@ -1,7 +1,6 @@
 package com.flamingo.buisness.services.impl;
 
 import com.flamingo.persistence.entities.Product;
-import jakarta.annotation.PostConstruct;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,7 +21,6 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 @Service
 @RequiredArgsConstructor
@@ -68,12 +66,12 @@ public class CategoryServiceImpl implements CategoryService {
             throw new notFoundException("No categories created till now");
         }
 
-        List<CategoryDTO> categoryDtos = categories.stream()
+        List<CategoryDTO> CategoryDtos = categories.stream()
                 .map(category -> modelMapper.map(category, CategoryDTO.class)).collect(Collectors.toList());
 
         CategoryResponse categoryResponse = new CategoryResponse();
 
-        categoryResponse.setData(categoryDtos);
+        categoryResponse.setData(CategoryDtos);
         categoryResponse.setPageNumber(categoriesPage.getNumber());
         categoryResponse.setPageSize(categoriesPage.getSize());
         categoryResponse.setTotalElements(categoriesPage.getTotalElements());

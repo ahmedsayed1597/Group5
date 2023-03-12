@@ -5,6 +5,7 @@ import { CartComponent } from './pages/cart/cart.component';
 import { HomeComponent } from './pages/home/home.component';
 import { ProductComponent } from './product/product.component';
 import { RegisterComponent } from './register/register.component';
+import { ShowProductComponent } from './show-product/show-product.component';
 
 const routes: Routes = [
   {
@@ -20,6 +21,10 @@ const routes: Routes = [
 
   {path:'Login' , component:LoginComponent},
   {path:'product' , component:ProductComponent},
+<<<<<<< HEAD
+=======
+  {path:'showProduct' , component:ShowProductComponent},
+>>>>>>> 56764417ce7a4ed01ea5cb60a15cd4688d574bb1
 
 ];
 
