@@ -1,4 +1,4 @@
-package com.flamingo.buisness.services;
+package com.flamingo.buisness.services.impl;
 
 import java.util.stream.Collectors;
 
@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import com.flamingo.buisness.exception.APIException;
 import com.flamingo.buisness.exception.ResourceNotFoundException;
+import com.flamingo.buisness.services.interfaces.AddressService;
 import com.flamingo.persistence.dao.AddressRepo;
 import com.flamingo.persistence.entities.Address;
 import com.flamingo.presentation.dto.AddressDTO;
@@ -72,7 +73,7 @@ public class AddressServiceImpl  implements AddressService{
 	@Override
 	public AddressDTO getAddress(Long addressId) {
 		Address address = addressRepo.findById(addressId)
-				.orElseThrow(() -> new ResourceNotFoundException("Address", "addressId", addressId));
+				.orElseThrow(() -> new ResourceNotFoundException("no addresse found"));
 
 		return modelMapper.map(address, AddressDTO.class);
 	}
@@ -85,7 +86,7 @@ public class AddressServiceImpl  implements AddressService{
 
 		if (addressFromDB == null) {
 			addressFromDB = addressRepo.findById(addressId)
-					.orElseThrow(() -> new ResourceNotFoundException("Address", "addressId", addressId));
+					.orElseThrow(() -> new ResourceNotFoundException("no addrrsse found"));
 
 			addressFromDB.setCountry(address.getCountry());
 			addressFromDB.setState(address.getState());
@@ -113,7 +114,7 @@ public class AddressServiceImpl  implements AddressService{
     @Override
 	public String deleteAddress(Long addressId) {
 		Address addressFromDB = addressRepo.findById(addressId)
-				.orElseThrow(() -> new ResourceNotFoundException("Address", "addressId", addressId));
+				.orElseThrow(() -> new ResourceNotFoundException("no addresse found"));
 
 		// List<User> users = userRepo.findByAddress(addressId);
 

@@ -9,7 +9,7 @@ import com.flamingo.persistence.entities.Address;
 @Repository
 public interface AddressRepo extends JpaRepository<Address, Long> {
 
-    Address findByCountryAndStateAndCityAndPincodeAndStreetAndBuildingName(String country, String state, String city,
+	Address findByCountryAndStateAndCityAndPincodeAndStreetAndBuildingName(String country, String state, String city,
 			String pincode, String street, String buildingName);
-    
+
 }

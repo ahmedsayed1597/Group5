@@ -1,6 +1,14 @@
 package com.flamingo.persistence.entities;
 
-import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -14,7 +22,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Address {
 
-    @Id
+	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long addressId;
 
@@ -42,8 +50,8 @@ public class Address {
 	@Size(min = 6, message = "Pincode must contain atleast 6 characters")
 	private String pincode;
 
-	// @ManyToMany(mappedBy = "addresses")
-	// private List<User> users = new ArrayList<>();
+	@ManyToMany(mappedBy = "addresses")
+	private List<User> users = new ArrayList<>();
 
 	public Address(String country, String state, String city, String pincode, String street, String buildingName) {
 		this.country = country;
@@ -53,5 +61,5 @@ public class Address {
 		this.street = street;
 		this.buildingName = buildingName;
 	}
-    
+
 }

@@ -1,6 +1,5 @@
 package com.flamingo.persistence.entities;
 
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +18,6 @@ import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 
 @Entity
 @Table(name = "orders")
@@ -47,5 +45,4 @@ public class Order {
 	
 	private Double totalAmount;
 	private String orderStatus;
-    
 }

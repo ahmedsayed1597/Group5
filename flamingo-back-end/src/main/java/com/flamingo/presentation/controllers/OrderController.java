@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.flamingo.buisness.services.OrderService;
+import com.flamingo.buisness.services.interfaces.OrderService;
 import com.flamingo.config.AppConstants;
 import com.flamingo.presentation.dto.OrderDTO;
 import com.flamingo.presentation.responseviewmodel.OrderResponse;
 
 @RestController
-@RequestMapping("/orders")
+@RequestMapping("/api")
 // @SecurityRequirement(name = "E-Commerce Application")
 public class OrderController {
 
@@ -40,14 +40,14 @@ public class OrderController {
 		return new ResponseEntity<OrderResponse>(orderResponse, HttpStatus.FOUND);
 	}
 
-    @GetMapping("users/orders/{emailId}")
+    @GetMapping("public/users/{emailId}/orders")
 	public ResponseEntity<List<OrderDTO>> getOrdersByUser(@PathVariable String emailId) {
 		List<OrderDTO> orders = orderService.getOrdersByUser(emailId);
 		
 		return new ResponseEntity<List<OrderDTO>>(orders, HttpStatus.FOUND);
 	}
 
-    @GetMapping("users/{emailId}/orders/{orderId}")
+    @GetMapping("public/users/{emailId}/orders/{orderId}")
 	public ResponseEntity<OrderDTO> getOrderByUser(@PathVariable String emailId, @PathVariable Long orderId) {
 		OrderDTO order = orderService.getOrder(emailId, orderId);
 		
@@ -63,7 +63,7 @@ public class OrderController {
 
 
 
-    @PostMapping("users/{emailId}/carts/{cartId}/payments/{paymentMethod}/order")
+    @PostMapping("/public/users/{emailId}/carts/{cartId}/payments/{paymentMethod}/order")
 	public ResponseEntity<OrderDTO> orderProducts(@PathVariable String emailId, @PathVariable Long cartId, @PathVariable String paymentMethod) {
 		OrderDTO order = orderService.placeOrder(emailId, cartId, paymentMethod);
 		
