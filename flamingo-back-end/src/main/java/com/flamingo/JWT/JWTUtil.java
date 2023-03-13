@@ -23,6 +23,7 @@ public class JWTUtil {
 		return JWT.create()
 				.withSubject("User Details")
 				.withClaim("email", email)
+				.withClaim("Role", "User")
 				.withIssuedAt(new Date())
 				.withIssuer("Event Scheduler")
 				.sign(Algorithm.HMAC256(secret));

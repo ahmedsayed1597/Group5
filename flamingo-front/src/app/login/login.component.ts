@@ -27,13 +27,15 @@ export class LoginComponent implements OnInit {
   onLogin(){
     if(this.logInForm.valid == true){
       console.log(this.logInForm.value)
-      this._UserService.signIn(this.logInForm.value).subscribe({
+      let token = localStorage.getItem("token")
+      this._UserService.signIn(this.logInForm.value, token).subscribe({
         next: (response) => {
-          console.log(this.logInForm.value);
-          this.responseMessage = response.message;
+          this.responseMessage = response.token;
           console.log(this.responseMessage)
-          if(response.message == 'Succesfull Login'){
-            this._Router.navigate(['Home'])
+          console.log(this.responseMessage)
+          if(this.responseMessage !== ""){
+            localStorage.setItem("token" , this.responseMessage)
+            this._Router.navigate(['home'])
           }
         }
       ,

@@ -79,7 +79,7 @@
                 </div>
   
                 <div class="row">
-                  <div class="col-md-6 mb-4 d-flex align-items-center">
+                  <!-- <div class="col-md-6 mb-4 d-flex align-items-center">
                     <div class="form-outline datepicker w-100">
                       <label for="username" class="form-label">username</label>
                       <input
@@ -108,8 +108,8 @@
   
                       
                     </div>
-                  </div>
-                  <div class="col-md-6 mb-4">
+                  </div> -->
+                  <!-- <div class="col-md-6 mb-4">
                     <h6 class="mb-2 pb-1">Gender:</h6>
   
                     <div class="form-check form-check-inline">
@@ -139,7 +139,7 @@
                         >Male</label
                       >
                     </div>
-                  </div>
+                  </div> -->
                 </div>
             
                 <div class="row">
@@ -172,19 +172,19 @@
                       <input
                         type="tel"
                         id="phoneNumber"
-                        formControlName="phone" 
+                        formControlName="mobileNumber" 
                         placeholder="Enter your number"
-                        [class.is-valid]="!checkErrorInForm('phone')" [class.is-invalid]="checkErrorInForm('phone')&& checkErrorIfFormTouch('phone')"
+                        [class.is-valid]="!checkErrorInForm('mobileNumber')" [class.is-invalid]="checkErrorInForm('mobileNumber')&& checkErrorIfFormTouch('mobileNumber')"
                         class="form-control form-control-lg"
                       />
   
                       <small class="text-danger text-bold"
-                      *ngIf="checkErrorInFormAndType('phone' , 'required') && checkErrorIfFormTouch('phone')">
+                      *ngIf="checkErrorInFormAndType('mobileNumber' , 'required') && checkErrorIfFormTouch('mobileNumber')">
                       Please enter your phone
                     </small>
                       
                     <small class="text-danger text-bold"
-                    *ngIf="checkErrorInFormAndType('phone' , 'pattern') && checkErrorIfFormTouch('phone')">
+                    *ngIf="checkErrorInFormAndType('mobileNumber' , 'pattern') && checkErrorIfFormTouch('mobileNumber')">
                     please enter vaild phone
                   </small>
                       

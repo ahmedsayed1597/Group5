@@ -23,6 +23,7 @@ public class CategoryController {
         return new ResponseEntity<>(categoryService.createCategory(category), HttpStatus.CREATED);
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/public/categories")
     public ResponseEntity<CategoryResponse> getAllCategories(
             @RequestParam(name = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
@@ -32,9 +33,10 @@ public class CategoryController {
 
         CategoryResponse categoryResponse = categoryService.getCategories(pageNumber, pageSize, field, orderBy);
 
-        return new ResponseEntity<>(categoryResponse, HttpStatus.FOUND);
+        return new ResponseEntity<>(categoryResponse, HttpStatus.OK);
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @PutMapping("/admin/categories/{categoryId}")
     public ResponseEntity<CategoryDTO> updateCategory(@RequestBody Category category  ,@PathVariable Long categoryId ){
 

@@ -18,7 +18,7 @@ import com.flamingo.JWT.JWTUtil;
 import com.flamingo.buisness.services.UserService;
 import com.flamingo.exception.UserNotFoundException;
 import com.flamingo.presentation.dto.LoginDTO;
-import com.flamingo.presentation.dto.UserDTO;
+import com.flamingo.presentation.dto.UserRequestDTO;
 
 import jakarta.validation.Valid;
 
@@ -39,18 +39,18 @@ public class AuthController {
     private PasswordEncoder passwordEncoder;
 
     @PostMapping("/register")
-    public ResponseEntity<Map<String, Object>> registerHandler(@Valid @RequestBody UserDTO user)
+    public ResponseEntity<Map<String, Object>> registerHandler(@Valid @RequestBody UserRequestDTO user)
             throws UserNotFoundException {
         String encodedPass = passwordEncoder.encode(user.getPassword());
 
         user.setPassword(encodedPass);
 
-        UserDTO userDTO = userService.registerUser(user);
+        UserRequestDTO userDTO = userService.registerUser(user);
 
         String token = jwtUtil.generateToken(userDTO.getEmail());
 
         Map<String, Object> hash_map = new HashMap<>();
-        hash_map.put("jwt-token", token);
+        hash_map.put("token", token);
 
         return new ResponseEntity<Map<String, Object>>(hash_map,HttpStatus.CREATED );
         
@@ -67,7 +67,7 @@ public class AuthController {
         String token = jwtUtil.generateToken(credentials.getEmail());
 
         Map<String, Object> hash_map = new HashMap<>();
-        hash_map.put("jwt-token", token);
+        hash_map.put("token", token);
 
         return hash_map;
     }

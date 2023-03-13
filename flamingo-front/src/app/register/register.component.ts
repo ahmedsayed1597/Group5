@@ -16,12 +16,12 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
     this.registerationForm = this._FormBuilder.group({
-      username: new FormControl("", [Validators.required, Validators.minLength(3), Validators.maxLength(30)]),
+      // username: new FormControl("", [Validators.required, Validators.minLength(3), Validators.maxLength(30)]),
       firstName :new FormControl("", [Validators.required, Validators.minLength(3), Validators.maxLength(30)]),
       lastName :new FormControl("", [Validators.required, Validators.minLength(3), Validators.maxLength(30)]),
-      phone: new FormControl("",[Validators.required, Validators.pattern(/^01[0-2,5]{1}[0-9]{8}$/)]),
+      mobileNumber: new FormControl("",[Validators.required, Validators.pattern(/^01[0-2,5]{1}[0-9]{8}$/)]),
       email: new FormControl("", [Validators.required, Validators.email]),
-      gender : new FormControl("", [Validators.required,]),
+      // gender : new FormControl("", [Validators.required,]),
       password: new FormControl("", [Validators.required]),
       password_repeat : new FormControl("", [Validators.required]),
     });
@@ -55,9 +55,10 @@ export class RegisterComponent implements OnInit {
       this._UserService.signUp(this.registerationForm.value).subscribe({
         next: (response) => {
 
-          this.responseMessage = response.message;
+          this.responseMessage = response.token;
+          localStorage.setItem("token" , this.responseMessage)
           console.log(this.responseMessage)
-          if(response.message == 'User Created'){
+          if(this.responseMessage !== ""){
             this._Router.navigate(['Login'])
           }
         }

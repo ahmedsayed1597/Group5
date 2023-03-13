@@ -26,7 +26,7 @@ import jakarta.servlet.http.HttpServletResponse;
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
-    public static final String[] PUBLIC_URLS = {"/api/register/**", "/api/login" };
+    public static final String[] PUBLIC_URLS = {"/api/register/**", "/api/login/**","/api/public/categories/**","/api/public/products/**" };
 	public static final String[] USER_URLS = { "/api/public/**" };
 	public static final String[] ADMIN_URLS = { "/api/admin/**" };
 	

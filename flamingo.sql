@@ -171,7 +171,7 @@ CREATE TABLE IF NOT EXISTS `flamingo`.`users` (
   `email` VARCHAR(255) NOT NULL,
   `first_name` VARCHAR(20) NULL DEFAULT NULL,
   `last_name` VARCHAR(20) NULL DEFAULT NULL,
-  `mobile_number` VARCHAR(10) NULL DEFAULT NULL,
+  `mobile_number` VARCHAR(11) NULL DEFAULT NULL,
   `password` VARCHAR(255) NULL DEFAULT NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE INDEX `UK_6dotkott2kjsp8vw4d0m25fb7` (`email` ASC) VISIBLE)

@@ -45,6 +45,7 @@ public class ProductController {
 
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/public/categories/{categoryId}/products")
     public ResponseEntity<ProductResponse> getProductsByCategory(
             @PathVariable Long categoryId,
