@@ -1,9 +1,5 @@
-package com.flamingo.presentation.responseviewmodel;
-
-
+package com.flamingo.presentation.dto;
 import java.util.List;
-
-import com.flamingo.presentation.dto.productDDDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,9 +8,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductResponse {
-
-	private List<productDDDTO> Data;
+public class UserResponse {
+	
+	private List<UserDTO> content;
 	private Integer pageNumber;
 	private Integer pageSize;
 	private Long totalElements;
@@ -22,4 +18,3 @@ public class ProductResponse {
 	private boolean lastPage;
 	
 }
-

@@ -15,29 +15,28 @@ import com.flamingo.buisness.exception.notFoundException;
 public class Handler {
 
     @ExceptionHandler(notFoundException.class)
-    public ResponseEntity<ErrorMessage> handler(notFoundException ex) {
+    public ResponseEntity<ErrorMessage> handler(notFoundException ex){
 
-        return new ResponseEntity<ErrorMessage>(new ErrorMessage(HttpStatus.NOT_FOUND.value(), ex.getMessage()),
-                HttpStatus.NOT_FOUND);
+        return new ResponseEntity<ErrorMessage>(new ErrorMessage(HttpStatus.NOT_FOUND.value(), ex.getMessage()),HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(AlreadyExist.class)
 
-    public ResponseEntity<ErrorMessage> handler(AlreadyExist ex) {
+    public ResponseEntity<ErrorMessage> handler(AlreadyExist ex){
 
-        return new ResponseEntity<ErrorMessage>(new ErrorMessage(HttpStatus.NOT_FOUND.value(), ex.getMessage()),
-                HttpStatus.NOT_FOUND);
+        return new ResponseEntity<ErrorMessage>(new ErrorMessage(HttpStatus.NOT_FOUND.value(), ex.getMessage()),HttpStatus.NOT_FOUND);
     }
+
+
 
     @ExceptionHandler(Exception.class)
 
-    public ResponseEntity<ErrorMessage> handler(Exception ex) {
-
-        return new ResponseEntity<ErrorMessage>(new ErrorMessage(HttpStatus.NOT_FOUND.value(), ex.getMessage()),
-                HttpStatus.NOT_FOUND);
+    public ResponseEntity<ErrorMessage> handler(Exception ex){
+        ex.printStackTrace();
+        return new ResponseEntity<ErrorMessage>(new ErrorMessage(HttpStatus.NOT_FOUND.value(), ex.getMessage()),HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(APIException.class)
+        @ExceptionHandler(APIException.class)
     public ResponseEntity<ErrorMessage> handler(APIException ex) {
 
         return new ResponseEntity<ErrorMessage>(new ErrorMessage(HttpStatus.NOT_FOUND.value(), ex.getMessage()),

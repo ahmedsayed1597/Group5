@@ -1,5 +1,6 @@
 package com.flamingo.presentation.dto;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,12 +10,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class AddressDTO {
 
-    private Long addressId;
+	private Long addressId;
 	private String street;
 	private String buildingName;
 	private String city;
 	private String state;
 	private String country;
 	private String pincode;
-    
 }
