@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { CategoryView } from '../models/Category-view.model';
 import { ProductToAdd } from '../models/ProductToAdd.model';
-import { ResponseViewModel } from '../models/Response-View-Model';
 import { CategoryService } from '../services/category.service';
 import { ProductService } from '../services/product.service';
 
