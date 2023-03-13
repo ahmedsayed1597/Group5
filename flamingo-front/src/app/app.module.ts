@@ -37,6 +37,7 @@ import { ProductComponent } from './product/product.component';
 import { MatInputModule } from '@angular/material/input';
 import { ShowProductComponent } from './show-product/show-product.component';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -75,6 +76,8 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     MatInputModule,
     FormsModule,
     MatPaginatorModule,
+    MatSelectModule,
+
 
 
   ],

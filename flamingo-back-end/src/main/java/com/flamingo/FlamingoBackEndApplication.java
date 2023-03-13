@@ -10,4 +10,5 @@ public class FlamingoBackEndApplication {
 		SpringApplication.run(FlamingoBackEndApplication.class, args);
 	}
 
+
 }

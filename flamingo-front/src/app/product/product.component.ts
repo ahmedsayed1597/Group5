@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { DomSanitizer } from '@angular/platform-browser';
-import { FileHandle } from '../models/file-handle-model';
+import { CategoryView } from '../models/Category-view.model';
 import { ProductToAdd } from '../models/ProductToAdd.model';
+
 import { ProductService } from '../services/product.service';
+import { StoreService } from '../services/store.service';
 
 @Component({
   selector: 'app-product',
@@ -12,58 +13,48 @@ import { ProductService } from '../services/product.service';
 })
 export class ProductComponent implements OnInit {
 
-  // product:ProductToAdd  ={
-  //   productName:string,
-  //   description:"qweqw",
-  //   price:4786,
-  //   quantity:65415,
-  //   categoryId:0,
-  //   image:""
-  //   }
+  categories: CategoryView[]=[];
+  selectedFile: File;
+  product=new ProductToAdd();
 
-   product: ProductToAdd = new ProductToAdd()
+  //bind with changing the image
+  onFileSelected(event:any){
+    this.selectedFile=event.target.files[0];
+    console.log(this.selectedFile)
+  }
+
+    build(productName: string ,Description: string ,Price: number ,
+      Quantity: number  ,selectedOption: number ){
+        this.product.productName=productName;
+        this.product.description =Description;
+        this.product.price =Price;
+        this.product.quantity =Quantity;
+        this.product.categoryId =selectedOption;
+        console.log(this.product);
+        this.addProduct(this.product,this.selectedFile)
+    }
   constructor(private productService:ProductService
-            ,private sanitizer:DomSanitizer) { 
-              
-            }
+            ,private _StoreService : StoreService) { }
 
   ngOnInit(): void {
+    this.getCategories();
   }
 
-  addProduct(productForm :NgForm){
-    this.productService.addProduct(this.product.categoryId,this.product).
-    subscribe({
-      next: (response) => {
-       
-        console.log(response)
-        
-        }
-        ,
-        error: (err) => {console.log(err);}
-      })
- 
-  
-     
+  addProduct(product: any, image: File){
+    console.log(JSON.stringify(product))
+    this.productService.addProduct(product.categoryId,product,image).
+      subscribe(
+        (product:ProductToAdd) => {console.log(product);
+        },
+        (error:Error) => {console.log(error)}
+          );
   }
 
-
-  
-
-
-
-  // onFileSelected(event: any){
-  //   console.log(event);
-  //   if(event.target.files){
-  //     const file = event.target.files[0];
-  //     const fileHandle:FileHandle={
-  //       file:file,
-  //       url:this.sanitizer.bypassSecurityTrustUrl(
-  //         window.URL.createObjectURL(file)
-  //       )
-  //     }
-  //   }
-
-  // }
+  getCategories(){
+     this._StoreService.getAllCategories()
+    .subscribe((response)=>this.categories=response.data );
+  }
 
 }
+
 

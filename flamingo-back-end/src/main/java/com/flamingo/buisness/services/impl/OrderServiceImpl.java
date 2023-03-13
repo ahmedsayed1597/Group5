@@ -63,7 +63,7 @@ public class OrderServiceImpl implements OrderService {
 		Order order =  (Order) orderRepo.findOrderByEmailAndOrderId(emailId, orderId);
 
 		if (order == null) {
-			throw new ResourceNotFoundException("Order", "orderId", orderId);
+			throw new ResourceNotFoundException("no order found");
 		}
 
 		return modelMapper.map(order, OrderDTO.class);
@@ -174,7 +174,7 @@ public class OrderServiceImpl implements OrderService {
 		Order order = (Order) orderRepo.findOrderByEmailAndOrderId(emailId, orderId);
 
 		if (order == null) {
-			throw new ResourceNotFoundException("Order", "orderId", orderId);
+			throw new ResourceNotFoundException("no order found");
 		}
 
 		// order.setOrderStatus(orderStatus);

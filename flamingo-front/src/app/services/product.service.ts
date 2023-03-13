@@ -12,9 +12,14 @@ export class ProductService {
   addedProduct:ProductToAdd
   constructor(private _httpClient:HttpClient) { }
 
-  public addProduct(categoryId:number,product:ProductToAdd){
+  public addProduct(categoryId:number,product: any, image: File){
+    console.log(product)
+    const formData = new FormData();
+    formData.append('product',new Blob( [JSON.stringify(product)],{type:'application/json'}));
+    formData.append('image', image, image.name);
+// console.log(JSON.stringify(formData))
     return this._httpClient.post<ProductToAdd>
-            ('http://localhost:9090/api/admin/categories/'+categoryId+'/product', product);
+            (`http://localhost:9090/api/admin/categories/${categoryId}/product`, formData);
 
   }
 
