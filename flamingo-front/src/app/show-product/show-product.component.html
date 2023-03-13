@@ -39,18 +39,18 @@
       <td >{{item.price}}</td>
 
       <td  ><button class="btn btn-danger" (click)="productDetails(item.ID)" >Delete</button></td>
-      <td  ><a routerLink="/edit/{{item.ID}}"><button class="btn btn-warning"  >Edit</button></a></td>
+      <!-- <td  ><a routerLink="/edit/{{item.ID}}"><button class="btn btn-warning"  >Edit</button></a></td> -->
       </tr>
     </tbody>
   </table>
   <h3 class="text-center mt-5 mb-5">Total Number of products  {{response.totalElements}}</h3>
 
   <div class="d-flex justify-content-center">
-    <pagination-controls
+    <!-- <pagination-controls
       previousLabel="Prev"
       nextLabel="Next"
       (pageChange)="onTableDataChange($event)"
     >
-    </pagination-controls>
+    </pagination-controls> -->
   </div>
 </div>

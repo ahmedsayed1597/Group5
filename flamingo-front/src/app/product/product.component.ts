@@ -1,15 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-<<<<<<< HEAD
-=======
-import { NgForm } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { CategoryView } from '../models/Category-view.model';
-import { FileHandle } from '../models/file-handle-model';
 import { ProductToAdd } from '../models/ProductToAdd.model';
-import { ResponseViewModel } from '../models/Response-View-Model';
 import { CategoryService } from '../services/category.service';
 import { ProductService } from '../services/product.service';
->>>>>>> 56764417ce7a4ed01ea5cb60a15cd4688d574bb1
 
 @Component({
   selector: 'app-product',
@@ -18,14 +12,8 @@ import { ProductService } from '../services/product.service';
 })
 export class ProductComponent implements OnInit {
 
-<<<<<<< HEAD
-  constructor() { }
 
-  ngOnInit(): void {
-  }
 
-}
-=======
   categories: CategoryView[]=[];
 
   selectedFile: File;
@@ -85,4 +73,3 @@ export class ProductComponent implements OnInit {
 
 }
 
->>>>>>> 56764417ce7a4ed01ea5cb60a15cd4688d574bb1
