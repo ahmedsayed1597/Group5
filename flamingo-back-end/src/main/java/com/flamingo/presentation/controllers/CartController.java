@@ -13,13 +13,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.flamingo.buisness.services.interfaces.CartService;
 import com.flamingo.presentation.dto.CartDTO;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = {"*"},methods = {RequestMethod.POST})
 
 // @SecurityRequirement(name = "E-Commerce Application")
 public class CartController {

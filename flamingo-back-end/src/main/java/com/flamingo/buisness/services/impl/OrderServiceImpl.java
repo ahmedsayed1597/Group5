@@ -10,7 +10,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
 
@@ -32,36 +31,30 @@ import com.flamingo.presentation.dto.OrderDTO;
 import com.flamingo.presentation.dto.OrderItemDTO;
 import com.flamingo.presentation.responseviewmodel.OrderResponse;
 
+import lombok.RequiredArgsConstructor;
+
 
 @Service
+@RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
 
-    @Autowired
-	public UserRepo userRepo;
+	public final UserRepo userRepo;
 
-	@Autowired
-	public CartRepo cartRepo;
+	public final CartRepo cartRepo;
 
-	@Autowired
-	public OrderRepo orderRepo;
+	public final OrderRepo orderRepo;
 
-	@Autowired
-	private PaymentRepo paymentRepo;
+	private final PaymentRepo paymentRepo;
 
-	@Autowired
-	public OrderItemRepo orderItemRepo;
+	public final OrderItemRepo orderItemRepo;
 
-	@Autowired
-	public CartItemRepo cartItemRepo;
+	public final CartItemRepo cartItemRepo;
 
-	@Autowired
-	public UserService userService;
+	public final UserService userService;
 
-	@Autowired
-	public CartService cartService;
+	public final CartService cartService;
 
-	@Autowired
-	public ModelMapper modelMapper;
+	public final ModelMapper modelMapper;
 
 	@Override
 	public OrderDTO placeOrder(String emailId, Long cartId, String paymentMethod) {

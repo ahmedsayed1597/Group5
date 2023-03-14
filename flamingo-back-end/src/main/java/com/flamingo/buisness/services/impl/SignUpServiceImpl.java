@@ -1,9 +1,13 @@
 package com.flamingo.buisness.services.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.flamingo.buisness.exception.notFoundException;
 import com.flamingo.buisness.services.interfaces.SignUpService;
 import com.flamingo.config.JwtService;
 import com.flamingo.persistence.dao.RoleRepo;
@@ -35,10 +39,13 @@ public class SignUpServiceImpl implements SignUpService {
         User registeredUser = userRepo.save(user);
         Cart cart = new Cart();
         user.setCart(cart);
-        Role role = roleRepo.findById(102L).get();
-        user.getRoles().add(role);
+        Role role = roleRepo.findById(102L).orElseThrow(()->new notFoundException("not found"));
+        List<Role>roles = new ArrayList<>();
+        roles.add(role);
+        user.setRoles(roles);
         cart.setUser(registeredUser);
-
+        
+        userRepo.save(user);
         String jwtToken = jwtService.generateToken(user);
 
         return jwtToken;

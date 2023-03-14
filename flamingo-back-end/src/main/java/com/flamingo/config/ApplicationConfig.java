@@ -17,13 +17,14 @@ import com.flamingo.persistence.dao.UserRepo;
 @Configuration
 @RequiredArgsConstructor
 public class ApplicationConfig {
-
   private final UserRepo userRepo;
+  
   @Bean
   public UserDetailsService userDetailsService(){
     return username -> userRepo.findByEmail(username)
             .orElseThrow(() ->new UsernameNotFoundException("User Not Found"));
   }
+
   @Bean
   public AuthenticationProvider authenticationProvider(){
     DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
@@ -36,6 +37,7 @@ public class ApplicationConfig {
   public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
     return config.getAuthenticationManager();
   }
+
   @Bean
   public PasswordEncoder passwordEncoder(){
     return new BCryptPasswordEncoder();

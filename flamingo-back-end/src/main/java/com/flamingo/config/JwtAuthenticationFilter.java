@@ -2,7 +2,6 @@ package com.flamingo.config;
 
 
 
-
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -31,29 +30,33 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
           @NonNull  HttpServletResponse response,
           @NonNull  FilterChain filterChain
   ) throws ServletException, IOException {
+//        get the Jwt(Bearer) token  from header called Authorization -> should start with "Bearer "
     final String authHeader = request.getHeader("Authorization");
     final String jwt;
     final String username;
 
     if (authHeader == null || !authHeader.startsWith("Bearer ")){
 
+//          go to next filter and pass request and response to the next one
       filterChain.doFilter(request,response);
       return;
     }
+//       extract jwt token "Bearer "-> 7 chars
     jwt = authHeader.substring(7);
+//        extract username from JWT token
     username = jwtService.extractUsername(jwt);
    
+//        check if the user not auth yet
     if(username != null && SecurityContextHolder.getContext().getAuthentication() == null){
       UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
       if (jwtService.isTokenValid(jwt , userDetails)){
 
+//                needed by security context holder to update security context
         UsernamePasswordAuthenticationToken authToken = new  UsernamePasswordAuthenticationToken(
                 userDetails ,
                 null,
                 userDetails.getAuthorities()
-                
         );
-        System.out.println(authToken.getAuthorities());
         authToken.setDetails(
                 new WebAuthenticationDetailsSource().buildDetails(request)
         );
@@ -62,6 +65,5 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
     filterChain.doFilter(request,response);
   }
-
 
 }

@@ -7,13 +7,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.flamingo.buisness.services.interfaces.LoginService;
 import com.flamingo.buisness.services.interfaces.SignUpService;
 import com.flamingo.exception.UserNotFoundException;
 import com.flamingo.presentation.dto.LoginDTO;
@@ -24,19 +22,21 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "http://localhost:4200")
+// @CrossOrigin(origins = {"*"},methods = {RequestMethod.POST})
+
 
 @RequiredArgsConstructor
 public class AuthController {
 
     private final SignUpService signUpService;
-    private final LoginService loginService;
+    private final com.flamingo.buisness.services.impl.LoginService loginService;
     private final PasswordEncoder passwordEncoder;
 
     @PostMapping("/register")
     public ResponseEntity<Map<String, Object>> registerHandler(@Valid @RequestBody UserRequestDTO user)
             throws UserNotFoundException {
         String encodedPass = passwordEncoder.encode(user.getPassword());
+        System.out.println(encodedPass);
         user.setPassword(encodedPass);
         Map<String, Object> hash_map = new HashMap<>();
         hash_map.put("jwtToken", signUpService.saveUser(user));
@@ -44,9 +44,9 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public Map<String, Object> loginHandler(@Valid @RequestBody LoginDTO credentials) {
+    public Map<String, Object> loginHandler(@Valid @RequestBody LoginDTO credentials) throws Exception {
         Map<String, Object> hash_map = new HashMap<>();
-        hash_map.put("jwtToken", loginService.userValidation(credentials));
+        hash_map.put("jwtToken", loginService.createJwtToken(credentials));
         return hash_map;
     }
 }

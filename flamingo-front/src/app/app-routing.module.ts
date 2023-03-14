@@ -16,7 +16,7 @@ const routes: Routes = [
   {path: '', redirectTo:'home', pathMatch:'full'},
   {path: 'home',component: HomeComponent},
   {path: 'cart',component: CartComponent,},
-  {path: 'register', component:RegisterComponent, canActivate:[PathLoginGuard]},
+  {path: 'Register', component:RegisterComponent, canActivate:[PathLoginGuard]},
   {path:'login' , component:LoginComponent, canActivate:[PathLoginGuard]},
   {path:'admin/product' , component:ProductComponent},
   {path:'admin/showProduct' , component:ShowProductComponent},
