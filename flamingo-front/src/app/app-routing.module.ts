@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AddCategoryComponent } from './add-category/add-category.component';
 import { PathLoginGuard } from './guards/path-login.guard';
 import { LoginComponent } from './login/login.component';
 import { CartComponent } from './pages/cart/cart.component';
@@ -16,6 +17,7 @@ const routes: Routes = [
   {path:'login' , component:LoginComponent, canActivate:[PathLoginGuard]},
   {path:'admin/product' , component:ProductComponent},
   {path:'admin/showProduct' , component:ShowProductComponent},
+  {path: 'admin/category' , component:AddCategoryComponent}
 
 ];
 

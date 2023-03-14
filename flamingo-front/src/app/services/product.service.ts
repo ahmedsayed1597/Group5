@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ProductViewModel } from '../models/product-view-model.module';
+import { CategoryView } from '../models/Category-view.model';
+import { CategoryToAdd } from '../models/CategoryToAdd.model';
+import { ProductViewModel } from '../models/product-view-model';
 import { ProductToAdd } from '../models/ProductToAdd.model';
 import { ResponseViewModel } from '../models/Response-View-Model';
 
@@ -23,8 +25,22 @@ export class ProductService {
 
   }
 
-  public getAllProducts(){
+  // public getAllProducts(){
 
-    return this._httpClient.get<ResponseViewModel>("http://localhost:9090/api/public/products")
+  //   return this._httpClient.get<ResponseViewModel>("http://localhost:9090/api/public/products")
+  // }
+
+  public getAllProducts(pageNumber:number , pageSize:number , field:string, orderBy:string){
+
+    return this._httpClient.get<ResponseViewModel>(
+      `http://localhost:9090/api/public/products?pageNumber=${pageNumber}&
+      pageSize=${pageSize}&field=${field}&orderBy=${orderBy}`
+      )
+  }
+
+  public addCategory(categoryToAdd:CategoryToAdd ){
+
+    return this._httpClient.post<CategoryView>("http://localhost:9090/api/admin/categories",categoryToAdd);
   }
 }
+

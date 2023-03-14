@@ -40,6 +40,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'; 
 import { InterceptorService } from './services/interceptor.service';
+import { AddCategoryComponent } from './add-category/add-category.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { InterceptorService } from './services/interceptor.service';
     RegisterComponent,
     ProductComponent,
     ShowProductComponent,
+    AddCategoryComponent,
   ],
   imports: [
     BrowserModule,

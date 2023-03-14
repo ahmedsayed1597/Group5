@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductViewModel } from '../models/product-view-model.module';
+import { ProductViewModel } from '../models/product-view-model';
 import { ProductService } from '../services/product.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { ResponseViewModel } from '../models/Response-View-Model';
@@ -10,11 +10,21 @@ import { ResponseViewModel } from '../models/Response-View-Model';
   styleUrls: ['./show-product.component.scss']
 })
 export class ShowProductComponent implements OnInit {
-productDetails : ResponseViewModel["data"];
-
-displayedColumns: string[] = ['product Id', 'productName','image', 'description', 'quantity', 'price'];
-
   constructor(private productService :ProductService) { }
+
+productDetails : ResponseViewModel["data"];
+displayedColumns: string[] = ['product Id', 'productName','image', 'description', 'quantity', 'price'];
+  page: number = 1;
+  count: number = 0;
+  tableSizes: any = [5, 10, 25, 50];
+  pageNumber:number=0;
+  field:string= "productId";
+  orderBy:string = "asc";
+  pageSize: number = 7;
+  response:any;
+
+
+  
 
   ngOnInit(): void {
     this.getAllProducts();
@@ -22,15 +32,27 @@ displayedColumns: string[] = ['product Id', 'productName','image', 'description'
 
   public getAllProducts(){
 
-    this.productService.getAllProducts().subscribe(
+    this.productService.getAllProducts(this.pageNumber,this.pageSize,this.field,this.orderBy).subscribe(
       (resp) => {
         console.log(resp);
         this.productDetails=resp.data;
+        this.response=resp;
       },
       (err:Error)=>{
         console.log(err);
       }
     )
   }
+
+  onTableDataChange(event: any) {
+    this.page = event;
+    this.getAllProducts();
+  }
+  onTableSizeChange(event: any): void {
+    this.pageSize = event.target.value;
+    this.page = 1;
+    this.getAllProducts();
+  }
+
 
 }
