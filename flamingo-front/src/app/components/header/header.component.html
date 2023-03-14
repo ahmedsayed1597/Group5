@@ -1,11 +1,14 @@
-<mat-toolbar class="bg-dark text-light p-1" >
-<button mat-icon-button (click)="routeToRegister()"
+<mat-toolbar class="bg-dark text-light d-flex justify-content-end w-100 p-1" >
+<!-- <button mat-icon-button (click)="routeToRegister()"
 color="white"
 
 >
   <mat-icon>account_circle</mat-icon>
-  <span>Account</span>
-</button>
+  <span *ngIf="userLogin == null"> Register</span>
+  <span *ngIf="userLogin !== null">Logout</span>
+</button> -->
+<button class="btn btn-success" *ngIf="!_UserAuthService.isLoggedIn()" [routerLink]="['/Login']" >Login</button>
+<button class="btn btn-danger" *ngIf="_UserAuthService.isLoggedIn()" (click)="logOut()">Logout</button>
 
 </mat-toolbar>
 <!-- <mat-mini-fab class="bg-dark " >
@@ -15,10 +18,10 @@ color="white"
       matBadgeColor="warn">account_circle<span class="text-light mt-2">account</span></mat-icon>
 </mat-mini-fab> -->
 
-<mat-toolbar class="justify-between max-w-7xl mx-auto border-x bg">
-  <a routerLink="home">Flamigoo</a>
+<mat-toolbar class="justify-between max-w-7xl text-light header mx-auto bg">
+  <a routerLink="home">Flamingo</a>
   <button mat-icon-button [matMenuTriggerFor]="menu">
-    <mat-icon
+    <mat-icon class="header-cart-icon"
       [matBadge]="itemsQuantity"
       [matBadgeHidden]="!itemsQuantity"
       matBadgeColor="warn"

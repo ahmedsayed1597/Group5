@@ -3,7 +3,6 @@ package com.flamingo.presentation.controllers;
 import com.flamingo.presentation.responseviewmodel.CategoryResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import com.flamingo.presentation.dto.CategoryDTO;
 
@@ -14,19 +13,22 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = "http://localhost:4200")
+
 @RequiredArgsConstructor
 public class CategoryController {
 
     private final CategoryService categoryService;
 
-    @PreAuthorize("hasRole('admin')")
+    
+
     @PostMapping("/admin/categories")
     public ResponseEntity<CategoryDTO> createCategory(@RequestBody Category category){
 
         return new ResponseEntity<>(categoryService.createCategory(category), HttpStatus.CREATED);
     }
 
-    @GetMapping("/public/categories")
+    @GetMapping("/categories")
     public ResponseEntity<CategoryResponse> getAllCategories(
             @RequestParam(name = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
             @RequestParam(name = "pageSize", defaultValue = "2", required = false) Integer pageSize,
@@ -35,17 +37,16 @@ public class CategoryController {
 
         CategoryResponse categoryResponse = categoryService.getCategories(pageNumber, pageSize, field, orderBy);
 
-        return new ResponseEntity<>(categoryResponse, HttpStatus.FOUND);
+        return new ResponseEntity<>(categoryResponse, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('admin')")
     @PutMapping("/admin/categories/{categoryId}")
     public ResponseEntity<CategoryDTO> updateCategory(@RequestBody Category category  ,@PathVariable Long categoryId ){
 
         return  new ResponseEntity<>(categoryService.updateCategory(category,categoryId),HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('admin')")
+
     @DeleteMapping ("/admin/categories/{categoryId}")
     public ResponseEntity<String> deleteCategory(@PathVariable Long categoryId ){
 

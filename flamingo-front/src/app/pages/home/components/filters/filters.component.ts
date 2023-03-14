@@ -14,7 +14,7 @@ import { StoreService } from 'src/app/services/store.service';
 })
 export class FiltersComponent implements OnInit, OnDestroy {
   @Output() showCategory = new EventEmitter<string>();
-  categories: string[] | undefined;
+  categories: any | undefined;
   categoriesSubscription: Subscription | undefined;
 
   constructor(private storeService: StoreService) {}
@@ -22,8 +22,9 @@ export class FiltersComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.categoriesSubscription = this.storeService
       .getAllCategories()
-      .subscribe((response: Array<string>) => {
-        this.categories = response;
+      .subscribe((response: any) => {
+        console.log(response)
+        this.categories = response.data;
       });
   }
 

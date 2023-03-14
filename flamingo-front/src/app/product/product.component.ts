@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { CategoryView } from '../models/Category-view.model';
 import { ProductToAdd } from '../models/ProductToAdd.model';
-import { CategoryService } from '../services/category.service';
+
 import { ProductService } from '../services/product.service';
+import { StoreService } from '../services/store.service';
 
 @Component({
   selector: 'app-product',
@@ -33,14 +34,15 @@ export class ProductComponent implements OnInit {
         this.addProduct(this.product,this.selectedFile)
     }
   constructor(private productService:ProductService
-            ,private categoryService : CategoryService) { }
+            ,private _StoreService : StoreService) { }
 
   ngOnInit(): void {
     this.getCategories();
   }
 
   addProduct(product: any, image: File){
-    this.productService.addProduct(this.product.categoryId,this.product,this.selectedFile).
+    console.log(JSON.stringify(product))
+    this.productService.addProduct(product.categoryId,product,image).
       subscribe(
         (product:ProductToAdd) => {console.log(product);
         },
@@ -49,7 +51,7 @@ export class ProductComponent implements OnInit {
   }
 
   getCategories(){
-     this.categoryService.getCategories()
+     this._StoreService.getAllCategories()
     .subscribe((response)=>this.categories=response.data );
   }
 

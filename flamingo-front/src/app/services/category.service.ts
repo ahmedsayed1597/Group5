@@ -12,13 +12,27 @@ export class CategoryService {
   constructor(private _http:HttpClient) { }
 
   public getCategories(){
-    return this._http.get<ResponseViewModel>("http://localhost:9090/api/public/categories?pageSize=100")
-    
+    return this._http.get<ResponseViewModel>("http://localhost:9090/api/categories?pageSize=150")
+
 
   }
 
   public addCategory(categoryToAdd:CategoryToAdd ){
 
     return this._http.post<CategoryView>("http://localhost:9090/api/admin/categories",categoryToAdd);
+  }
+
+  public updateCategory(categoryToAdd:CategoryToAdd,categoryId:number){
+    return this._http.put<CategoryView>("http://localhost:9090/api/admin/categories/"+categoryId,categoryToAdd);
+
+  }
+  public deleteCategory(categoryId:number){
+    return this._http.delete<String>("http://localhost:9090/api/admin/categories/"+categoryId);
+
+  }
+
+  public getCategoryById(categoryId:number){
+    return this._http.get<CategoryView>("http://localhost:9090/api/categories/"+categoryId)
+
   }
 }

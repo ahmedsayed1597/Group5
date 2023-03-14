@@ -112,7 +112,6 @@ public class CategoryServiceImpl implements CategoryService {
 
     public Category getCategoryByName(String categoryName){
         Category category = categoryRepository.getCategoryByCategoryName(categoryName);
-
         return category;
     }
 }

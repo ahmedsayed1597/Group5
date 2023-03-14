@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-products-header',
@@ -7,8 +7,10 @@ import { Component, EventEmitter, Output } from '@angular/core';
 export class ProductsHeaderComponent {
   @Output() columnsCountChange = new EventEmitter<number>();
   @Output() itemsCountChange = new EventEmitter<number>();
+  @Output() previousPage = new EventEmitter<number>();
   @Output() sortChange = new EventEmitter<string>();
-  itemsShowCount = 12;
+  @Input() pageNumber:number;
+  itemsShowCount = 0;
   sort = 'desc';
 
   constructor() {}
@@ -17,9 +19,14 @@ export class ProductsHeaderComponent {
     this.columnsCountChange.emit(colsNum);
   }
 
-  onItemsUpdated(count: number): void {
-    this.itemsCountChange.emit(count);
-    this.itemsShowCount = count;
+  onItemsNext(): void {
+    this.itemsShowCount++;
+    this.itemsCountChange.emit(this.itemsShowCount);
+  }
+
+  onItemsPrevious(): void {
+    this.itemsShowCount--;
+    this.previousPage.emit(this.itemsShowCount);
   }
 
   onSortUpdated(newSort: string): void {

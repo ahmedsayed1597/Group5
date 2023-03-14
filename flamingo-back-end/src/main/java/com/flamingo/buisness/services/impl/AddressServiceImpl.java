@@ -73,7 +73,7 @@ public class AddressServiceImpl  implements AddressService{
 	@Override
 	public AddressDTO getAddress(Long addressId) {
 		Address address = addressRepo.findById(addressId)
-				.orElseThrow(() -> new ResourceNotFoundException("Address", "addressId", addressId));
+				.orElseThrow(() -> new ResourceNotFoundException("no addresse found"));
 
 		return modelMapper.map(address, AddressDTO.class);
 	}
@@ -86,7 +86,7 @@ public class AddressServiceImpl  implements AddressService{
 
 		if (addressFromDB == null) {
 			addressFromDB = addressRepo.findById(addressId)
-					.orElseThrow(() -> new ResourceNotFoundException("Address", "addressId", addressId));
+					.orElseThrow(() -> new ResourceNotFoundException("no addrrsse found"));
 
 			addressFromDB.setCountry(address.getCountry());
 			addressFromDB.setState(address.getState());
@@ -114,7 +114,7 @@ public class AddressServiceImpl  implements AddressService{
     @Override
 	public String deleteAddress(Long addressId) {
 		Address addressFromDB = addressRepo.findById(addressId)
-				.orElseThrow(() -> new ResourceNotFoundException("Address", "addressId", addressId));
+				.orElseThrow(() -> new ResourceNotFoundException("no addresse found"));
 
 		// List<User> users = userRepo.findByAddress(addressId);
 

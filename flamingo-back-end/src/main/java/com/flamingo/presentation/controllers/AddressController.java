@@ -30,19 +30,19 @@ public class AddressController {
 	private AddressService addressService;
 
 
-    // @PreAuthorize("hasRole('admin')")
+
     @GetMapping("/addresses")
 	public ResponseEntity<List<AddressDTO>> getAddresses() {
 		List<AddressDTO> addressDTOs = addressService.getAddresses();
 		
-		return new ResponseEntity<List<AddressDTO>>(addressDTOs, HttpStatus.OK);
+		return new ResponseEntity<List<AddressDTO>>(addressDTOs, HttpStatus.FOUND);
 	}
 	
 	@GetMapping("/addresses/{addressId}")
 	public ResponseEntity<AddressDTO> getAddress(@PathVariable Long addressId) {
 		AddressDTO addressDTO = addressService.getAddress(addressId);
 		
-		return new ResponseEntity<AddressDTO>(addressDTO, HttpStatus.OK);
+		return new ResponseEntity<AddressDTO>(addressDTO, HttpStatus.FOUND);
 	}
 
     @PostMapping("/address")

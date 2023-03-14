@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { LoaderService } from '../services/loader.service';
 import { UserService } from '../user.service';
 
 @Component({
@@ -10,7 +11,7 @@ import { UserService } from '../user.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private  _Router:Router, private _FormBuilder:FormBuilder, private _UserService:UserService) { }
+  constructor(private  _Router:Router, private _FormBuilder:FormBuilder, private _UserService:UserService, public _LoaderService:LoaderService) { }
 
   logInForm:FormGroup;
   responseMessage: any
@@ -27,13 +28,15 @@ export class LoginComponent implements OnInit {
   onLogin(){
     if(this.logInForm.valid == true){
       console.log(this.logInForm.value)
-      this._UserService.signIn(this.logInForm.value).subscribe({
+      let token = localStorage.getItem("token")
+      this._UserService.signIn(this.logInForm.value, token).subscribe({
         next: (response) => {
-          console.log(this.logInForm.value);
-          this.responseMessage = response.message;
+          this.responseMessage = response.token;
           console.log(this.responseMessage)
-          if(response.message == 'Succesfull Login'){
-            this._Router.navigate(['Home'])
+          console.log(this.responseMessage)
+          if(this.responseMessage !== ""){
+            localStorage.setItem("token" , this.responseMessage)
+            this._Router.navigate(['home'])
           }
         }
       ,
@@ -58,3 +61,4 @@ export class LoginComponent implements OnInit {
   }
 
 }
+

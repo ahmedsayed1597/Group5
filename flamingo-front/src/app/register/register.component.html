@@ -1,6 +1,12 @@
-<section class="vh-100 gradient-custom">
+
+<section class="vh-100 gradient-custom ">
+
     <div class="container py-5 h-100">
-      <div class="row justify-content-center align-items-center h-100">
+
+      <div class="row justify-content-center align-items-center h-100"> 
+        <div class="loader-container" *ngIf="_LoaderService.isLoading | async">
+          <mat-progress-spinner mode="indeterminate" style="top: 50%;  left:50%; "></mat-progress-spinner>
+        </div>
         <div class="col-12 col-lg-9 col-xl-7">
           <div
             class="card shadow-2-strong card-registration"
@@ -17,9 +23,10 @@
                 <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 text-center">
                   Registration Here
                 </h3>
-              </div>
-  
+              </div>  
+
               <div>
+                
                 <!-- <h1 class="text-success text-center" *ngIf="responseMessage == 'success'">{{responseMessage}}</h1> -->
                 <h1 class="text-danger  text-center" *ngIf="responseMessage != 'User created'">{{responseMessage}}</h1>
             </div>
@@ -79,7 +86,7 @@
                 </div>
   
                 <div class="row">
-                  <div class="col-md-6 mb-4 d-flex align-items-center">
+                  <!-- <div class="col-md-6 mb-4 d-flex align-items-center">
                     <div class="form-outline datepicker w-100">
                       <label for="username" class="form-label">username</label>
                       <input
@@ -108,8 +115,8 @@
   
                       
                     </div>
-                  </div>
-                  <div class="col-md-6 mb-4">
+                  </div> -->
+                  <!-- <div class="col-md-6 mb-4">
                     <h6 class="mb-2 pb-1">Gender:</h6>
   
                     <div class="form-check form-check-inline">
@@ -139,7 +146,7 @@
                         >Male</label
                       >
                     </div>
-                  </div>
+                  </div> -->
                 </div>
             
                 <div class="row">
@@ -172,19 +179,19 @@
                       <input
                         type="tel"
                         id="phoneNumber"
-                        formControlName="phone" 
+                        formControlName="mobileNumber" 
                         placeholder="Enter your number"
-                        [class.is-valid]="!checkErrorInForm('phone')" [class.is-invalid]="checkErrorInForm('phone')&& checkErrorIfFormTouch('phone')"
+                        [class.is-valid]="!checkErrorInForm('mobileNumber')" [class.is-invalid]="checkErrorInForm('mobileNumber')&& checkErrorIfFormTouch('mobileNumber')"
                         class="form-control form-control-lg"
                       />
   
                       <small class="text-danger text-bold"
-                      *ngIf="checkErrorInFormAndType('phone' , 'required') && checkErrorIfFormTouch('phone')">
+                      *ngIf="checkErrorInFormAndType('mobileNumber' , 'required') && checkErrorIfFormTouch('mobileNumber')">
                       Please enter your phone
                     </small>
                       
                     <small class="text-danger text-bold"
-                    *ngIf="checkErrorInFormAndType('phone' , 'pattern') && checkErrorIfFormTouch('phone')">
+                    *ngIf="checkErrorInFormAndType('mobileNumber' , 'pattern') && checkErrorIfFormTouch('mobileNumber')">
                     please enter vaild phone
                   </small>
                       

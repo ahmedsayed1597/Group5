@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Product } from 'src/app/models/product.model';
+import { ProductToAdd } from 'src/app/models/ProductToAdd.model';
+import { ResponseViewModel } from 'src/app/models/Response-View-Model';
 
 @Component({
   selector: '[app-product-box]',
@@ -7,7 +9,7 @@ import { Product } from 'src/app/models/product.model';
 })
 export class ProductBoxComponent {
   @Input() fullWidthMode = false;
-  @Input() product: Product | undefined;
+  @Input() product: ProductToAdd | undefined;
   @Output() addToCart = new EventEmitter();
 
   constructor() {}

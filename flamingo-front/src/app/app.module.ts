@@ -28,7 +28,7 @@ import { FiltersComponent } from './pages/home/components/filters/filters.compon
 import { HeaderComponent } from './components/header/header.component';
 import { CartComponent } from './pages/cart/cart.component';
 import { CartService } from './services/cart.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { StoreService } from './services/store.service';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
@@ -36,13 +36,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ProductComponent } from './product/product.component';
 import { MatInputModule } from '@angular/material/input';
 import { ShowProductComponent } from './show-product/show-product.component';
-import {MatPaginatorModule} from '@angular/material/paginator';
-import {MatSelectModule} from '@angular/material/select';
-import { NgxPaginationModule } from 'ngx-pagination';
-import { AddCategoryComponent } from './categories/add-category/add-category.component';
-import { EditCategoryComponent } from './categories/edit-category/edit-category.component';
-
-
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSelectModule } from '@angular/material/select';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { InterceptorService } from './services/interceptor.service';
+import { AddCategoryComponent } from './add-category/add-category.component';
+import { AdminComponent } from './adminPages/admin/admin.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +57,7 @@ import { EditCategoryComponent } from './categories/edit-category/edit-category.
     ProductComponent,
     ShowProductComponent,
     AddCategoryComponent,
-    EditCategoryComponent,
+    AdminComponent,
   ],
   imports: [
     BrowserModule,
@@ -84,12 +83,12 @@ import { EditCategoryComponent } from './categories/edit-category/edit-category.
     FormsModule,
     MatPaginatorModule,
     MatSelectModule,
-    NgxPaginationModule,
-
-
-
+    MatProgressSpinnerModule,
+    MatToolbarModule,
+    MatFormFieldModule,
+    
   ],
-  providers: [CartService, StoreService],
+  providers: [CartService, StoreService, {provide: HTTP_INTERCEPTORS, useClass:InterceptorService, multi:true}],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

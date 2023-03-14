@@ -11,8 +11,10 @@
   <mat-drawer-content class="p-6">
     <app-products-header
       (columnsCountChange)="onColumnsCountChange($event)"
-      (itemsCountChange)="onItemsCountChange($event)"
+      (itemsCountChange)="nextPage()"
+      (previousPage) = "previousPage()"
       (sortChange)="onSortChange($event)"
+      [pageNumber] = count
     ></app-products-header>
     <mat-grid-list
       *ngIf="products && products.length"

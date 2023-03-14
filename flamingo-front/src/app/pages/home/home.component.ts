@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Product } from 'src/app/models/product.model';
+import { ProductToAdd } from 'src/app/models/ProductToAdd.model';
 import { CartService } from 'src/app/services/cart.service';
 import { StoreService } from 'src/app/services/store.service';
 
@@ -13,10 +14,10 @@ const ROWS_HEIGHT: { [id: number]: number } = { 1: 400, 3: 335, 4: 350 };
 export class HomeComponent implements OnInit, OnDestroy {
   cols = 3;
   rowHeight: number = ROWS_HEIGHT[this.cols];
-  products: Array<Product> | undefined;
-  count = '12';
+  products: Array<ProductToAdd> | undefined;
+  count = 0;
   sort = 'desc';
-  category: string | undefined;
+  category: any =1;
   productsSubscription: Subscription | undefined;
 
   constructor(
@@ -25,7 +26,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.getProducts();
+    // this.getProducts();
+    this.getProductsFromAllCategories();
   }
 
   onColumnsCountChange(colsNum: number): void {
@@ -33,8 +35,13 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.rowHeight = ROWS_HEIGHT[colsNum];
   }
 
-  onItemsCountChange(count: number): void {
-    this.count = count.toString();
+  nextPage(): void {
+    this.count++
+    this.getProducts();
+  }
+
+  previousPage(): void {
+    this.count--
     this.getProducts();
   }
 
@@ -44,15 +51,29 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   onShowCategory(newCategory: string): void {
+    this.count = 0
     this.category = newCategory;
     this.getProducts();
   }
 
+  
   getProducts(): void {
+    console.log(this.category)
     this.productsSubscription = this.storeService
-      .getAllProducts(this.count, this.sort, this.category)
-      .subscribe((_products) => {
-        this.products = _products;
+    
+      .getAllProducts(this.category, this.sort, this.count)
+      .subscribe((_products:any) => {
+        this.products = _products.data;
+      });
+  }
+
+  getProductsFromAllCategories(): void {
+    console.log(this.category)
+    this.productsSubscription = this.storeService
+    
+      .getAllProductsFromAllCategory()
+      .subscribe((_products:any) => {
+        this.products = _products.data;
       });
   }
 
