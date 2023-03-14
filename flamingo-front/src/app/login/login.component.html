@@ -1,6 +1,12 @@
 <section class="h-100 gradient-form" style="background-color: #eee;">
-    <div class="container py-5 h-100">
+    <div class="container py-5 h-100">  
+
+      <div class="loader-container" *ngIf="_LoaderService.isLoading | async">
+      <mat-progress-spinner mode="indeterminate" style="top: 50%;  left:50%; "></mat-progress-spinner>
+    </div> 
+    
       <div class="row d-flex justify-content-center align-items-center h-100">
+
         <div class="col-xl-10">
           <div class="card rounded-3 text-black">
             <div class="row g-0">

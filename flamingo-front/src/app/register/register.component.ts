@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { LoaderService } from '../services/loader.service';
 import { UserService } from '../user.service';
 
 @Component({
@@ -10,7 +11,7 @@ import { UserService } from '../user.service';
 })
 export class RegisterComponent implements OnInit {
 
-  constructor(private  _Router:Router, private _UserService:UserService, private _FormBuilder:FormBuilder) { }
+  constructor(private  _Router:Router, private _UserService:UserService, private _FormBuilder:FormBuilder, public _LoaderService:LoaderService) { }
   responseMessage:any;
   registerationForm:FormGroup;
 

@@ -28,7 +28,7 @@ import { FiltersComponent } from './pages/home/components/filters/filters.compon
 import { HeaderComponent } from './components/header/header.component';
 import { CartComponent } from './pages/cart/cart.component';
 import { CartService } from './services/cart.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { StoreService } from './services/store.service';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
@@ -36,8 +36,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ProductComponent } from './product/product.component';
 import { MatInputModule } from '@angular/material/input';
 import { ShowProductComponent } from './show-product/show-product.component';
-import {MatPaginatorModule} from '@angular/material/paginator';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'; 
+import { InterceptorService } from './services/interceptor.service';
 
 @NgModule({
   declarations: [
@@ -77,11 +79,9 @@ import { MatSelectModule } from '@angular/material/select';
     FormsModule,
     MatPaginatorModule,
     MatSelectModule,
-
-
-
+    MatProgressSpinnerModule
   ],
-  providers: [CartService, StoreService],
+  providers: [CartService, StoreService, {provide: HTTP_INTERCEPTORS, useClass:InterceptorService, multi:true}],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

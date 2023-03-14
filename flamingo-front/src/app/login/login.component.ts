@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { LoaderService } from '../services/loader.service';
 import { UserService } from '../user.service';
 
 @Component({
@@ -10,7 +11,7 @@ import { UserService } from '../user.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private  _Router:Router, private _FormBuilder:FormBuilder, private _UserService:UserService) { }
+  constructor(private  _Router:Router, private _FormBuilder:FormBuilder, private _UserService:UserService, public _LoaderService:LoaderService) { }
 
   logInForm:FormGroup;
   responseMessage: any
@@ -60,3 +61,4 @@ export class LoginComponent implements OnInit {
   }
 
 }
+
