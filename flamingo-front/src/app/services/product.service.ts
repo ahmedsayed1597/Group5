@@ -33,7 +33,7 @@ export class ProductService {
   public getAllProducts(pageNumber:number , pageSize:number , field:string, orderBy:string){
 
     return this._httpClient.get<ResponseViewModel>(
-      `http://localhost:9090/api/products?pageNumber=${pageNumber}&
+      `http://localhost:9090/api/public/products?pageNumber=${pageNumber}&
       pageSize=${pageSize}&field=${field}&orderBy=${orderBy}`
       )
   }

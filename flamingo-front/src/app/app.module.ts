@@ -38,10 +38,9 @@ import { MatInputModule } from '@angular/material/input';
 import { ShowProductComponent } from './show-product/show-product.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'; 
 import { InterceptorService } from './services/interceptor.service';
 import { AddCategoryComponent } from './add-category/add-category.component';
-import { AdminComponent } from './adminPages/admin/admin.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +56,6 @@ import { AdminComponent } from './adminPages/admin/admin.component';
     ProductComponent,
     ShowProductComponent,
     AddCategoryComponent,
-    AdminComponent,
   ],
   imports: [
     BrowserModule,
@@ -83,10 +81,7 @@ import { AdminComponent } from './adminPages/admin/admin.component';
     FormsModule,
     MatPaginatorModule,
     MatSelectModule,
-    MatProgressSpinnerModule,
-    MatToolbarModule,
-    MatFormFieldModule,
-    
+    MatProgressSpinnerModule
   ],
   providers: [CartService, StoreService, {provide: HTTP_INTERCEPTORS, useClass:InterceptorService, multi:true}],
   bootstrap: [AppComponent],
