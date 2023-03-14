@@ -89,7 +89,7 @@ import { RouterModule } from '@angular/router';
     MatPaginatorModule,
     MatSelectModule,
     MatProgressSpinnerModule,
-    RouterModule
+    RouterModule,
   ],
   providers: [CartService, StoreService, {provide: HTTP_INTERCEPTORS, useClass:InterceptorService, multi:true}],
   bootstrap: [AppComponent],

@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
     if(this.logInForm.valid == true){
       console.log(this.logInForm.value)
       let token = localStorage.getItem("jwtToken")
-      this._UserService.signIn(this.logInForm.value,token).subscribe({
+      this._UserService.signIn(this.logInForm.value).subscribe({
         next: (response) => {
           this.responseMessage = response.jwtToken;
           console.log(this.responseMessage)
@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit {
           }
         }
       ,
-      error: (err) => {alert(err.message        );
+      error: (err) => {alert(err.message);
         console.log(err);
       }
      });

@@ -18,6 +18,7 @@ export class AddCategoryComponent implements OnInit {
 
   addCategory(){
 
+    console.log("add category");
     this.category.categoryName=this.CategotyName;
     this.categoryService.addCategory(this.category)
     .subscribe((resp)=>console.log(resp)

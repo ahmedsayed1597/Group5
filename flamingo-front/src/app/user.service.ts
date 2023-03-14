@@ -18,12 +18,9 @@ export class UserService {
     return this._HttpClient.post(`${this.baseURL}/register`, userData);
   }
 
-  signIn(userData: any,token:any): Observable<any> {
+  signIn(userData: any): Observable<any> {
 
-    let queryParams = new HttpParams();
-    queryParams = queryParams.append("token",token);
-    this._UserAuthService.setToken(token)
-    return this._HttpClient.post(`${this.baseURL}/login`, userData, {params:queryParams});
+    return this._HttpClient.post(`${this.baseURL}/login`, userData);
   }
 
   decodeToken(token: string): any {

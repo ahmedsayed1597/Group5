@@ -17,6 +17,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   products: Array<ProductToAdd> | undefined;
   count = 0;
   sort = 'desc';
+  field='price';
   category: any =1;
   productsSubscription: Subscription | undefined;
 
@@ -56,12 +57,12 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.getProducts();
   }
 
-  
+
   getProducts(): void {
     console.log(this.category)
     this.productsSubscription = this.storeService
-    
-      .getAllProducts(this.category, this.sort, this.count)
+
+      .getAllProducts(this.category, this.sort, this.count,this.field)
       .subscribe((_products:any) => {
         this.products = _products.data;
       });
@@ -70,7 +71,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   getProductsFromAllCategories(): void {
     console.log(this.category)
     this.productsSubscription = this.storeService
-    
+
       .getAllProductsFromAllCategory()
       .subscribe((_products:any) => {
         this.products = _products.data;

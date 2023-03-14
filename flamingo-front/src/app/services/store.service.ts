@@ -24,10 +24,12 @@ export class StoreService {
   //   );
   // }
 
-  public getAllProducts(categoryId:number, sort:string, pageNumber:number){
+  public getAllProducts(categoryId:number, sort:string, pageNumber:number,field :string){
     let queryParams = new HttpParams();
     queryParams = queryParams.append("sortOrder",sort);
     queryParams = queryParams.append("pageNumber",pageNumber);
+    queryParams = queryParams.append("sortBy",field);
+
     return this.httpClient.get(`${STORE_BASE_URL}/categories/${categoryId}/products`, {params:queryParams})
   }
 
