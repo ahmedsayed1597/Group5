@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AddCategoryComponent } from './add-category/add-category.component';
+import { AdminComponent } from './adminPages/admin/admin.component';
+import { AddCategoryComponent } from './categories/add-category/add-category.component';
+import { EditCategoryComponent } from './categories/edit-category/edit-category.component';
+import { ShowCategoryComponent } from './categories/show-category/show-category.component';
 import { PathLoginGuard } from './guards/path-login.guard';
 import { LoginComponent } from './login/login.component';
 import { CartComponent } from './pages/cart/cart.component';
@@ -17,7 +20,15 @@ const routes: Routes = [
   {path:'login' , component:LoginComponent, canActivate:[PathLoginGuard]},
   {path:'admin/product' , component:ProductComponent},
   {path:'admin/showProduct' , component:ShowProductComponent},
-  {path: 'admin/category' , component:AddCategoryComponent}
+  {path: 'admin/category' , component:AddCategoryComponent},
+  {path: 'admin/showCategory' , component:ShowCategoryComponent},
+  {path: 'admin/editCategory/:categoryId' , component:EditCategoryComponent},
+  {path: 'admin/dashboard' , component:AdminComponent},
+  // {path: 'admin/editCategory/:categoryId' , component:EditCategoryComponent},
+  // {path: 'admin/editCategory/:categoryId' , component:EditCategoryComponent},
+  // {path: 'admin/editCategory/:categoryId' , component:EditCategoryComponent},
+
+
 
 ];
 

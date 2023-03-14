@@ -38,9 +38,13 @@ import { MatInputModule } from '@angular/material/input';
 import { ShowProductComponent } from './show-product/show-product.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'; 
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { InterceptorService } from './services/interceptor.service';
-import { AddCategoryComponent } from './add-category/add-category.component';
+import { AddCategoryComponent } from './categories/add-category/add-category.component';
+import { ShowCategoryComponent } from './categories/show-category/show-category.component';
+import { EditCategoryComponent } from './categories/edit-category/edit-category.component';
+import { AdminComponent } from './adminPages/admin/admin.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -56,6 +60,9 @@ import { AddCategoryComponent } from './add-category/add-category.component';
     ProductComponent,
     ShowProductComponent,
     AddCategoryComponent,
+    ShowCategoryComponent,
+    EditCategoryComponent,
+    AdminComponent,
   ],
   imports: [
     BrowserModule,
@@ -81,7 +88,8 @@ import { AddCategoryComponent } from './add-category/add-category.component';
     FormsModule,
     MatPaginatorModule,
     MatSelectModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    RouterModule
   ],
   providers: [CartService, StoreService, {provide: HTTP_INTERCEPTORS, useClass:InterceptorService, multi:true}],
   bootstrap: [AppComponent],

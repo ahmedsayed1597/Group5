@@ -114,4 +114,11 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = categoryRepository.getCategoryByCategoryName(categoryName);
         return category;
     }
+
+    @Override
+    public CategoryDTO getCategoryById(Long categoryId) {
+
+        
+        return modelMapper.map( categoryRepository.findById(categoryId).orElseThrow(()->new notFoundException("not found !")),CategoryDTO.class);
+    }
 }

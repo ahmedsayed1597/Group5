@@ -47,7 +47,7 @@ public class AuthController {
 
 
         Map<String, Object> hash_map = new HashMap<>();
-        hash_map.put("jwt-token", signUpService.saveUser(user));
+        hash_map.put("jwtToken", signUpService.saveUser(user));
 
         return new ResponseEntity<Map<String, Object>>(hash_map, HttpStatus.CREATED);
 
@@ -59,7 +59,7 @@ public class AuthController {
 
 
         Map<String, Object> hash_map = new HashMap<>();
-        hash_map.put("jwt-token", loginService.userValidation(credentials));
+        hash_map.put("jwtToken", loginService.userValidation(credentials));
 
         return hash_map;
     }

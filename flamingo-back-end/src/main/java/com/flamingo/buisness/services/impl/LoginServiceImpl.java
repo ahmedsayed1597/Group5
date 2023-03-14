@@ -1,5 +1,10 @@
 package com.flamingo.buisness.services.impl;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -11,6 +16,7 @@ import com.flamingo.buisness.services.UserService;
 import com.flamingo.buisness.services.interfaces.LoginService;
 import com.flamingo.config.JwtService;
 import com.flamingo.persistence.dao.UserRepo;
+import com.flamingo.persistence.entities.Role;
 import com.flamingo.persistence.entities.User;
 import com.flamingo.presentation.dto.LoginDTO;
 
@@ -42,9 +48,15 @@ public class LoginServiceImpl implements LoginService{
                 )
         );
 
-      User u = re.findByEmail(ldto.getEmail()).orElseThrow(()->new notFoundException("no such user"));
+      User user = re.findByEmail(ldto.getEmail()).orElseThrow(()->new notFoundException("no such user"));
 
-      String jwtToken = jwtService.generateToken(u);
+      Map<String,Object> claims = new  HashMap<>();
+      List<Role> roles = user.getRoles();
+      
+      System.out.println(roles.get(0).getRoleName());
+      claims.put("Role_",roles.get(0).getRoleName());
+
+      String jwtToken = jwtService.generateToken(roles.get(0).getRoleName(),user);
 
       return jwtToken;
 
