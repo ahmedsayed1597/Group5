@@ -8,6 +8,7 @@ import io.jsonwebtoken.security.Keys;
 import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -37,15 +38,15 @@ public class JwtService {
   }
 
   public String generateToken(
-      Object role,
+      Map<String,Object> claims,
       UserDetails userDetails
   ) {
 
-
+    String s = (String) claims.get("Role_");
     return 
     JWT.create()
 				.withSubject(userDetails.getUsername())
-				.withClaim("Role_", (String)role)
+				.withClaim("Role_", s)
 				.withIssuedAt(new Date())
 				.withIssuer("Event Scheduler")
 				.sign(Algorithm.HMAC256(secret));

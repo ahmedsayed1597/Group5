@@ -56,7 +56,7 @@ public class LoginServiceImpl implements LoginService{
       System.out.println(roles.get(0).getRoleName());
       claims.put("Role_",roles.get(0).getRoleName());
 
-      String jwtToken = jwtService.generateToken(roles.get(0).getRoleName(),user);
+      String jwtToken = jwtService.generateToken(claims,user);
 
       return jwtToken;
 
