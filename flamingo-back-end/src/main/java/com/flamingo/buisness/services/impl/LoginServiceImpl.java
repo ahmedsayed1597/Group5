@@ -40,15 +40,15 @@ public class LoginServiceImpl implements LoginService{
 
 
     @Override
-    public String userValidation(LoginDTO ldto) {
+    public String userValidation(LoginDTO credintials) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        ldto.getEmail(),
-                        ldto.getPassword()
+                        credintials.getEmail(),
+                        credintials.getPassword()
                 )
         );
 
-      User user = re.findByEmail(ldto.getEmail()).orElseThrow(()->new notFoundException("no such user"));
+      User user = re.findByEmail(credintials.getEmail()).orElseThrow(()->new notFoundException("no such user"));
 
       Map<String,Object> claims = new  HashMap<>();
       List<Role> roles = user.getRoles();

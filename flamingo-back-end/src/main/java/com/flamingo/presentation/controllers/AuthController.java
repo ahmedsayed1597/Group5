@@ -30,37 +30,23 @@ import lombok.RequiredArgsConstructor;
 public class AuthController {
 
     private final SignUpService signUpService;
-
     private final LoginService loginService;
-
-
-
     private final PasswordEncoder passwordEncoder;
 
     @PostMapping("/register")
     public ResponseEntity<Map<String, Object>> registerHandler(@Valid @RequestBody UserRequestDTO user)
             throws UserNotFoundException {
         String encodedPass = passwordEncoder.encode(user.getPassword());
-
         user.setPassword(encodedPass);
-
-
-
         Map<String, Object> hash_map = new HashMap<>();
         hash_map.put("jwtToken", signUpService.saveUser(user));
-
         return new ResponseEntity<Map<String, Object>>(hash_map, HttpStatus.CREATED);
-
     }
 
     @PostMapping("/login")
     public Map<String, Object> loginHandler(@Valid @RequestBody LoginDTO credentials) {
-
-
-
         Map<String, Object> hash_map = new HashMap<>();
         hash_map.put("jwtToken", loginService.userValidation(credentials));
-
         return hash_map;
     }
 }
