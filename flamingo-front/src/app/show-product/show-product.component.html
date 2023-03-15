@@ -1,6 +1,10 @@
 <div class="container mt-5">
+  <mat-form-field appearance="outline" class="w-100">
+    <mat-label>search by productName or Description</mat-label>
+    <input matInput placeholder="search by productName or Description"
+      name="keyword" #keyword (keyup)="searchByKeyword(keyword.value)" color="primary">
+  </mat-form-field>
   <table mat-table [dataSource]="productDetails" class="mat-elevation-z8">
-
 
     <ng-container matColumnDef="product Id">
       <th mat-header-cell *matHeaderCellDef> product Id </th>
@@ -70,6 +74,9 @@
   <div class="text-center mt-5 " style="padding-bottom: 15px;">
     <button type="button" mat-raised-button
     color="warn" (click)="loadBefore()" >  Load previous </button>
+  </div>
+  <div  class="text-center mt-5 " style="padding-bottom: 15px;">
+    <p>current Page is {{response.pageNumber}}</p>
   </div>
 
 <div class="text-center mt-5 " style="padding-bottom: 15px;" *ngIf="showLoadButton">

@@ -3,14 +3,17 @@ import { ProductViewModel } from '../models/product-view-model';
 import { ProductService } from '../services/product.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { ResponseViewModel } from '../models/Response-View-Model';
+import { ProductToAdd } from '../models/ProductToAdd.model';
+import { StoreService } from '../services/store.service';
 
 @Component({
   selector: 'app-show-product',
   templateUrl: './show-product.component.html',
   styleUrls: ['./show-product.component.scss']
 })
+
 export class ShowProductComponent implements OnInit {
-  constructor(private productService :ProductService) { }
+  constructor(private storeService:StoreService,private productService :ProductService) { }
 
 productDetails : ResponseViewModel["data"];
 
@@ -20,6 +23,7 @@ displayedColumns:any=['product Id','productName','image','description','quantity
   orderBy:string = "asc";
   pageSize: number = 5;
   response:any;
+  products: Array<ProductToAdd> | undefined;
 
   showLoadButton=true;
 
@@ -47,6 +51,19 @@ displayedColumns:any=['product Id','productName','image','description','quantity
       }
     )
   }
+
+  searchByKeyword(keyword:string){
+    console.log(keyword);
+    this.pageNumber=0;
+    if(keyword != ''){
+    this.productService.searchProductsByKeyword(keyword
+      ,this.pageNumber,this.pageSize,this.field,this.orderBy)
+      .subscribe((resp)=>{this.productDetails=resp.data;
+      })
+    }else
+    this.getAllProducts();
+  }
+
 
   loadNext(){
     this.pageNumber++;
