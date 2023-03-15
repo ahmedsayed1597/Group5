@@ -33,9 +33,22 @@ export class ProductService {
   public getAllProducts(pageNumber:number , pageSize:number , field:string, orderBy:string){
 
     return this._httpClient.get<ResponseViewModel>(
-      `http://localhost:9090/api/public/products?pageNumber=${pageNumber}&
-      pageSize=${pageSize}&field=${field}&orderBy=${orderBy}`
+      `http://localhost:9090/api/products?pageNumber=0&pageSize=100`
       )
+  }
+
+  public editProduct(productId:number,editedProduct :ProductToAdd){
+    return this._httpClient.put<ProductViewModel>("http://localhost:9090/api/products/"+productId,editedProduct)
+
+  }
+
+  public getProductById(id:number){
+    return this._httpClient.get<ProductToAdd>("http://localhost:9090/api/products/"+id);
+  }
+
+
+  public deleteProduct(id:number){
+    return this._httpClient.delete<string>("http://localhost:9090/api/admin/products/"+id);
   }
 
   public addCategory(categoryToAdd:CategoryToAdd ){
@@ -48,5 +61,7 @@ export class ProductService {
       'Authorization', `Bearer ${token}`)
     return this._httpClient.post<CategoryView>("http://localhost:9090/api/admin/categories",categoryToAdd,{headers:head});
   }
+
+
 }
 

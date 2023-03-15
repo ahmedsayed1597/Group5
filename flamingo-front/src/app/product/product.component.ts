@@ -22,7 +22,12 @@ export class ProductComponent implements OnInit {
     this.selectedFile=event.target.files[0];
     console.log(this.selectedFile)
   }
-
+  clearFields(){
+    this.product.productName="";
+        this.product.description ="";
+        this.product.price =0;
+        this.product.quantity =0;
+  }
     build(productName: string ,Description: string ,Price: number ,
       Quantity: number  ,selectedOption: number ){
         this.product.productName=productName;
@@ -44,7 +49,10 @@ export class ProductComponent implements OnInit {
     console.log(JSON.stringify(product))
     this.productService.addProduct(product.categoryId,product,image).
       subscribe(
-        (product:ProductToAdd) => {console.log(product);
+        (product:ProductToAdd) => {
+          alert("product added succefully" + JSON.stringify(product))
+          console.log(product);
+          this.clearFields();
         },
         (error:Error) => {console.log(error)}
           );

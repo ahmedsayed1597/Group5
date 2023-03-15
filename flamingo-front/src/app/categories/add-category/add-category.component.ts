@@ -10,16 +10,21 @@ import { ProductService } from '../../services/product.service';
 export class AddCategoryComponent implements OnInit {
 
   category=new CategoryToAdd();
-  CategotyName:string;
+  categoryName:string;
   constructor(private categoryService:ProductService) { }
 
   ngOnInit(): void {
   }
 
+
+  clearFields(){
+    this.categoryName="";
+
+  }
   addCategory(){
 
     console.log("add category");
-    this.category.categoryName=this.CategotyName;
+    this.category.categoryName=this.categoryName;
     this.categoryService.addCategory(this.category)
     .subscribe((resp)=>console.log(resp)
     ,(err)=>console.log(err));

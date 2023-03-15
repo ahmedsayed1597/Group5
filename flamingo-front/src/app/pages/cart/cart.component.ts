@@ -22,7 +22,7 @@ export class CartComponent implements OnInit, OnDestroy {
   dataSource: CartItem[] = [];
   cartSubscription: Subscription | undefined;
 
-  constructor(private cartService: CartService, private http: HttpClient) {}
+  constructor(private cartService: CartService, private http: HttpClient, private _CartService:CartService) {}
 
   ngOnInit(): void {
     this.cartSubscription = this.cartService.cart.subscribe((_cart: Cart) => {
@@ -68,5 +68,19 @@ export class CartComponent implements OnInit, OnDestroy {
     if (this.cartSubscription) {
       this.cartSubscription.unsubscribe();
     }
+  }
+
+  checkOutCart(){
+    let cart:any = localStorage.getItem('cart');
+    cart = JSON.parse(cart)
+    for(let i=0; i<cart.length; i++){
+      this._CartService.sendCart(cart[i].id, cart[i].quantity).subscribe({
+        next:(response) =>{
+          localStorage.clear()
+          this.onClearCart()
+        },error:(err) =>{console.log(err)}
+      });
+    }
+
   }
 }

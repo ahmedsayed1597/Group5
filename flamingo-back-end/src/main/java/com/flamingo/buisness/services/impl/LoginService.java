@@ -67,7 +67,7 @@ public class LoginService implements UserDetailsService {
         private List getAuthority(User user) {
             List<SimpleGrantedAuthority> authorities = new ArrayList<>();
             user.getRoles().forEach(role -> {
-                authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getRoleName()));
+                authorities.add(new SimpleGrantedAuthority("Role_" + role.getRoleName()));
             });
             return authorities;
         }

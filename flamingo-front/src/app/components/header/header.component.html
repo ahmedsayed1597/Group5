@@ -1,4 +1,4 @@
-<mat-toolbar class="bg-dark text-light d-flex justify-between  text-light header mx-auto bg w-100 p-1" >
+<mat-toolbar class="ps-4 pe-4 bg text-light d-flex justify-between  text-light header mx-auto w-100 p-1 mb-4" >
 <!-- <button mat-icon-button (click)="routeToRegister()"
 color="white"
 
@@ -11,7 +11,7 @@ color="white"
 
 <a routerLink="home">Flamingo</a>
   <button mat-icon-button [matMenuTriggerFor]="menu">
-    <mat-icon class="header-cart-icon"
+    <mat-icon class="header-cart-icon" *ngIf="!ifUserAdmin()"
       [matBadge]="itemsQuantity"
       [matBadgeHidden]="!itemsQuantity"
       matBadgeColor="warn"
@@ -56,7 +56,7 @@ color="white"
     </div>
   </mat-menu>
   <button class="btn btn-success" *ngIf="!_UserAuthService.isLoggedIn()" [routerLink]="['/login']" >Login</button>
-<button class="btn btn-danger" *ngIf="_UserAuthService.isLoggedIn()" (click)="logOut()">Logout</button>
+<button class="btn btn-danger" *ngIf="_UserAuthService.isLoggedIn()" (click)="logOut()" [routerLink]="['/home']">Logout</button>
 </mat-toolbar>
 
 

@@ -13,18 +13,16 @@ export class ShowProductComponent implements OnInit {
   constructor(private productService :ProductService) { }
 
 productDetails : ResponseViewModel["data"];
-displayedColumns: string[] = ['product Id', 'productName','image', 'description', 'quantity', 'price'];
-  page: number = 1;
-  count: number = 0;
-  tableSizes: any = [5, 10, 25, 50];
+
+displayedColumns:any=['product Id','productName','image','description','quantity','price','edt','delete'];
   pageNumber:number=0;
   field:string= "productId";
   orderBy:string = "asc";
-  pageSize: number = 7;
+  pageSize: number = 100;
   response:any;
 
 
-  
+
 
   ngOnInit(): void {
     this.getAllProducts();
@@ -44,15 +42,18 @@ displayedColumns: string[] = ['product Id', 'productName','image', 'description'
     )
   }
 
-  onTableDataChange(event: any) {
-    this.page = event;
-    this.getAllProducts();
+  public deleteProduct(id:number){
+    console.log(id);
+    this.productService.deleteProduct(id).subscribe(
+      (resp)=>
+      {this.getAllProducts();
+      console.log("succecful");},
+      (err)=>{
+        console.log(err);
+      }
+    )
   }
-  onTableSizeChange(event: any): void {
-    this.pageSize = event.target.value;
-    this.page = 1;
-    this.getAllProducts();
-  }
+
 
 
 }

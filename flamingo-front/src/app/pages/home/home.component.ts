@@ -4,12 +4,14 @@ import { Product } from 'src/app/models/product.model';
 import { ProductToAdd } from 'src/app/models/ProductToAdd.model';
 import { CartService } from 'src/app/services/cart.service';
 import { StoreService } from 'src/app/services/store.service';
+import { UserAuthService } from 'src/app/services/user-auth.service';
 
 const ROWS_HEIGHT: { [id: number]: number } = { 1: 400, 3: 335, 4: 350 };
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
+  styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit, OnDestroy {
   cols = 3;
@@ -23,7 +25,8 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   constructor(
     private cartService: CartService,
-    private storeService: StoreService
+    private storeService: StoreService,
+    private _UserAuthService:UserAuthService
   ) {}
 
   ngOnInit(): void {
@@ -75,16 +78,17 @@ export class HomeComponent implements OnInit, OnDestroy {
       .getAllProductsFromAllCategory()
       .subscribe((_products:any) => {
         this.products = _products.data;
+        console.log(_products.data)
       });
   }
 
-  onAddToCart(product: Product): void {
+  onAddToCart(product: any): void {
     this.cartService.addToCart({
       product: product.image,
-      name: product.title,
+      name: product.productName,
       price: product.price,
       quantity: 1,
-      id: product.id,
+      id: product.productId,
     });
   }
 
@@ -92,5 +96,11 @@ export class HomeComponent implements OnInit, OnDestroy {
     if (this.productsSubscription) {
       this.productsSubscription.unsubscribe();
     }
+  }
+
+  ifUserAdmin(){
+    if(this._UserAuthService.getRoles() == 'ADMIN'){
+      return true;
+    }return false
   }
 }

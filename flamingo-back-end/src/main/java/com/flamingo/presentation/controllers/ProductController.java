@@ -47,6 +47,15 @@ public class ProductController {
 
     }
 
+    
+    @GetMapping("/products/{productId}")
+    public ResponseEntity<productDDDTO> getProductBYID(@PathVariable long productId){
+
+
+        return new ResponseEntity<>(productService.getByID(productId), HttpStatus.OK);
+
+    }
+
     @GetMapping("/categories/{categoryId}/products")
     public ResponseEntity<ProductResponse> getProductsByCategory(
             @PathVariable Long categoryId,

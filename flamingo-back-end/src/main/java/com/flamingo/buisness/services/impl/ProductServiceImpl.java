@@ -218,9 +218,12 @@ public class ProductServiceImpl implements ProductService {
         
         carts.forEach(cart -> cartService.deleteProductFromCart(cart.getCartId(),
         productId));
+        System.out.println("before delete");
 
         productRepository.delete(productFromDB);
 
+        productRepository.deleteProductByproductId(productId);
+        System.out.println("after delete");
         return "produt is succefuly deleted ! ";
     }
 
@@ -229,6 +232,12 @@ public class ProductServiceImpl implements ProductService {
                 .orElseThrow(() -> new notFoundException("no such product Exist ! "));
         return fileService.downloadImage(productFromDB.getImage());
 
+    }
+
+    @Override
+    public productDDDTO getByID(long ID) {
+        Product product= this.productRepository.findById(ID).orElseThrow(()-> new notFoundException("no productFound whith that id"));
+        return modelMapper.map(product ,productDDDTO.class);
     }
 
 

@@ -44,30 +44,13 @@
 
 
           <div class="d-flex justify-content-between">
-            <button mat-stroked-button color="primary">clear</button>
+            <button mat-stroked-button color="primary" (click)="clearFields()">clear</button>
             <button mat-stroked-button color="primary" type="submit">Add Product</button>
           </div>
 
         </div>
 
-        <!-- <div class="col-6">
-        <div>
-        <input type="file" name="image"  #selectFile
-            (change)="onFileSelected($event)">
-          </div>
-          <div class="mt-5">
-            <div >
-              <mat-grid-list cols="1" rowHeight="1:1">
-                  <mat-grid-tile>
-                      <div style="position:relative">
-                        <img src="{{selectedFile.name}}">
-                      </div>
-                  </mat-grid-tile>
 
-              </mat-grid-list>
-            </div>
-          </div>
-      </div>-->
       </div>
     </div>
 

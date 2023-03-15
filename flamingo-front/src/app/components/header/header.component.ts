@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Route, Router } from '@angular/router';
 import { Cart, CartItem } from 'src/app/models/cart.model';
 import { CartService } from 'src/app/services/cart.service';
@@ -10,7 +10,7 @@ import { UserService } from 'src/app/user.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   private _cart: Cart = { items: [] };
   itemsQuantity = 0;
 
@@ -30,6 +30,9 @@ export class HeaderComponent {
 
   constructor(private cartService: CartService, private _Router:Router, public _UserAuthService:UserAuthService) {
 
+  }
+  ngOnInit(): void {
+    this.ifUserAdmin()
   }
   
   getTotal(items: CartItem[]): number {
@@ -54,4 +57,11 @@ export class HeaderComponent {
   logOut(){
     this._UserAuthService.clear();
   }
+
+  ifUserAdmin(){
+    if(this._UserAuthService.getRoles() == 'ADMIN'){
+      return true;
+    }return false
+  }
+  
 }
