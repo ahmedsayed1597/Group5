@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
@@ -9,7 +10,8 @@ import { Cart, CartItem } from '../models/cart.model';
 export class CartService {
   cart = new BehaviorSubject<Cart>({ items: [] });
 
-  constructor(private _snackBar: MatSnackBar) {}
+  totalPrice:number
+  constructor(private _snackBar: MatSnackBar, private httpClient: HttpClient) {}
 
   addToCart(item: CartItem): void {
     const items = [...this.cart.value.items];
@@ -23,6 +25,15 @@ export class CartService {
 
     this.cart.next({ items });
     this._snackBar.open('1 item added to cart.', 'Ok', { duration: 3000 });
+  }
+
+  setTotalPrice(total:number){
+    this.totalPrice = total;
+  }
+
+  getTotalPrice():number{
+    console.log(this.totalPrice)
+    return this.totalPrice;
   }
 
   removeFromCart(item: CartItem, updateCart = true): CartItem[] {
@@ -72,8 +83,16 @@ export class CartService {
   }
 
   getTotal(items: CartItem[]): number {
+    localStorage.setItem('cart' , JSON.stringify(items));
+  
+    
     return items
       .map((item) => item.price * item.quantity)
       .reduce((prev, current) => prev + current, 0);
+  }
+
+  sendCart(productId:number, quantity:number){
+    let cartID:any = parseInt(localStorage.getItem('CartId')!)
+    return this.httpClient.post(`http://localhost:9090/api/public/carts/${cartID}/products/${productId}/quantity/${quantity}`, "/ssss");
   }
 }

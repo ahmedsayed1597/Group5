@@ -1,4 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { CategoryView } from '../models/Category-view.model';
+import { ProductToAdd } from '../models/ProductToAdd.model';
+
+import { ProductService } from '../services/product.service';
+import { StoreService } from '../services/store.service';
 
 @Component({
   selector: 'app-product',
@@ -7,9 +13,56 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProductComponent implements OnInit {
 
-  constructor() { }
+  categories: CategoryView[]=[];
+  selectedFile: File;
+  product=new ProductToAdd();
+
+  //bind with changing the image
+  onFileSelected(event:any){
+    this.selectedFile=event.target.files[0];
+    console.log(this.selectedFile)
+  }
+  clearFields(){
+    this.product.productName="";
+        this.product.description ="";
+        this.product.price =0;
+        this.product.quantity =0;
+  }
+    build(productName: string ,Description: string ,Price: number ,
+      Quantity: number  ,selectedOption: number ){
+        this.product.productName=productName;
+        this.product.description =Description;
+        this.product.price =Price;
+        this.product.quantity =Quantity;
+        this.product.categoryId =selectedOption;
+        console.log(this.product);
+        this.addProduct(this.product,this.selectedFile)
+    }
+  constructor(private productService:ProductService
+            ,private _StoreService : StoreService) { }
 
   ngOnInit(): void {
+    this.getCategories();
+  }
+
+  addProduct(product: any, image: File){
+    console.log(JSON.stringify(product))
+    this.productService.addProduct(product.categoryId,product,image).
+      subscribe(
+        (product:ProductToAdd) => {
+          alert("product added succefully" + JSON.stringify(product))
+          console.log(product);
+          this.clearFields();
+        },
+        (error:Error) => {console.log(error)}
+          );
+  }
+
+  getCategories(){
+     this._StoreService.getAllCategories()
+    .subscribe((response)=>this.categories=response.data );
   }
 
 }
+
+

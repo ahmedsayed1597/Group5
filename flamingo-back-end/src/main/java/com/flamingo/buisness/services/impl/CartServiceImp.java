@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
@@ -13,38 +12,34 @@ import com.flamingo.buisness.exception.ResourceNotFoundException;
 import com.flamingo.buisness.services.interfaces.CartService;
 import com.flamingo.persistence.dao.CartItemRepo;
 import com.flamingo.persistence.dao.CartRepo;
-import com.flamingo.persistence.dao.ProductRepo;
+import com.flamingo.persistence.dao.ProductRepository;
 import com.flamingo.persistence.entities.Cart;
 import com.flamingo.persistence.entities.CartItem;
 import com.flamingo.persistence.entities.Product;
 import com.flamingo.presentation.dto.CartDTO;
-import com.flamingo.presentation.dto.ProductDTO;
+import com.flamingo.presentation.dto.productDDDTO;
 
-import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 
-@Transactional
+@RequiredArgsConstructor
 @Service
 public class CartServiceImp implements CartService {
 
-    @Autowired
-    private CartRepo cartRepo;
+    private final CartRepo cartRepo;
 
-    @Autowired
-    private ProductRepo productRepo;
+    private final ProductRepository productRepo;
 
-    @Autowired
-    private CartItemRepo cartItemRepo;
+    private final CartItemRepo cartItemRepo;
 
-    // @Autowired
-    private ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
 
     @Override
     public CartDTO addProductToCart(Long cartId, Long productId, Integer quantity) {
         Cart cart = cartRepo.findById(cartId)
-                .orElseThrow(() -> new ResourceNotFoundException("Cart", "cartId", cartId));
+                .orElseThrow(() -> new ResourceNotFoundException("no cart found"));
 
         Product product = productRepo.findById(productId)
-                .orElseThrow(() -> new ResourceNotFoundException("Product", "productId", productId));
+                .orElseThrow(() -> new ResourceNotFoundException("no product found"));
 
         CartItem cartItem = cartItemRepo.findCartItemByProductIdAndCartId(cartId, productId);
 
@@ -76,10 +71,10 @@ public class CartServiceImp implements CartService {
 
         CartDTO cartDTO = modelMapper.map(cart, CartDTO.class);
 
-        List<ProductDTO> productDTOs = cart.getCartItems().stream()
-                .map(p -> modelMapper.map(p.getProduct(), ProductDTO.class)).collect(Collectors.toList());
+        List<productDDDTO> productDDDTOs = cart.getCartItems().stream()
+                .map(p -> modelMapper.map(p.getProduct(), productDDDTO.class)).collect(Collectors.toList());
 
-        cartDTO.setProducts(productDTOs);
+        cartDTO.setProducts(productDDDTOs);
 
         return cartDTO;
     }
@@ -96,8 +91,8 @@ public class CartServiceImp implements CartService {
         List<CartDTO> cartDTOs = carts.stream().map(cart -> {
             CartDTO cartDTO = modelMapper.map(cart, CartDTO.class);
 
-            List<ProductDTO> products = cart.getCartItems().stream()
-                    .map(p -> modelMapper.map(p.getProduct(), ProductDTO.class)).collect(Collectors.toList());
+            List<productDDDTO> products = cart.getCartItems().stream()
+                    .map(p -> modelMapper.map(p.getProduct(), productDDDTO.class)).collect(Collectors.toList());
 
             cartDTO.setProducts(products);
 
@@ -113,13 +108,13 @@ public class CartServiceImp implements CartService {
         Cart cart = cartRepo.findCartByEmailAndCartId(emailId, cartId);
 
         if (cart == null) {
-            throw new ResourceNotFoundException("Cart", "cartId", cartId);
+            throw new ResourceNotFoundException("no cart found");
         }
 
         CartDTO cartDTO = modelMapper.map(cart, CartDTO.class);
 
-        List<ProductDTO> products = cart.getCartItems().stream()
-                .map(p -> modelMapper.map(p.getProduct(), ProductDTO.class)).collect(Collectors.toList());
+        List<productDDDTO> products = cart.getCartItems().stream()
+                .map(p -> modelMapper.map(p.getProduct(), productDDDTO.class)).collect(Collectors.toList());
 
         cartDTO.setProducts(products);
 
@@ -129,10 +124,10 @@ public class CartServiceImp implements CartService {
     @Override
     public CartDTO updateProductQuantityInCart(Long cartId, Long productId, Integer quantity) {
         Cart cart = cartRepo.findById(cartId)
-                .orElseThrow(() -> new ResourceNotFoundException("Cart", "cartId", cartId));
+                .orElseThrow(() -> new ResourceNotFoundException("no cart found"));
 
         Product product = productRepo.findById(productId)
-                .orElseThrow(() -> new ResourceNotFoundException("Product", "productId", productId));
+                .orElseThrow(() -> new ResourceNotFoundException("no product found"));
 
         if (product.getQuantity() == 0) {
             throw new APIException(product.getProductName() + " is not available");
@@ -162,10 +157,10 @@ public class CartServiceImp implements CartService {
 
         CartDTO cartDTO = modelMapper.map(cart, CartDTO.class);
 
-        List<ProductDTO> productDTOs = cart.getCartItems().stream()
-                .map(p -> modelMapper.map(p.getProduct(), ProductDTO.class)).collect(Collectors.toList());
+        List<productDDDTO> productDDDTOs = cart.getCartItems().stream()
+                .map(p -> modelMapper.map(p.getProduct(), productDDDTO.class)).collect(Collectors.toList());
 
-        cartDTO.setProducts(productDTOs);
+        cartDTO.setProducts(productDDDTOs);
 
         return cartDTO;
     }
@@ -173,10 +168,10 @@ public class CartServiceImp implements CartService {
     @Override
     public void updateProductInCarts(Long cartId, Long productId) {
         Cart cart = cartRepo.findById(cartId)
-                .orElseThrow(() -> new ResourceNotFoundException("Cart", "cartId", cartId));
+                .orElseThrow(() -> new ResourceNotFoundException("no cart found"));
 
         Product product = productRepo.findById(productId)
-                .orElseThrow(() -> new ResourceNotFoundException("Product", "productId", productId));
+                .orElseThrow(() -> new ResourceNotFoundException("no product found"));
 
         CartItem cartItem = cartItemRepo.findCartItemByProductIdAndCartId(cartId, productId);
 
@@ -196,12 +191,12 @@ public class CartServiceImp implements CartService {
     @Override
     public String deleteProductFromCart(Long cartId, Long productId) {
         Cart cart = cartRepo.findById(cartId)
-                .orElseThrow(() -> new ResourceNotFoundException("Cart", "cartId", cartId));
+                .orElseThrow(() -> new ResourceNotFoundException("no cart found"));
 
         CartItem cartItem = cartItemRepo.findCartItemByProductIdAndCartId(cartId, productId);
 
         if (cartItem == null) {
-            throw new ResourceNotFoundException("Product", "productId", productId);
+            throw new ResourceNotFoundException("no product found");
         }
 
         cart.setTotalPrice(cart.getTotalPrice() - (cartItem.getProductPrice() * cartItem.getQuantity()));

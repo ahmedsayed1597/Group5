@@ -1,0 +1,30 @@
+<mat-toolbar color="primary" class="d-flex justify-content-between">
+  <button mat-raised-button color="primary" routerLink="/home">Home</button>
+  <span class="text-center">Add category</span>
+  <span class="space-buttons"></span>
+</mat-toolbar>
+
+<form (ngSubmit)="edit()">
+  <div class="container mt-5">
+    <div class="card p-2">
+      <div class="row">
+        <div class="col-12">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Category Name</mat-label>
+            <input matInput placeholder="Product Name"  [(ngModel)]="newCategory.categoryName" name="CategoryName"
+              required>
+          </mat-form-field>
+
+
+          <div class="d-flex justify-content-between">
+            <button mat-stroked-button color="primary">clear</button>
+            <button mat-stroked-button color="primary" type="submit">edit Category</button>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</form>

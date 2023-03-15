@@ -1,20 +1,16 @@
 package com.flamingo.presentation.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class AddressDTO {
-
-    private Long addressId;
-	private String street;
-	private String buildingName;
-	private String city;
-	private String state;
-	private String country;
-	private String pincode;
     
+    private String street;
+
+	private String city;
+
+	private String country;
 }

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { LoaderService } from '../services/loader.service';
+import { UserAuthService } from '../services/user-auth.service';
 import { UserService } from '../user.service';
 
 @Component({
@@ -10,7 +12,11 @@ import { UserService } from '../user.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private  _Router:Router, private _FormBuilder:FormBuilder, private _UserService:UserService) { }
+  constructor(private  _Router:Router,
+    private _FormBuilder:FormBuilder,
+     private _UserService:UserService,
+      public _LoaderService:LoaderService,
+      private _userAuth:UserAuthService) { }
 
   logInForm:FormGroup;
   responseMessage: any
@@ -27,24 +33,32 @@ export class LoginComponent implements OnInit {
   onLogin(){
     if(this.logInForm.valid == true){
       console.log(this.logInForm.value)
+      let token = localStorage.getItem("jwtToken")
       this._UserService.signIn(this.logInForm.value).subscribe({
         next: (response) => {
-          console.log(this.logInForm.value);
-          this.responseMessage = response.message;
+          this.responseMessage = response.jwtToken;
           console.log(this.responseMessage)
-          if(response.message == 'Succesfull Login'){
-            this._Router.navigate(['Home'])
+          if(this.responseMessage !== ""){
+            localStorage.setItem("jwtToken" , this.responseMessage)
+            this._Router.navigate(['home']);
+            this._userAuth. setRoles(this.responseMessage);
+            this._userAuth. setUserID(this.responseMessage);
+            this._userAuth. setCartID(this.responseMessage);
+
+            console.log( this._userAuth.getRoles());
           }
         }
       ,
-      error: (err) => {console.log(err);}
+      error: (err) => {alert(err.message);
+        console.log(err);
+      }
      });
      }
   }
 
   checkErrorInForm(input:string){
     if(this.logInForm.controls[input].errors) return true;
-    else return false;   
+    else return false;
   }
 
   checkErrorInFormAndType(input:string, errorType:string){
@@ -58,3 +72,4 @@ export class LoginComponent implements OnInit {
   }
 
 }
+
