@@ -22,7 +22,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   sort = 'desc';
   field='price';
   category: any =1;
-  pageSize:number=20;
+  pageSize:number=6;
   pageNumber:number=0;
   productsSubscription: Subscription | undefined;
 
@@ -35,7 +35,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     // this.getProducts();
-    this.getProductsFromAllCategories();
+    this.getProductsPaged();
   }
 
   onColumnsCountChange(colsNum: number): void {
@@ -69,7 +69,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     console.log(this.category)
     this.productsSubscription = this.storeService
 
-      .getAllProducts(this.category, this.sort, this.count,this.field)
+      .getAllProducts(+this.category, this.sort, this.count,this.field)
       .subscribe((_products:any) => {
         this.products = _products.data;
       });

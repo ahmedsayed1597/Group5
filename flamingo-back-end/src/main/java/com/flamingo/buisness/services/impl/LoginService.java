@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.flamingo.persistence.entities.Cart;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
@@ -40,10 +41,15 @@ public class LoginService implements UserDetailsService {
     
             UserDetails userDetails = loadUserByUsername(userName);
     
-            User user = userRepo.findByEmail(userName).get();
-            
+            User user = userRepo.findByEmail(userName).orElseThrow(()->new notFoundException("user not found"));
+            Cart cart=user.getCart();
             Map<String,String> claims = new HashMap<>();
-            claims.put("Role_", user.getRoles().get(0).getRoleName());
+            if (user.getRoles().get(0) != null) {
+                claims.put("Role_", user.getRoles().get(0).getRoleName());
+            }
+            claims.put("CartId", cart.getCartId().toString());
+            claims.put("UserId", user.getUserId().toString());
+
             String newGeneratedToken = jwtService.generateToken(claims,userDetails);
 
             return  newGeneratedToken;
