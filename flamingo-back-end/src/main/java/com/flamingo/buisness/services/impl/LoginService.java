@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.flamingo.persistence.entities.Cart;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
@@ -40,14 +41,22 @@ public class LoginService implements UserDetailsService {
     
             UserDetails userDetails = loadUserByUsername(userName);
     
-            User user = userRepo.findByEmail(userName).get();
-            
+            User user = userRepo.findByEmail(userName).orElseThrow(()->new notFoundException("user not found"));
+            Cart cart=user.getCart();
             Map<String,String> claims = new HashMap<>();
-            claims.put("Role_", user.getRoles().get(0).getRoleName());
+            if (!user.getRoles().isEmpty() ){
+                claims.put("Role_", user.getRoles().get(0).getRoleName());
+            }
+            if (cart != null) {
+                claims.put("CartId", cart.getCartId().toString());
+            }
+            claims.put("UserId", user.getUserId().toString());
+
             String newGeneratedToken = jwtService.generateToken(claims,userDetails);
 
             return  newGeneratedToken;
         }
+        
     
         @Override
         public UserDetails loadUserByUsername(String username) throws notFoundException {
@@ -67,7 +76,7 @@ public class LoginService implements UserDetailsService {
         private List getAuthority(User user) {
             List<SimpleGrantedAuthority> authorities = new ArrayList<>();
             user.getRoles().forEach(role -> {
-                authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getRoleName()));
+                authorities.add(new SimpleGrantedAuthority("Role_" + role.getRoleName()));
             });
             return authorities;
         }

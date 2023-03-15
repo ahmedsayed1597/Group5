@@ -154,13 +154,19 @@ public class ProductServiceImpl implements ProductService {
         Sort sorting = (sortOrder.equalsIgnoreCase("asc")) ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
 
         Pageable pageDetails = PageRequest.of(pageNumber, pageSize, sorting);
+        Page<Product> productPage = null;
+        if (keyword.equals("")) {
+            productPage = productRepository.findAll(pageDetails);
+        }
+        else {
+//        Page<Product> productPage = productRepository.findProductByProductNameLike(keyword, pageDetails);
 
-        Page<Product> productPage = productRepository.findProductByProductNameLike(keyword, pageDetails);
-
+            productPage = productRepository.findByProductNameContainingIgnoreCaseOrDescriptionContainingIgnoreCase(keyword, keyword, pageDetails);
+        }
         List<Product> products = productPage.getContent();
 
-        if (products == null)
-            throw new notFoundException("no products found for this keyword ! ");
+//        if (products == null)
+//            throw new notFoundException("no products found for this keyword ! ");
 
         List<productDDDTO> productDDDTOs = products.stream()
                 .map(product -> modelMapper.map(product, productDDDTO.class)).collect(Collectors.toList());
@@ -218,9 +224,12 @@ public class ProductServiceImpl implements ProductService {
         
         carts.forEach(cart -> cartService.deleteProductFromCart(cart.getCartId(),
         productId));
+        System.out.println("before delete");
 
         productRepository.delete(productFromDB);
 
+        productRepository.deleteProductByproductId(productId);
+        System.out.println("after delete");
         return "produt is succefuly deleted ! ";
     }
 
@@ -229,6 +238,12 @@ public class ProductServiceImpl implements ProductService {
                 .orElseThrow(() -> new notFoundException("no such product Exist ! "));
         return fileService.downloadImage(productFromDB.getImage());
 
+    }
+
+    @Override
+    public productDDDTO getByID(long ID) {
+        Product product= this.productRepository.findById(ID).orElseThrow(()-> new notFoundException("no productFound whith that id"));
+        return modelMapper.map(product ,productDDDTO.class);
     }
 
 

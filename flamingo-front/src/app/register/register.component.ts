@@ -36,7 +36,7 @@ export class RegisterComponent implements OnInit {
 
   checkErrorInForm(input:string){
     if(this.registerationForm.controls[input].errors) return true;
-    else return false;   
+    else return false;
   }
 
   checkErrorInFormAndType(input:string, errorType:string){
@@ -51,7 +51,7 @@ export class RegisterComponent implements OnInit {
 
   onSubmit(){
     if(this.registerationForm.valid == true && this.checkPassswordConfirmation()){
-  
+
       //let user = new User(this.registerationForm.value['name'],this.registerationForm.value['email'],this.registerationForm.value['password'],this.registerationForm.value['avatar'])
       this._UserService.signUp(this.registerationForm.value).subscribe({
         next: (response) => {
@@ -60,11 +60,15 @@ export class RegisterComponent implements OnInit {
           localStorage.setItem("token" , this.responseMessage)
           console.log(this.responseMessage)
           if(this.responseMessage !== ""){
-            this._Router.navigate(['Login'])
+            this._Router.navigate(['login'])
           }
         }
       ,
-      error: (err) => {console.log(err);}
+      error: (err) => {
+        console.log(err);
+        this._Router.navigate(['login'])
+      }
+
      });
      }
   }

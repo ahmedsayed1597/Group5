@@ -46,6 +46,9 @@ import { EditCategoryComponent } from './categories/edit-category/edit-category.
 import { AdminComponent } from './adminPages/admin/admin.component';
 import { RouterModule } from '@angular/router';
 import { AdminNavbarComponent } from './admin-navbar/admin-navbar.component';
+import { EditProductComponent } from './edit-product/edit-product.component';
+import { AddressComponent } from './address/address.component';
+
 
 @NgModule({
   declarations: [
@@ -65,6 +68,9 @@ import { AdminNavbarComponent } from './admin-navbar/admin-navbar.component';
     EditCategoryComponent,
     AdminComponent,
     AdminNavbarComponent,
+    EditProductComponent,
+    AddressComponent,
+
   ],
   imports: [
     BrowserModule,

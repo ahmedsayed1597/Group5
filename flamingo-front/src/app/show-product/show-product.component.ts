@@ -13,18 +13,16 @@ export class ShowProductComponent implements OnInit {
   constructor(private productService :ProductService) { }
 
 productDetails : ResponseViewModel["data"];
-displayedColumns: string[] = ['product Id', 'productName','image', 'description', 'quantity', 'price'];
-  page: number = 1;
-  count: number = 0;
-  tableSizes: any = [5, 10, 25, 50];
+
+displayedColumns:any=['product Id','productName','image','description','quantity','price','edt','delete'];
   pageNumber:number=0;
   field:string= "productId";
   orderBy:string = "asc";
-  pageSize: number = 7;
+  pageSize: number = 5;
   response:any;
 
+  showLoadButton=true;
 
-  
 
   ngOnInit(): void {
     this.getAllProducts();
@@ -35,6 +33,12 @@ displayedColumns: string[] = ['product Id', 'productName','image', 'description'
     this.productService.getAllProducts(this.pageNumber,this.pageSize,this.field,this.orderBy).subscribe(
       (resp) => {
         console.log(resp);
+        if(resp.lastPage){
+        this.showLoadButton=false;
+        }
+        else
+        this.showLoadButton=true;
+
         this.productDetails=resp.data;
         this.response=resp;
       },
@@ -44,15 +48,29 @@ displayedColumns: string[] = ['product Id', 'productName','image', 'description'
     )
   }
 
-  onTableDataChange(event: any) {
-    this.page = event;
+  loadNext(){
+    this.pageNumber++;
     this.getAllProducts();
   }
-  onTableSizeChange(event: any): void {
-    this.pageSize = event.target.value;
-    this.page = 1;
+
+  loadBefore(){
+    if(this.pageNumber>0)
+    this.pageNumber--;
     this.getAllProducts();
   }
+
+  public deleteProduct(id:number){
+    console.log(id);
+    this.productService.deleteProduct(id).subscribe(
+      (resp)=>
+      {this.getAllProducts();
+      console.log("succecful");},
+      (err)=>{
+        console.log(err);
+      }
+    )
+  }
+
 
 
 }

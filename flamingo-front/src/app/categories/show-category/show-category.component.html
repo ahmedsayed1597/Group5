@@ -24,7 +24,7 @@
         <td >{{item.categoryName}}</td>
 
 
-        <td  ><button class="btn btn-danger" (click)="deleteCategory(currentIndex)"  >Delete</button></td>
+        <td  ><button class="btn btn-danger" (click)="deleteCategory(item.categoryId)"  >Delete</button></td>
         <td  ><a routerLink="/admin/editCategory/{{item.categoryId}}"><button class="btn btn-warning"  >Edit</button></a></td>
 
       </tr>

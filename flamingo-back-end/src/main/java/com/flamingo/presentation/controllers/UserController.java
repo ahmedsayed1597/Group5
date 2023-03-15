@@ -1,8 +1,10 @@
 package com.flamingo.presentation.controllers;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,8 +23,8 @@ import com.flamingo.presentation.dto.UserResponse;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = {"*"},methods = {RequestMethod.POST})
 
+@RequiredArgsConstructor
 public class UserController {
     public static final String PAGE_NUMBER = "0";
 	public static final String PAGE_SIZE = "2";
@@ -31,9 +33,9 @@ public class UserController {
     public static final String SORT_DIR = "asc";
 
 	
-	@Autowired
-	private UserService userService;
-	
+
+	private final UserService userService;
+
 	@GetMapping("/admin/users")
 	public ResponseEntity<UserResponse> getUsers(
 			@RequestParam(name = "pageNumber", defaultValue = PAGE_NUMBER, required = false) Integer pageNumber,

@@ -42,6 +42,9 @@ export class LoginComponent implements OnInit {
             localStorage.setItem("jwtToken" , this.responseMessage)
             this._Router.navigate(['home']);
             this._userAuth. setRoles(this.responseMessage);
+            this._userAuth. setUserID(this.responseMessage);
+            this._userAuth. setCartID(this.responseMessage);
+
             console.log( this._userAuth.getRoles());
           }
         }

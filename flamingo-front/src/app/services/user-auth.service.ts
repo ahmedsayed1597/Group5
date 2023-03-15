@@ -34,6 +34,17 @@ export class UserAuthService {
     localStorage.setItem("Role_",role)
   }
 
+  public setUserID(token: string){
+    let userID = this.getClaimFromToken(token,"UserId");
+    localStorage.setItem("UserId",userID)
+  }
+
+  public setCartID(token: string){
+    let cartID = this.getClaimFromToken(token,"CartId");
+    localStorage.setItem("CartId",cartID)
+  }
+
+
   public getRoles(){
     return localStorage.getItem('Role_') ;
   }

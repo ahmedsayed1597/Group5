@@ -1,10 +1,9 @@
 
 
-<mat-drawer-container 
+<mat-drawer-container
   [autosize]="true"
-  
-  class="min-h-full max-w-7xl mx-auto border-x bg text-center"
->
+
+  class="min-h-full max-w-7xl mx-auto border-x bg text-center">
   <mat-drawer mode="side" opened class="p-6">
     <app-filters (showCategory)="onShowCategory($event)"></app-filters>
   </mat-drawer>
@@ -19,6 +18,12 @@
 
     <button class="btn btn-color" *ngIf="ifUserAdmin()" routerLink="/admin/dashboard"> Admin Dash Board</button>
 
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>search by productName or Description</mat-label>
+      <input matInput placeholder="search by productName or Description"
+        name="keyword" #keyword (keyup)="searchByKeyword(keyword.value)">
+    </mat-form-field>
+
     <mat-grid-list
       *ngIf="products && products.length"
       gutterSize="16"
@@ -26,7 +31,7 @@
       [rowHeight]="rowHeight"
     >
       <mat-grid-tile *ngFor="let product of products">
-        
+
         <div
           (addToCart)="onAddToCart($event)"
           app-product-box
