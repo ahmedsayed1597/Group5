@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { Product } from 'src/app/models/product.model';
 import { ProductToAdd } from 'src/app/models/ProductToAdd.model';
 import { CartService } from 'src/app/services/cart.service';
+import { ProductService } from 'src/app/services/product.service';
 import { StoreService } from 'src/app/services/store.service';
 import { UserAuthService } from 'src/app/services/user-auth.service';
 
@@ -21,12 +22,15 @@ export class HomeComponent implements OnInit, OnDestroy {
   sort = 'desc';
   field='price';
   category: any =1;
+  pageSize:number=20;
+  pageNumber:number=0;
   productsSubscription: Subscription | undefined;
 
   constructor(
     private cartService: CartService,
     private storeService: StoreService,
-    private _UserAuthService:UserAuthService
+    private _UserAuthService:UserAuthService,
+    private productService:ProductService
   ) {}
 
   ngOnInit(): void {
@@ -41,12 +45,12 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   nextPage(): void {
     this.count++
-    this.getProducts();
+    this.getProductsPaged();
   }
 
   previousPage(): void {
     this.count--
-    this.getProducts();
+    this.getProductsPaged();
   }
 
   onSortChange(newSort: string): void {
@@ -82,6 +86,30 @@ export class HomeComponent implements OnInit, OnDestroy {
       });
   }
 
+  searchByKeyword(keyword:string){
+    console.log(keyword);
+    this.pageNumber=0;
+    if(keyword != ''){
+    this.productService.searchProductsByKeyword(keyword
+      ,this.pageNumber,this.pageSize,this.field,this.sort)
+      .subscribe((resp)=>{this.products=resp.data;
+      })
+    }else
+    this.getProductsPaged();
+  }
+
+
+
+
+  getProductsPaged(){
+    this.productsSubscription = this.storeService
+
+    .getAllProductsFromAllCategorySortedAndPaged(this.sort,this.count,this.field,this.pageSize)
+    .subscribe((_products:any) => {
+      this.products = _products.data;
+      console.log(_products.data)
+    });
+  }
   onAddToCart(product: any): void {
     this.cartService.addToCart({
       product: product.image,

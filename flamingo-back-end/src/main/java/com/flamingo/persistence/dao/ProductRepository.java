@@ -17,7 +17,7 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
     @Query("select p from Product p where p.category.categoryId = ?1")
     Page<Product> findProductsByCategoryId(Long categoryId, Pageable pageDetails);
 
-    Page<Product>  findByProductNameContainingIgnoreOrDescriptionContainingIgnore(
+    Page<Product>  findByProductNameContainingIgnoreCaseOrDescriptionContainingIgnoreCase(
             String ProductName,
             String Description,
             Pageable pageDetails

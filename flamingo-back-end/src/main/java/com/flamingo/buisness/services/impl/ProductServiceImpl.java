@@ -161,12 +161,12 @@ public class ProductServiceImpl implements ProductService {
         else {
 //        Page<Product> productPage = productRepository.findProductByProductNameLike(keyword, pageDetails);
 
-            productPage = productRepository.findByProductNameContainingIgnoreOrDescriptionContainingIgnore(keyword, keyword, pageDetails);
+            productPage = productRepository.findByProductNameContainingIgnoreCaseOrDescriptionContainingIgnoreCase(keyword, keyword, pageDetails);
         }
         List<Product> products = productPage.getContent();
 
-        if (products == null)
-            throw new notFoundException("no products found for this keyword ! ");
+//        if (products == null)
+//            throw new notFoundException("no products found for this keyword ! ");
 
         List<productDDDTO> productDDDTOs = products.stream()
                 .map(product -> modelMapper.map(product, productDDDTO.class)).collect(Collectors.toList());

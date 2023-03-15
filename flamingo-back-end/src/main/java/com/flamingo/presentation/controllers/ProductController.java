@@ -72,7 +72,7 @@ public class ProductController {
 
     @GetMapping("/products/keyword/{keyword}")
     public ResponseEntity<ProductResponse> getProductsByKeyword(
-            @PathVariable String keyword,
+            @PathVariable("keyword") String keyword,
             @RequestParam(name = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
             @RequestParam(name = "pageSize", defaultValue = "10", required = false) Integer pageSize,
             @RequestParam(name = "sortBy", defaultValue = "productId", required = false) String sortBy,
@@ -80,7 +80,7 @@ public class ProductController {
 
 
         return new ResponseEntity<ProductResponse>( productService.searchProductByKeyword(keyword, pageNumber, pageSize, sortBy,
-                sortOrder), HttpStatus.FOUND);
+                sortOrder), HttpStatus.OK);
     }
 
 

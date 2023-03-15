@@ -29,6 +29,7 @@ export class StoreService {
     queryParams = queryParams.append("sortOrder",sort);
     queryParams = queryParams.append("pageNumber",pageNumber);
     queryParams = queryParams.append("sortBy",field);
+    queryParams = queryParams.append("pageSize",25);
 
     return this.httpClient.get(`${STORE_BASE_URL}/categories/${categoryId}/products`, {params:queryParams})
   }
