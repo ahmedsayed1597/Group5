@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserResponse {
+public class UserResponseDTO {
 	
 	private List<UserDTO> content;
 	private Integer pageNumber;
@@ -16,5 +16,7 @@ public class UserResponse {
 	private Long totalElements;
 	private Integer totalPages;
 	private boolean lastPage;
+    // public void setContent(List<UserRequestDTO> userRequestDTOs) {
+    // }
 	
 }

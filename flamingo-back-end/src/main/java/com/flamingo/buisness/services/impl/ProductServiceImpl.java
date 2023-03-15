@@ -2,12 +2,16 @@ package com.flamingo.buisness.services.impl;
 
 import com.flamingo.buisness.exception.AlreadyExist;
 import com.flamingo.buisness.exception.notFoundException;
+import com.flamingo.buisness.services.interfaces.CartService;
 import com.flamingo.buisness.services.interfaces.FileService;
 import com.flamingo.buisness.services.interfaces.ProductService;
+import com.flamingo.persistence.dao.CartRepo;
 import com.flamingo.persistence.dao.CategoryRepository;
 import com.flamingo.persistence.dao.ProductRepository;
+import com.flamingo.persistence.entities.Cart;
 import com.flamingo.persistence.entities.Category;
 import com.flamingo.persistence.entities.Product;
+import com.flamingo.presentation.dto.CartDTO;
 import com.flamingo.presentation.dto.productDDDTO;
 import com.flamingo.presentation.responseviewmodel.ProductResponse;
 import lombok.RequiredArgsConstructor;
@@ -32,12 +36,11 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final ModelMapper modelMapper;
     private final CategoryRepository categoryRepository;
-
     private final FileService fileService;
 
-    // private final CartRepo cartRepo;
-    //
-    // private final CartService cartService;
+    private final CartRepo cartRepo;
+    
+    private final CartService cartService;
 
     @Value("${project.image}")
     private String path;
@@ -176,23 +179,23 @@ public class ProductServiceImpl implements ProductService {
         product.setImage(updatedProduct.getImage());
         product.setCategory(updatedProduct.getCategory());
 
-        // List<Cart> carts = cartRepo.findCartsByProductId(productId);
-        //
-        // List<CartDTO> cartDTOs = carts.stream().map(cart -> {
-        // CartDTO cartDTO = modelMapper.map(cart, CartDTO.class);
-        //
-        // List<productDDDTO> products = cart.getCartItems().stream()
-        // .map(p -> modelMapper.map(p.getProduct(),
-        // productDDDTO.class)).collect(Collectors.toList());
-        //
-        // cartDTO.setProducts(products);
-        //
-        // return cartDTO;
-        //
-        // }).collect(Collectors.toList());
-        //
-        // cartDTOs.forEach(cart -> cartService.updateProductInCarts(cart.getCartId(),
-        // productId));
+        List<Cart> carts = cartRepo.findCartsByProductId(productId);
+        
+        List<CartDTO> cartDTOs = carts.stream().map(cart -> {
+        CartDTO cartDTO = modelMapper.map(cart, CartDTO.class);
+        
+        List<productDDDTO> products = cart.getCartItems().stream()
+        .map(p -> modelMapper.map(p.getProduct(),
+        productDDDTO.class)).collect(Collectors.toList());
+        
+        cartDTO.setProducts(products);
+        
+        return cartDTO;
+        
+        }).collect(Collectors.toList());
+        
+        cartDTOs.forEach(cart -> cartService.updateProductInCarts(cart.getCartId(),
+        productId));
 
         return modelMapper.map(productRepository.save(product), productDDDTO.class);
     }
@@ -211,10 +214,10 @@ public class ProductServiceImpl implements ProductService {
         Product productFromDB = productRepository.findById(productId)
                 .orElseThrow(() -> new notFoundException("no such product Exist ! "));
 
-        // List<Cart> carts = cartRepo.findCartsByProductId(productId);
-        //
-        // carts.forEach(cart -> cartService.deleteProductFromCart(cart.getCartId(),
-        // productId));
+        List<Cart> carts = cartRepo.findCartsByProductId(productId);
+        
+        carts.forEach(cart -> cartService.deleteProductFromCart(cart.getCartId(),
+        productId));
 
         productRepository.delete(productFromDB);
 

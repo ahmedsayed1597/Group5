@@ -13,17 +13,22 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = {"*"},methods = {RequestMethod.POST})
+
 @RequiredArgsConstructor
 public class CategoryController {
 
     private final CategoryService categoryService;
+
+    
+
     @PostMapping("/admin/categories")
     public ResponseEntity<CategoryDTO> createCategory(@RequestBody Category category){
 
         return new ResponseEntity<>(categoryService.createCategory(category), HttpStatus.CREATED);
     }
 
-    @GetMapping("/public/categories")
+    @GetMapping("/categories")
     public ResponseEntity<CategoryResponse> getAllCategories(
             @RequestParam(name = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
             @RequestParam(name = "pageSize", defaultValue = "2", required = false) Integer pageSize,
@@ -32,7 +37,14 @@ public class CategoryController {
 
         CategoryResponse categoryResponse = categoryService.getCategories(pageNumber, pageSize, field, orderBy);
 
-        return new ResponseEntity<>(categoryResponse, HttpStatus.FOUND);
+        return new ResponseEntity<>(categoryResponse, HttpStatus.OK);
+    }
+
+    @GetMapping("/categories/{categoryId}")
+    public ResponseEntity<CategoryDTO> getCAtegoryById(@PathVariable Long categoryId) {
+
+
+        return new ResponseEntity<>(categoryService.getCategoryById(categoryId), HttpStatus.OK);
     }
 
     @PutMapping("/admin/categories/{categoryId}")
@@ -40,6 +52,7 @@ public class CategoryController {
 
         return  new ResponseEntity<>(categoryService.updateCategory(category,categoryId),HttpStatus.OK);
     }
+
 
     @DeleteMapping ("/admin/categories/{categoryId}")
     public ResponseEntity<String> deleteCategory(@PathVariable Long categoryId ){
