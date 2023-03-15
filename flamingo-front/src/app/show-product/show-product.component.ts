@@ -18,10 +18,10 @@ displayedColumns:any=['product Id','productName','image','description','quantity
   pageNumber:number=0;
   field:string= "productId";
   orderBy:string = "asc";
-  pageSize: number = 100;
+  pageSize: number = 5;
   response:any;
 
-
+  showLoadButton=true;
 
 
   ngOnInit(): void {
@@ -33,6 +33,12 @@ displayedColumns:any=['product Id','productName','image','description','quantity
     this.productService.getAllProducts(this.pageNumber,this.pageSize,this.field,this.orderBy).subscribe(
       (resp) => {
         console.log(resp);
+        if(resp.lastPage){
+        this.showLoadButton=false;
+        }
+        else
+        this.showLoadButton=true;
+
         this.productDetails=resp.data;
         this.response=resp;
       },
@@ -40,6 +46,17 @@ displayedColumns:any=['product Id','productName','image','description','quantity
         console.log(err);
       }
     )
+  }
+
+  loadNext(){
+    this.pageNumber++;
+    this.getAllProducts();
+  }
+
+  loadBefore(){
+    if(this.pageNumber>0)
+    this.pageNumber--;
+    this.getAllProducts();
   }
 
   public deleteProduct(id:number){

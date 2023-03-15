@@ -154,9 +154,15 @@ public class ProductServiceImpl implements ProductService {
         Sort sorting = (sortOrder.equalsIgnoreCase("asc")) ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
 
         Pageable pageDetails = PageRequest.of(pageNumber, pageSize, sorting);
+        Page<Product> productPage = null;
+        if (keyword.equals("")) {
+            productPage = productRepository.findAll(pageDetails);
+        }
+        else {
+//        Page<Product> productPage = productRepository.findProductByProductNameLike(keyword, pageDetails);
 
-        Page<Product> productPage = productRepository.findProductByProductNameLike(keyword, pageDetails);
-
+            productPage = productRepository.findByProductNameContainingIgnoreOrDescriptionContainingIgnore(keyword, keyword, pageDetails);
+        }
         List<Product> products = productPage.getContent();
 
         if (products == null)

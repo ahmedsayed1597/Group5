@@ -31,6 +31,7 @@ public class SecurityConfiguration {
                 .disable() //disable some kind of verification
                 .authorizeHttpRequests()
                 .requestMatchers("/api/**") //my white list any one can access
+
                 .permitAll()
                 .anyRequest() //any other requests must be auth
                 .authenticated()

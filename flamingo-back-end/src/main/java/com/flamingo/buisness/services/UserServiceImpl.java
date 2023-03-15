@@ -60,7 +60,7 @@ public class UserServiceImpl implements UserService {
 				: Sort.by(sortBy).descending();
 
 		Pageable pageDetails = PageRequest.of(pageNumber, pageSize, sortByAndOrder);
-		
+		System.out.println("here");
 		Page<User> pageUsers = userRepo.findAll(pageDetails);
 		
 		List<User> users = pageUsers.getContent();

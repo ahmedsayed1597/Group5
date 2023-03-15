@@ -33,8 +33,17 @@ export class StoreService {
     return this.httpClient.get(`${STORE_BASE_URL}/categories/${categoryId}/products`, {params:queryParams})
   }
 
-  public getAllProductsFromAllCategory(){
+  public getAllProductsFromAllCategorySortedAndPaged( sort:string, pageNumber:number,field :string,pageSize:number){
+    let queryParams = new HttpParams();
+    queryParams = queryParams.append("orderBy",sort);
+    queryParams = queryParams.append("pageNumber",pageNumber);
+    queryParams = queryParams.append("field",field);
+    queryParams = queryParams.append("pageSize",pageSize);
 
+    return this.httpClient.get(`${STORE_BASE_URL}/products`, {params:queryParams})
+  }
+
+  public getAllProductsFromAllCategory(){
     return this.httpClient.get(`${STORE_BASE_URL}/products`)
   }
 
