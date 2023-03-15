@@ -112,9 +112,13 @@ public class CategoryServiceImpl implements CategoryService {
 
     public Category getCategoryByName(String categoryName){
         Category category = categoryRepository.getCategoryByCategoryName(categoryName);
-        if(category == null){
-            throw new notFoundException("Category not found " + categoryName);
-        }
         return category;
+    }
+
+    @Override
+    public CategoryDTO getCategoryById(Long categoryId) {
+
+        
+        return modelMapper.map( categoryRepository.findById(categoryId).orElseThrow(()->new notFoundException("not found !")),CategoryDTO.class);
     }
 }

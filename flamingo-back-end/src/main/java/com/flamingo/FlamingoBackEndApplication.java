@@ -8,12 +8,14 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.flamingo.persistence.dao.RoleRepo;
 import com.flamingo.persistence.entities.Role;
 
 @SpringBootApplication
-public class FlamingoBackEndApplication implements CommandLineRunner {
+public class FlamingoBackEndApplication  {
 
 	public static final Long ADMIN_ID = 101L;
 	public static final Long USER_ID = 102L;
@@ -28,29 +30,6 @@ public class FlamingoBackEndApplication implements CommandLineRunner {
 	public ModelMapper modelMapper() {
 		return new ModelMapper();
 	}
-
-	// store the the id of admin and user in database
-	@Override
-	public void run(String... args) throws Exception {
-		try {
-			Role adminRole = new Role();
-			adminRole.setRoleId(ADMIN_ID);
-			adminRole.setRoleName("ADMIN");
-
-			Role userRole = new Role();
-			userRole.setRoleId(USER_ID);
-			userRole.setRoleName("USER");
-
-			List<Role> roles = List.of(adminRole, userRole);
-			/* Hibernate: select r1_0.role_id,r1_0.role_name from roles r1_0 where
-			 r1_0.role_id=? */
-			/*  Hibernate: select r1_0.role_id,r1_0.role_name from roles r1_0 where
-			 r1_0.role_id=? */
-			roleRepo.saveAll(roles);
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
+	
+	
 }

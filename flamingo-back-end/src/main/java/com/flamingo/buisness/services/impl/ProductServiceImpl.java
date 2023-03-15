@@ -2,12 +2,16 @@ package com.flamingo.buisness.services.impl;
 
 import com.flamingo.buisness.exception.AlreadyExist;
 import com.flamingo.buisness.exception.notFoundException;
+import com.flamingo.buisness.services.interfaces.CartService;
 import com.flamingo.buisness.services.interfaces.FileService;
 import com.flamingo.buisness.services.interfaces.ProductService;
+import com.flamingo.persistence.dao.CartRepo;
 import com.flamingo.persistence.dao.CategoryRepository;
 import com.flamingo.persistence.dao.ProductRepository;
+import com.flamingo.persistence.entities.Cart;
 import com.flamingo.persistence.entities.Category;
 import com.flamingo.persistence.entities.Product;
+import com.flamingo.presentation.dto.CartDTO;
 import com.flamingo.presentation.dto.productDDDTO;
 import com.flamingo.presentation.responseviewmodel.ProductResponse;
 import lombok.RequiredArgsConstructor;
@@ -32,12 +36,11 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final ModelMapper modelMapper;
     private final CategoryRepository categoryRepository;
-
     private final FileService fileService;
 
-    // private final CartRepo cartRepo;
-    //
-    // private final CartService cartService;
+    private final CartRepo cartRepo;
+    
+    private final CartService cartService;
 
     @Value("${project.image}")
     private String path;
@@ -151,13 +154,19 @@ public class ProductServiceImpl implements ProductService {
         Sort sorting = (sortOrder.equalsIgnoreCase("asc")) ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
 
         Pageable pageDetails = PageRequest.of(pageNumber, pageSize, sorting);
+        Page<Product> productPage = null;
+        if (keyword.equals("")) {
+            productPage = productRepository.findAll(pageDetails);
+        }
+        else {
+//        Page<Product> productPage = productRepository.findProductByProductNameLike(keyword, pageDetails);
 
-        Page<Product> productPage = productRepository.findProductByProductNameLike(keyword, pageDetails);
-
+            productPage = productRepository.findByProductNameContainingIgnoreCaseOrDescriptionContainingIgnoreCase(keyword, keyword, pageDetails);
+        }
         List<Product> products = productPage.getContent();
 
-        if (products == null)
-            throw new notFoundException("no products found for this keyword ! ");
+//        if (products == null)
+//            throw new notFoundException("no products found for this keyword ! ");
 
         List<productDDDTO> productDDDTOs = products.stream()
                 .map(product -> modelMapper.map(product, productDDDTO.class)).collect(Collectors.toList());
@@ -176,23 +185,23 @@ public class ProductServiceImpl implements ProductService {
         product.setImage(updatedProduct.getImage());
         product.setCategory(updatedProduct.getCategory());
 
-        // List<Cart> carts = cartRepo.findCartsByProductId(productId);
-        //
-        // List<CartDTO> cartDTOs = carts.stream().map(cart -> {
-        // CartDTO cartDTO = modelMapper.map(cart, CartDTO.class);
-        //
-        // List<productDDDTO> products = cart.getCartItems().stream()
-        // .map(p -> modelMapper.map(p.getProduct(),
-        // productDDDTO.class)).collect(Collectors.toList());
-        //
-        // cartDTO.setProducts(products);
-        //
-        // return cartDTO;
-        //
-        // }).collect(Collectors.toList());
-        //
-        // cartDTOs.forEach(cart -> cartService.updateProductInCarts(cart.getCartId(),
-        // productId));
+        List<Cart> carts = cartRepo.findCartsByProductId(productId);
+        
+        List<CartDTO> cartDTOs = carts.stream().map(cart -> {
+        CartDTO cartDTO = modelMapper.map(cart, CartDTO.class);
+        
+        List<productDDDTO> products = cart.getCartItems().stream()
+        .map(p -> modelMapper.map(p.getProduct(),
+        productDDDTO.class)).collect(Collectors.toList());
+        
+        cartDTO.setProducts(products);
+        
+        return cartDTO;
+        
+        }).collect(Collectors.toList());
+        
+        cartDTOs.forEach(cart -> cartService.updateProductInCarts(cart.getCartId(),
+        productId));
 
         return modelMapper.map(productRepository.save(product), productDDDTO.class);
     }
@@ -211,13 +220,16 @@ public class ProductServiceImpl implements ProductService {
         Product productFromDB = productRepository.findById(productId)
                 .orElseThrow(() -> new notFoundException("no such product Exist ! "));
 
-        // List<Cart> carts = cartRepo.findCartsByProductId(productId);
-        //
-        // carts.forEach(cart -> cartService.deleteProductFromCart(cart.getCartId(),
-        // productId));
+        List<Cart> carts = cartRepo.findCartsByProductId(productId);
+        
+        carts.forEach(cart -> cartService.deleteProductFromCart(cart.getCartId(),
+        productId));
+        System.out.println("before delete");
 
         productRepository.delete(productFromDB);
 
+        productRepository.deleteProductByproductId(productId);
+        System.out.println("after delete");
         return "produt is succefuly deleted ! ";
     }
 
@@ -226,6 +238,12 @@ public class ProductServiceImpl implements ProductService {
                 .orElseThrow(() -> new notFoundException("no such product Exist ! "));
         return fileService.downloadImage(productFromDB.getImage());
 
+    }
+
+    @Override
+    public productDDDTO getByID(long ID) {
+        Product product= this.productRepository.findById(ID).orElseThrow(()-> new notFoundException("no productFound whith that id"));
+        return modelMapper.map(product ,productDDDTO.class);
     }
 
 

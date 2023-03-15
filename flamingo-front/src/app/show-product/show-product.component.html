@@ -1,56 +1,80 @@
-<div class="container">
-  <h3 class="text-center mt-5 mb-5">Number of products in this page {{pageSize}}</h3>
-  <table class="table">
-    <caption>List of products</caption>
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Name</th>
-        <th scope="col">image</th>
-        <th scope="col">description</th>
-        <th scope="col">quantity</th>
-        <th scope="col">price</th>
-        <th  scope="col">Action</th>
-        <th  scope="col">Edit</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr
-        *ngFor="
-        let item of productDetails
-            | paginate
-              : {
-                  itemsPerPage: pageSize,
-                  currentPage: page,
-                  totalItems: count
-                };
-          let i = index
-        "
-      >
-      <td >
-        <!-- <a routerLink="/details/{{productDetails[currentIndex].ID}} "> -->
-         {{item.productId}}
-        <!-- </a> -->
-      </td>
-      <td >{{item.productName}}</td>
-      <td ><img src="../../assets/images/{{item.image}}"></td>
-      <td >{{item.description}}</td>
-      <td>{{item.quantity}}</td>
-      <td >{{item.price}}</td>
+<div class="container mt-5">
+  <table mat-table [dataSource]="productDetails" class="mat-elevation-z8">
 
-      <td  ><button class="btn btn-danger" (click)="productDetails(item.ID)" >Delete</button></td>
-      <td  ><a routerLink="/edit/{{item.ID}}"><button class="btn btn-warning"  >Edit</button></a></td>
-      </tr>
-    </tbody>
+
+    <ng-container matColumnDef="product Id">
+      <th mat-header-cell *matHeaderCellDef> product Id </th>
+      <td mat-cell *matCellDef="let element"> {{element.productId}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="productName">
+      <th mat-header-cell *matHeaderCellDef> productName </th>
+      <td mat-cell *matCellDef="let element"> {{element.productName}} </td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="image">
+      <th mat-header-cell *matHeaderCellDef> image </th>
+      <td mat-cell *matCellDef="let element"><img src="../../assets/images/{{element.image}}"  ></td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef> description </th>
+      <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+    </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="quantity">
+        <th mat-header-cell *matHeaderCellDef> quantity </th>
+        <td mat-cell *matCellDef="let element"> {{element.quantity}} </td>
+      </ng-container>
+
+          <!-- price Column -->
+          <ng-container matColumnDef="price">
+            <th mat-header-cell *matHeaderCellDef> price </th>
+            <td mat-cell *matCellDef="let element"> {{element.price}} </td>
+          </ng-container>
+
+
+
+          <!-- edit Column -->
+          <ng-container matColumnDef="edt">
+            <th mat-header-cell *matHeaderCellDef > edit </th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-icon-button color="primary" routerLink="/admin/editProduct/{{element.productId}}">
+                <mat-icon>edit</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <!-- delete Column -->
+          <ng-container matColumnDef="delete">
+            <th mat-header-cell *matHeaderCellDef> delete </th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-icon-button color="warn" (click)="deleteProduct(element.productId )">
+                <mat-icon> delete </mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
-  <h3 class="text-center mt-5 mb-5">Total Number of products  {{response.totalElements}}</h3>
-
-  <div class="d-flex justify-content-center">
-    <pagination-controls
-      previousLabel="Prev"
-      nextLabel="Next"
-      (pageChange)="onTableDataChange($event)"
-    >
-    </pagination-controls>
   </div>
+  <!-- <mat-paginator [pageSizeOptions]="[5,10,20]"
+  showFirstLastButtons="">
+</mat-paginator> -->
+<div class="d-flex justify-content-center">
+  <div class="text-center mt-5 " style="padding-bottom: 15px;">
+    <button type="button" mat-raised-button
+    color="warn" (click)="loadBefore()" >  Load previous </button>
+  </div>
+
+<div class="text-center mt-5 " style="padding-bottom: 15px;" *ngIf="showLoadButton">
+  <button type="button" mat-raised-button
+  color="warn" (click)="loadNext()" >  Load next </button>
+</div>
+
 </div>

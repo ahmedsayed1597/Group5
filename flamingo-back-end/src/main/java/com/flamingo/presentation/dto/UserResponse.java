@@ -16,5 +16,7 @@ public class UserResponse {
 	private Long totalElements;
 	private Integer totalPages;
 	private boolean lastPage;
+    public void setContent(List<UserRequestDTO> userRequestDTOs) {
+    }
 	
 }

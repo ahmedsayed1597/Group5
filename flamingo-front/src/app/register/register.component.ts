@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { LoaderService } from '../services/loader.service';
 import { UserService } from '../user.service';
 
 @Component({
@@ -10,18 +11,18 @@ import { UserService } from '../user.service';
 })
 export class RegisterComponent implements OnInit {
 
-  constructor(private  _Router:Router, private _UserService:UserService, private _FormBuilder:FormBuilder) { }
+  constructor(private  _Router:Router, private _UserService:UserService, private _FormBuilder:FormBuilder, public _LoaderService:LoaderService) { }
   responseMessage:any;
   registerationForm:FormGroup;
 
   ngOnInit(): void {
     this.registerationForm = this._FormBuilder.group({
-      username: new FormControl("", [Validators.required, Validators.minLength(3), Validators.maxLength(30)]),
+      // username: new FormControl("", [Validators.required, Validators.minLength(3), Validators.maxLength(30)]),
       firstName :new FormControl("", [Validators.required, Validators.minLength(3), Validators.maxLength(30)]),
       lastName :new FormControl("", [Validators.required, Validators.minLength(3), Validators.maxLength(30)]),
-      phone: new FormControl("",[Validators.required, Validators.pattern(/^01[0-2,5]{1}[0-9]{8}$/)]),
+      mobileNumber: new FormControl("",[Validators.required, Validators.pattern(/^01[0-2,5]{1}[0-9]{8}$/)]),
       email: new FormControl("", [Validators.required, Validators.email]),
-      gender : new FormControl("", [Validators.required,]),
+      // gender : new FormControl("", [Validators.required,]),
       password: new FormControl("", [Validators.required]),
       password_repeat : new FormControl("", [Validators.required]),
     });
@@ -35,7 +36,7 @@ export class RegisterComponent implements OnInit {
 
   checkErrorInForm(input:string){
     if(this.registerationForm.controls[input].errors) return true;
-    else return false;   
+    else return false;
   }
 
   checkErrorInFormAndType(input:string, errorType:string){
@@ -50,15 +51,16 @@ export class RegisterComponent implements OnInit {
 
   onSubmit(){
     if(this.registerationForm.valid == true && this.checkPassswordConfirmation()){
-  
+
       //let user = new User(this.registerationForm.value['name'],this.registerationForm.value['email'],this.registerationForm.value['password'],this.registerationForm.value['avatar'])
       this._UserService.signUp(this.registerationForm.value).subscribe({
         next: (response) => {
 
-          this.responseMessage = response.message;
+          this.responseMessage = response.token;
+          localStorage.setItem("token" , this.responseMessage)
           console.log(this.responseMessage)
-          if(response.message == 'User Created'){
-            this._Router.navigate(['Login'])
+          if(this.responseMessage !== ""){
+            this._Router.navigate(['login'])
           }
         }
       ,

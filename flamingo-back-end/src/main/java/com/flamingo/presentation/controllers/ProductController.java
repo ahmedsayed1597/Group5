@@ -17,6 +17,8 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = {"*"},methods = {RequestMethod.POST})
+
 @RequiredArgsConstructor
 public class ProductController {
 
@@ -33,7 +35,7 @@ public class ProductController {
     }
 
 
-    @GetMapping("/public/products")
+    @GetMapping("/products")
     public ResponseEntity<ProductResponse> getAllProducts(
             @RequestParam(name = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
             @RequestParam(name = "pageSize", defaultValue = "10", required = false) Integer pageSize,
@@ -45,7 +47,16 @@ public class ProductController {
 
     }
 
-    @GetMapping("/public/categories/{categoryId}/products")
+    
+    @GetMapping("/products/{productId}")
+    public ResponseEntity<productDDDTO> getProductBYID(@PathVariable long productId){
+
+
+        return new ResponseEntity<>(productService.getByID(productId), HttpStatus.OK);
+
+    }
+
+    @GetMapping("/categories/{categoryId}/products")
     public ResponseEntity<ProductResponse> getProductsByCategory(
             @PathVariable Long categoryId,
             @RequestParam(name = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
@@ -57,9 +68,11 @@ public class ProductController {
         return new ResponseEntity<>(productService.searchByCategory(categoryId,pageNumber,pageSize,sortBy,sortOrder), HttpStatus.OK);
     }
 
-    @GetMapping("/public/products/keyword/{keyword}")
+
+
+    @GetMapping("/products/keyword/{keyword}")
     public ResponseEntity<ProductResponse> getProductsByKeyword(
-            @PathVariable String keyword,
+            @PathVariable("keyword") String keyword,
             @RequestParam(name = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
             @RequestParam(name = "pageSize", defaultValue = "10", required = false) Integer pageSize,
             @RequestParam(name = "sortBy", defaultValue = "productId", required = false) String sortBy,
@@ -67,13 +80,15 @@ public class ProductController {
 
 
         return new ResponseEntity<ProductResponse>( productService.searchProductByKeyword(keyword, pageNumber, pageSize, sortBy,
-                sortOrder), HttpStatus.FOUND);
+                sortOrder), HttpStatus.OK);
     }
 
-    @GetMapping("/public/products/{productId}/image")
-    public ResponseEntity<?> getImages(@PathVariable Long productId) throws IOException {
-        return ResponseEntity.ok().contentType(MediaType.valueOf(MediaType.IMAGE_PNG_VALUE)).body(productService.downloadImages(productId));
-    }
+
+    // @GetMapping("/public/products/{productId}/image")
+    // public ResponseEntity<?> getImages(@PathVariable Long productId) throws IOException {
+    //     return ResponseEntity.ok().contentType(MediaType.valueOf(MediaType.IMAGE_PNG_VALUE)).body(productService.downloadImages(productId));
+    // }
+
 
     @PutMapping("/admin/products/{productId}")
     public ResponseEntity<productDDDTO> updateProduct(@RequestBody Product product,

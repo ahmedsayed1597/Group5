@@ -14,6 +14,8 @@ public interface ProductService {
 			MultipartFile image) throws IOException;
 
 	ProductResponse getAllProducts(Integer pageNumber, Integer pageSize, String field, String orderBy);
+	productDDDTO getByID(long ID);
+
 
 	ProductResponse searchByCategory(Long categoryId, Integer pageNumber, Integer pageSize, String field,
 			String orderBy);
@@ -26,6 +28,8 @@ public interface ProductService {
 			String sortOrder);
 
 	String deleteProduct(Long productId);
+
+
 
 	public byte[] downloadImages(Long productId) throws IOException;
 }

@@ -6,7 +6,9 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.flamingo.buisness.error.ErrorMessage;
+import com.flamingo.buisness.exception.APIException;
 import com.flamingo.buisness.exception.AlreadyExist;
+import com.flamingo.buisness.exception.ResourceNotFoundException;
 import com.flamingo.buisness.exception.notFoundException;
 
 @ControllerAdvice
@@ -32,5 +34,19 @@ public class Handler {
     public ResponseEntity<ErrorMessage> handler(Exception ex){
         ex.printStackTrace();
         return new ResponseEntity<ErrorMessage>(new ErrorMessage(HttpStatus.NOT_FOUND.value(), ex.getMessage()),HttpStatus.NOT_FOUND);
+    }
+
+        @ExceptionHandler(APIException.class)
+    public ResponseEntity<ErrorMessage> handler(APIException ex) {
+
+        return new ResponseEntity<ErrorMessage>(new ErrorMessage(HttpStatus.NOT_FOUND.value(), ex.getMessage()),
+                HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<ErrorMessage> handler(ResourceNotFoundException ex) {
+
+        return new ResponseEntity<ErrorMessage>(new ErrorMessage(HttpStatus.NOT_FOUND.value(), ex.getMessage()),
+                HttpStatus.NOT_FOUND);
     }
 }

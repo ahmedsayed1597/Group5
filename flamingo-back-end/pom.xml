@@ -60,6 +60,35 @@
 		</dependency>
 		
 	
+		<!-- <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.9.1</version>
+        </dependency> -->
+
+		    <!-- jjwt API -->
+			<dependency>
+				<groupId>io.jsonwebtoken</groupId>
+				<artifactId>jjwt-api</artifactId>
+				<version>0.11.2</version>
+			</dependency>
+		
+			<!-- jjwt implementation -->
+			<dependency>
+				<groupId>io.jsonwebtoken</groupId>
+				<artifactId>jjwt-impl</artifactId>
+				<version>0.11.2</version>
+				<scope>runtime</scope>
+			</dependency>
+		
+			<!-- jjwt Jackson dependency -->
+			<dependency>
+				<groupId>io.jsonwebtoken</groupId>
+				<artifactId>jjwt-jackson</artifactId>
+				<version>0.11.2</version>
+				<scope>runtime</scope>
+			</dependency>
+
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
@@ -77,6 +106,8 @@
 			
 			<version>3.1.1</version>
 		</dependency>
+
+	
 	</dependencies>
 
 	<build>

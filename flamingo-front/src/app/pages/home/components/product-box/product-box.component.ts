@@ -1,5 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Product } from 'src/app/models/product.model';
+
+import { ProductToAdd } from 'src/app/models/ProductToAdd.model';
+import { UserAuthService } from 'src/app/services/user-auth.service';
+
 
 @Component({
   selector: '[app-product-box]',
@@ -7,12 +10,19 @@ import { Product } from 'src/app/models/product.model';
 })
 export class ProductBoxComponent {
   @Input() fullWidthMode = false;
-  @Input() product: Product | undefined;
+  @Input() product: ProductToAdd | undefined;
   @Output() addToCart = new EventEmitter();
 
-  constructor() {}
+  constructor(public _UserAuthService:UserAuthService) {}
 
   onAddToCart(): void {
     this.addToCart.emit(this.product);
   }
+
+  ifUserAdmin(){
+    if(this._UserAuthService.getRoles() == 'ADMIN'){
+      return true;
+    }return false
+  }
+  
 }
