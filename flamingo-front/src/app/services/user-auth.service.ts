@@ -30,12 +30,12 @@ export class UserAuthService {
   }
   public setRoles(token: string){
 
-    let role = this.getClaimFromToken(token,"Role_");
-    localStorage.setItem("Role_",role)
+    let role = this.getClaimFromToken(token,"Role");
+    localStorage.setItem("Role",role)
   }
 
   public getRoles(){
-    return localStorage.getItem('Role_') ;
+    return localStorage.getItem('Role') ;
   }
 
   decodeToken(token: string): any {

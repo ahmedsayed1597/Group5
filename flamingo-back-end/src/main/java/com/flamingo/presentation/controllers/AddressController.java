@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.flamingo.buisness.services.UserService;
 import com.flamingo.presentation.dto.AddressDTO;
 import com.flamingo.presentation.dto.UserDTO;
+import com.flamingo.presentation.dto.UserRequestDTO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -27,19 +28,19 @@ public class AddressController {
 
 
     @PostMapping("/address")
-    public UserDTO addAdress(@PathVariable Long userId,@RequestBody AddressDTO addressDTO){
+    public UserRequestDTO addAdress(@PathVariable Long userId,@RequestBody AddressDTO addressDTO){
 
         return userService.registerAddress(userId, addressDTO);
     } 
 
     @PutMapping("/address")
-    public UserDTO updateAddress(@PathVariable Long userId,@RequestBody AddressDTO addressDTO){
+    public UserRequestDTO updateAddress(@PathVariable Long userId,@RequestBody AddressDTO addressDTO){
 
         return userService.updateAddress(userId, addressDTO);
     } 
 
     @GetMapping("/address")
-    public UserDTO getAdress(@PathVariable Long userId){
+    public UserRequestDTO getAdress(@PathVariable Long userId){
 
         return userService.getAddress(userId);
     } 

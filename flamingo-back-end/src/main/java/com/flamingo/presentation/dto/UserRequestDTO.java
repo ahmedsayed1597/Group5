@@ -14,4 +14,7 @@ public class UserRequestDTO {
 	private String mobileNumber;
 	private String email;
 	private String password;
+	private String street;
+	private String city;
+	private String country;
 }

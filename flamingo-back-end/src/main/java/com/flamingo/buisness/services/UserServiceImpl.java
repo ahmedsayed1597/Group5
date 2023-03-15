@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,76 +19,108 @@ import com.flamingo.exception.APIException;
 import com.flamingo.exception.ResourceNotFoundException;
 import com.flamingo.persistence.dao.RoleRepo;
 import com.flamingo.persistence.dao.UserRepo;
+import com.flamingo.persistence.entities.Cart;
 import com.flamingo.persistence.entities.CartItem;
+import com.flamingo.persistence.entities.Role;
 import com.flamingo.persistence.entities.User;
 import com.flamingo.presentation.dto.AddressDTO;
 import com.flamingo.presentation.dto.CartDTO;
 import com.flamingo.presentation.dto.productDDDTO;
 import com.flamingo.presentation.dto.UserDTO;
 import com.flamingo.presentation.dto.UserRequestDTO;
-import com.flamingo.presentation.dto.UserResponse;
+import com.flamingo.presentation.dto.UserResponseDTO;
 
 import jakarta.transaction.Transactional;
 
 @Transactional
 @Service
 public class UserServiceImpl implements UserService {
-    public static final Long ADMIN_ID = 101L;
+	public static final Long ADMIN_ID = 101L;
 	public static final Long USER_ID = 102L;
 
-    @Autowired
-    private UserRepo userRepo;
+	@Autowired
+	private UserRepo userRepo;
 
-    @Autowired
-    private RoleRepo roleRepo;
+	@Autowired
+	private RoleRepo roleRepo;
+
+	@Autowired
+	private CartService cartService;
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+
+	@Autowired
+	private ModelMapper modelMapper;
+
+	@Override
+	public UserRequestDTO registerUser(UserRequestDTO userRequestDTO) {
+
+		try {
+			User user = modelMapper.map(userRequestDTO, User.class);
+
+			Cart cart = new Cart();
+			user.setCart(cart);
+
+			Role role = roleRepo.findById(USER_ID).get();
+			user.getRoles().add(role);
 
 
 
-    @Autowired
-    private CartService cartService;
+			User registeredUser = userRepo.save(user);
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+			cart.setUser(registeredUser);
 
-    @Autowired
-    private ModelMapper modelMapper;
+			userRequestDTO = modelMapper.map(registeredUser, UserRequestDTO.class);
 
-    
 
-    @Override
-	public UserResponse getAllUsers(Integer pageNumber, Integer pageSize, String sortBy, String sortOrder) {
+			return userRequestDTO;
+		} catch (DataIntegrityViolationException e) {
+			throw new APIException("User already exists with emailId: " + userRequestDTO.getEmail());
+		}
+
+	}
+
+	@Override
+	public UserResponseDTO getAllUsers(Integer pageNumber, Integer pageSize, String sortBy, String sortOrder) {
 		Sort sortByAndOrder = sortOrder.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending()
 				: Sort.by(sortBy).descending();
 
 		Pageable pageDetails = PageRequest.of(pageNumber, pageSize, sortByAndOrder);
-		System.out.println("here");
+
 		Page<User> pageUsers = userRepo.findAll(pageDetails);
-		
+
 		List<User> users = pageUsers.getContent();
 
 		if (users.size() == 0) {
 			throw new APIException("No User exists !!!");
 		}
 
-		List<UserRequestDTO> userDTOs = users.stream().map(user -> {
-			UserRequestDTO dto = modelMapper.map(user, UserRequestDTO.class);
+		List<UserDTO> userDTOs = users.stream().map(user -> {
+			UserDTO dto = modelMapper.map(user, UserDTO.class);
+
+
+
 			CartDTO cart = modelMapper.map(user.getCart(), CartDTO.class);
+
 			List<productDDDTO> products = user.getCart().getCartItems().stream()
 					.map(item -> modelMapper.map(item.getProduct(), productDDDTO.class)).collect(Collectors.toList());
-					
+
+
 			return dto;
+
 		}).collect(Collectors.toList());
 
-		UserResponse userResponse = new UserResponse();
-		
-		userResponse.setContent(userDTOs);
-		userResponse.setPageNumber(pageUsers.getNumber());
-		userResponse.setPageSize(pageUsers.getSize());
-		userResponse.setTotalElements(pageUsers.getTotalElements());
-		userResponse.setTotalPages(pageUsers.getTotalPages());
-		userResponse.setLastPage(pageUsers.isLast());
-		
-		return userResponse;
+		UserResponseDTO userResponseDTO = new UserResponseDTO();
+
+		userResponseDTO.setContent(userDTOs);
+		userResponseDTO.setPageNumber(pageUsers.getNumber());
+		userResponseDTO.setPageSize(pageUsers.getSize());
+		userResponseDTO.setTotalElements(pageUsers.getTotalElements());
+		userResponseDTO.setTotalPages(pageUsers.getTotalPages());
+		userResponseDTO.setLastPage(pageUsers.isLast());
+
+		return userResponseDTO;
 	}
 
 	@Override
@@ -145,56 +178,57 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserDTO registerAddress(Long userId,AddressDTO addressDTO) {
-		
+	public UserRequestDTO registerAddress(Long userId,AddressDTO addressDTO) {
+
 		User user = userRepo.findById(userId)
-		.orElseThrow(() -> new ResourceNotFoundException("User", "userId", userId));
+				.orElseThrow(() -> new ResourceNotFoundException("User", "userId", userId));
 
-		 user.setStreet( addressDTO.getStreet());
-		 user.setCity( addressDTO.getCity());
-		 user.setCountry( addressDTO.getCountry());
+		user.setStreet( addressDTO.getStreet());
+		user.setCity( addressDTO.getCity());
+		user.setCountry( addressDTO.getCountry());
 
-		 user.setUserId( userId);
+		user.setUserId( userId);
 
-		 return modelMapper.map( userRepo.save(user),UserDTO.class);
+		return modelMapper.map( userRepo.save(user),UserRequestDTO.class);
 	}
 
 	@Override
-	public UserDTO getAddress(Long userId) {
-		
+	public UserRequestDTO getAddress(Long userId) {
+
 		User user = userRepo.findById(userId)
-		.orElseThrow(() -> new ResourceNotFoundException("User", "userId", userId));
+				.orElseThrow(() -> new ResourceNotFoundException("User", "userId", userId));
 
 		AddressDTO addressDTO = new AddressDTO();
 		addressDTO.setStreet( user.getStreet());
 		addressDTO.setCity( user.getCity());
 		addressDTO.setCountry( user.getCountry());
-		 
-		 user.setUserId( userId);
 
-		 return modelMapper.map( userRepo.save(user),UserDTO.class);
+		user.setUserId( userId);
+
+		return modelMapper.map( userRepo.save(user),UserRequestDTO.class);
 	}
 
+
 	@Override
-	public UserDTO updateAddress(Long userId,AddressDTO addressDTO) {
-		
+	public UserRequestDTO updateAddress(Long userId,AddressDTO addressDTO) {
+
 		User user = userRepo.findById(userId)
-		.orElseThrow(() -> new ResourceNotFoundException("User", "userId", userId));
+				.orElseThrow(() -> new ResourceNotFoundException("User", "userId", userId));
 
-		 user.setStreet( addressDTO.getStreet());
-		 user.setCity( addressDTO.getCity());
-		 user.setCountry( addressDTO.getCountry());
-		 
-		 user.setUserId( userId);
+		user.setStreet( addressDTO.getStreet());
+		user.setCity( addressDTO.getCity());
+		user.setCountry( addressDTO.getCountry());
 
-		 return modelMapper.map( userRepo.save(user),UserDTO.class);
+		user.setUserId( userId);
+
+		return modelMapper.map( userRepo.save(user),UserRequestDTO.class);
 	}
 
 	@Override
 	public String deleteAddress(Long userId) {
-		
+
 		User user = userRepo.findById(userId)
-		.orElseThrow(() -> new ResourceNotFoundException("User", "userId", userId));
+				.orElseThrow(() -> new ResourceNotFoundException("User", "userId", userId));
 
 
 		user.setCity("null");
@@ -202,6 +236,6 @@ public class UserServiceImpl implements UserService {
 		user.setCountry("null");
 		user.setUserId(userId);
 		userRepo.save(user);
-		 return "deleted";
+		return "deleted";
 	}
 }

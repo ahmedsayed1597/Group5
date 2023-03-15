@@ -3,6 +3,7 @@ package com.flamingo.buisness.services.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.flamingo.buisness.exception.notFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -105,7 +106,7 @@ public class CartServiceImp implements CartService {
 
     @Override
     public CartDTO getCart(String emailId, Long cartId) {
-        Cart cart = cartRepo.findCartByEmailAndCartId(emailId, cartId);
+        Cart cart = cartRepo.findById( cartId).orElseThrow(()->new notFoundException("not found !!"));
 
         if (cart == null) {
             throw new ResourceNotFoundException("no cart found");

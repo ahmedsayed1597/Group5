@@ -39,7 +39,7 @@ public class SignUpServiceImpl implements SignUpService {
         User registeredUser = userRepo.save(user);
         Cart cart = new Cart();
         user.setCart(cart);
-        Role role = roleRepo.findById(102L).orElseThrow(()->new notFoundException("not found"));
+        Role role = roleRepo.findById(102L).get();
         List<Role>roles = new ArrayList<>();
         roles.add(role);
         user.setRoles(roles);

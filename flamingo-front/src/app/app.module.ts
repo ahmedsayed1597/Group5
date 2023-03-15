@@ -47,6 +47,8 @@ import { AdminComponent } from './adminPages/admin/admin.component';
 import { RouterModule } from '@angular/router';
 import { AdminNavbarComponent } from './admin-navbar/admin-navbar.component';
 import { EditProductComponent } from './edit-product/edit-product.component';
+import { AddAddressComponent } from './address/add-address/add-address.component';
+import { UpdateAddressComponent } from './address/update-address/update-address.component';
 
 
 @NgModule({
@@ -68,6 +70,8 @@ import { EditProductComponent } from './edit-product/edit-product.component';
     AdminComponent,
     AdminNavbarComponent,
     EditProductComponent,
+    AddAddressComponent,
+    UpdateAddressComponent,
 
   ],
   imports: [
