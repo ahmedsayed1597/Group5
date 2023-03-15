@@ -1,4 +1,4 @@
-<mat-toolbar class="bg-dark text-light d-flex justify-content-end w-100 p-1" >
+<mat-toolbar class="ps-4 pe-4 bg text-light d-flex justify-between  text-light header mx-auto w-100 p-1 mb-4" >
 <!-- <button mat-icon-button (click)="routeToRegister()"
 color="white"
 
@@ -7,10 +7,59 @@ color="white"
   <span *ngIf="userLogin == null"> Register</span>
   <span *ngIf="userLogin !== null">Logout</span>
 </button> -->
-<button class="btn btn-success" *ngIf="!_UserAuthService.isLoggedIn()" [routerLink]="['/Login']" >Login</button>
-<button class="btn btn-danger" *ngIf="_UserAuthService.isLoggedIn()" (click)="logOut()">Logout</button>
 
+
+<a routerLink="home">Flamingo</a>
+  <button mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon class="header-cart-icon" *ngIf="!ifUserAdmin()"
+      [matBadge]="itemsQuantity"
+      [matBadgeHidden]="!itemsQuantity"
+      matBadgeColor="warn"
+      >shopping_cart</mat-icon
+    >
+  </button>
+  <mat-menu #menu="matMenu" >
+    <div class="p-3 divide-y divide-solid">
+      <div class="pb-3 flex justify-between">
+        <span class="mr-16">{{ cart.items.length }} items</span>
+        <a routerLink="cart">View Cart</a>
+      </div>
+      <div *ngIf="cart.items.length" class="py-3">
+        <div
+          *ngFor="let item of cart.items"
+          class="flex justify-between font-light mb-2"
+        >
+          {{ item.name }} x {{ item.quantity }}
+          <span class="font-bold not-italic">{{ item.price | currency }}</span>
+        </div>
+      </div>
+      <div class="flex justify-between py-3 font-light">
+        Total:
+        <span class="font-bold not-italic">{{
+          getTotal(cart.items) | currency
+        }}</span>
+      </div>
+      <div class="pt-3 flex justify-between">
+        <button
+          (click)="onClearCart()"
+          class="bg-rose-600 text-white rounded-full w-9 h-9"
+        >
+          <mat-icon>remove_shopping_cart</mat-icon>
+        </button>
+        <button
+          routerLink="cart"
+          class="bg-green-600 text-white rounded-full w-9 h-9"
+        >
+          <mat-icon>shopping_cart_checkout</mat-icon>
+        </button>
+      </div>
+    </div>
+  </mat-menu>
+  <button class="btn btn-success" *ngIf="!_UserAuthService.isLoggedIn()" [routerLink]="['/Login']" >Login</button>
+<button class="btn btn-danger" *ngIf="_UserAuthService.isLoggedIn()" (click)="logOut()" [routerLink]="['/home']">Logout</button>
 </mat-toolbar>
+
+
 <!-- <mat-mini-fab class="bg-dark " >
   <mat-icon class="text-light">account</mat-icon>
 
@@ -18,7 +67,7 @@ color="white"
       matBadgeColor="warn">account_circle<span class="text-light mt-2">account</span></mat-icon>
 </mat-mini-fab> -->
 
-<mat-toolbar class="justify-between max-w-7xl text-light header mx-auto bg">
+<!-- <mat-toolbar class="justify-between max-w-7xl text-light header mx-auto bg">
   <a routerLink="home">Flamingo</a>
   <button mat-icon-button [matMenuTriggerFor]="menu">
     <mat-icon class="header-cart-icon"
@@ -65,4 +114,4 @@ color="white"
       </div>
     </div>
   </mat-menu>
-</mat-toolbar>
+</mat-toolbar> -->

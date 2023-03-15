@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { CategoryToAdd } from '../models/CategoryToAdd.model';
-import { ProductService } from '../services/product.service';
+import { CategoryToAdd } from '../../models/CategoryToAdd.model';
+import { ProductService } from '../../services/product.service';
 
 @Component({
   selector: 'app-add-category',
@@ -18,6 +18,7 @@ export class AddCategoryComponent implements OnInit {
 
   addCategory(){
 
+    console.log("add category");
     this.category.categoryName=this.CategotyName;
     this.categoryService.addCategory(this.category)
     .subscribe((resp)=>console.log(resp)

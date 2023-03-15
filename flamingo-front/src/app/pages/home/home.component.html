@@ -3,7 +3,7 @@
 <mat-drawer-container 
   [autosize]="true"
   
-  class="min-h-full max-w-7xl mx-auto border-x"
+  class="min-h-full max-w-7xl mx-auto border-x bg text-center"
 >
   <mat-drawer mode="side" opened class="p-6">
     <app-filters (showCategory)="onShowCategory($event)"></app-filters>
@@ -16,6 +16,9 @@
       (sortChange)="onSortChange($event)"
       [pageNumber] = count
     ></app-products-header>
+
+    <button class="btn btn-color" *ngIf="ifUserAdmin()" routerLink="/admin/dashboard"> Admin Dash Board</button>
+
     <mat-grid-list
       *ngIf="products && products.length"
       gutterSize="16"
@@ -23,6 +26,7 @@
       [rowHeight]="rowHeight"
     >
       <mat-grid-tile *ngFor="let product of products">
+        
         <div
           (addToCart)="onAddToCart($event)"
           app-product-box

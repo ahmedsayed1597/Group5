@@ -21,7 +21,9 @@ public class UserDTO {
 	private String mobileNumber;
 	private String email;
 	private String password;
+	private String street;
+	private String city;
+	private String country;
 	private Set<Role> roles = new HashSet<>();
-	private AddressDTO address;
 	private CartDTO cart;
 }

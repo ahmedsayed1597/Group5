@@ -5,7 +5,7 @@
       [ngClass]="{ 'h-[200px]': !fullWidthMode, 'h-[360px]': fullWidthMode }"
       src="../../../../../assets/images/{{product.image}}"
     />
-    
+
     <div
       class="w-full"
       [ngClass]="{ 'px-8 flex flex-col justify-between': fullWidthMode }"
@@ -24,8 +24,8 @@
       </div>
       <div class="flex justify-between">
         <span class="text-red-400">{{ product.price | currency }}</span>
-        <button class="btn btn-primary">Update</button>
-        <button (click)="onAddToCart()">
+        
+        <button (click)="onAddToCart()" *ngIf="!ifUserAdmin()">
           <mat-icon class="text-gray-500">shopping_cart</mat-icon>
         </button>
       </div>

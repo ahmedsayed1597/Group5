@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CategoryView } from '../models/Category-view.model';
 import { CategoryToAdd } from '../models/CategoryToAdd.model';
@@ -40,7 +40,13 @@ export class ProductService {
 
   public addCategory(categoryToAdd:CategoryToAdd ){
 
-    return this._httpClient.post<CategoryView>("http://localhost:9090/api/admin/categories",categoryToAdd);
+    const token = localStorage.getItem('jwtToken');
+
+    console.log(token);
+    const head = new HttpHeaders();
+    head.append(
+      'Authorization', `Bearer ${token}`)
+    return this._httpClient.post<CategoryView>("http://localhost:9090/api/admin/categories",categoryToAdd,{headers:head});
   }
 }
 

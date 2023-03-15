@@ -17,6 +17,8 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = {"*"},methods = {RequestMethod.POST})
+
 @RequiredArgsConstructor
 public class ProductController {
 
@@ -33,7 +35,7 @@ public class ProductController {
     }
 
 
-    @GetMapping("/public/products")
+    @GetMapping("/products")
     public ResponseEntity<ProductResponse> getAllProducts(
             @RequestParam(name = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
             @RequestParam(name = "pageSize", defaultValue = "10", required = false) Integer pageSize,
@@ -45,8 +47,7 @@ public class ProductController {
 
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
-    @GetMapping("/public/categories/{categoryId}/products")
+    @GetMapping("/categories/{categoryId}/products")
     public ResponseEntity<ProductResponse> getProductsByCategory(
             @PathVariable Long categoryId,
             @RequestParam(name = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
@@ -58,7 +59,9 @@ public class ProductController {
         return new ResponseEntity<>(productService.searchByCategory(categoryId,pageNumber,pageSize,sortBy,sortOrder), HttpStatus.OK);
     }
 
-    @GetMapping("/public/products/keyword/{keyword}")
+
+
+    @GetMapping("/products/keyword/{keyword}")
     public ResponseEntity<ProductResponse> getProductsByKeyword(
             @PathVariable String keyword,
             @RequestParam(name = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
@@ -71,10 +74,12 @@ public class ProductController {
                 sortOrder), HttpStatus.FOUND);
     }
 
-    @GetMapping("/public/products/{productId}/image")
-    public ResponseEntity<?> getImages(@PathVariable Long productId) throws IOException {
-        return ResponseEntity.ok().contentType(MediaType.valueOf(MediaType.IMAGE_PNG_VALUE)).body(productService.downloadImages(productId));
-    }
+
+    // @GetMapping("/public/products/{productId}/image")
+    // public ResponseEntity<?> getImages(@PathVariable Long productId) throws IOException {
+    //     return ResponseEntity.ok().contentType(MediaType.valueOf(MediaType.IMAGE_PNG_VALUE)).body(productService.downloadImages(productId));
+    // }
+
 
     @PutMapping("/admin/products/{productId}")
     public ResponseEntity<productDDDTO> updateProduct(@RequestBody Product product,

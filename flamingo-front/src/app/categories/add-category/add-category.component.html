@@ -3,7 +3,7 @@
     <span class="text-center">Add category</span>
     <span class="space-buttons"></span>
   </mat-toolbar>
-  
+
   <form (ngSubmit)="addCategory()">
     <div class="container mt-5">
       <div class="card p-2">
@@ -15,14 +15,14 @@
                 required>
             </mat-form-field>
 
-  
+
             <div class="d-flex justify-content-between">
               <button mat-stroked-button color="primary">clear</button>
               <button mat-stroked-button color="primary" type="submit">Add Product</button>
             </div>
-  
+
           </div>
-  
+
           <!-- <div class="col-6">
           <div>
           <input type="file" name="image"  #selectFile
@@ -36,14 +36,17 @@
                           <img src="{{selectedFile.name}}">
                         </div>
                     </mat-grid-tile>
-  
+
                 </mat-grid-list>
               </div>
             </div>
         </div>-->
         </div>
       </div>
-  
+
     </div>
   </form>
-  
+
+
+  <app-product></app-product>
+
