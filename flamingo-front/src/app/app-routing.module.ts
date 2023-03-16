@@ -9,6 +9,7 @@ import { EditProductComponent } from './edit-product/edit-product.component';
 import { PathLoginGuard } from './guards/path-login.guard';
 import { PathRoleGuard } from './guards/path-role.guard';
 import { LoginComponent } from './login/login.component';
+import { OrderOneComponent } from './order-one/order-one.component';
 import { CartComponent } from './pages/cart/cart.component';
 import { HomeComponent } from './pages/home/home.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
@@ -31,7 +32,7 @@ const routes: Routes = [
   {path: 'AddAddressComponent' , component:AddAddressComponent},
   {path: 'Details/:id' , component:ProductDetailsComponent},
 
-  // {path: 'admin/editCategory/:categoryId' , component:EditCategoryComponent},
+  {path: 'neworder' , component:OrderOneComponent},
 
 
 

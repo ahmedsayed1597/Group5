@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.flamingo.buisness.exception.notFoundException;
+import com.flamingo.presentation.dto.OrderRequestDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -110,7 +111,30 @@ public class OrderServiceImpl implements OrderService {
 		
 		orderItems.forEach(item -> orderDTO.getOrderItems().add(modelMapper.map(item, OrderItemDTO.class)));
 
+
 		return orderDTO;
+	}
+
+	@Override
+	public OrderRequestDTO placeOrder(String emailId, OrderRequestDTO orderRequestDTO) {
+		Order order = new Order();
+
+		order.setEmail(emailId);
+		order.setOrderDate(LocalDate.now());
+		order.setTotalAmount(orderRequestDTO.getTotalAmount());
+		order.setOrderStatus("Order Accepted !");
+
+		Order savedOrder = orderRepo.save(order);
+
+		OrderItem orderItem=orderRequestDTO.getOrderItem();
+		orderItem.setOrder(savedOrder);
+		orderItem.setProduct(orderRequestDTO.getOrderItem().getProduct());
+		 orderItem =orderItemRepo.save(orderItem);
+		OrderDTO orderDTO = modelMapper.map(savedOrder, OrderDTO.class);
+
+		 orderDTO.getOrderItems().add(modelMapper.map(orderItem, OrderItemDTO.class));
+
+		return modelMapper.map(orderDTO,OrderRequestDTO.class);
 	}
 
 	@Override

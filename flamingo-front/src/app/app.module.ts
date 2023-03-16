@@ -49,6 +49,7 @@ import { AdminNavbarComponent } from './admin-navbar/admin-navbar.component';
 import { EditProductComponent } from './edit-product/edit-product.component';
 import { AddAddressComponent } from './address/add-address/add-address.component';
 import { UpdateAddressComponent } from './address/update-address/update-address.component';
+import { OrderOneComponent } from './order-one/order-one.component';
 
 
 @NgModule({
@@ -72,6 +73,7 @@ import { UpdateAddressComponent } from './address/update-address/update-address.
     EditProductComponent,
     AddAddressComponent,
     UpdateAddressComponent,
+    OrderOneComponent,
 
   ],
   imports: [

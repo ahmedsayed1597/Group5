@@ -2,19 +2,12 @@ package com.flamingo.presentation.controllers;
 
 import java.util.List;
 
+import com.flamingo.presentation.dto.OrderRequestDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import com.flamingo.buisness.services.interfaces.OrderService;
 import com.flamingo.config.AppConstants;
@@ -80,6 +73,16 @@ public class OrderController {
 		OrderDTO order = orderService.placeOrder(emailId, cartId);
 
 		return new ResponseEntity<OrderDTO>(order, HttpStatus.CREATED);
+
+	}
+
+	@PostMapping("/public/users/{emailId}/orderOne")
+	public ResponseEntity<OrderRequestDTO> orderProduct(@PathVariable String emailId, @RequestBody OrderRequestDTO orderRequestDTO) {
+
+
+		OrderRequestDTO order = orderService.placeOrder(emailId, orderRequestDTO);
+
+		return new ResponseEntity<OrderRequestDTO>(order, HttpStatus.CREATED);
 
 	}
 
