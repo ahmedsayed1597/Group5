@@ -16,7 +16,6 @@ export class AddAddressComponent implements OnInit {
 
   onSubmit(AddressForm : any){
     console.log(AddressForm.value);
-    this.addressService.addAddress()
   }
 
 }

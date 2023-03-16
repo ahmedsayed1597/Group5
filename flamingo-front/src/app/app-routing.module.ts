@@ -11,6 +11,7 @@ import { PathRoleGuard } from './guards/path-role.guard';
 import { LoginComponent } from './login/login.component';
 import { CartComponent } from './pages/cart/cart.component';
 import { HomeComponent } from './pages/home/home.component';
+import { ProductDetailsComponent } from './product-details/product-details.component';
 import { ProductComponent } from './product/product.component';
 import { RegisterComponent } from './register/register.component';
 import { ShowProductComponent } from './show-product/show-product.component';
@@ -28,6 +29,8 @@ const routes: Routes = [
   {path: 'admin/dashboard' , component:AdminComponent, canActivate:[PathRoleGuard]},
   {path: 'admin/editProduct/:productId' , component:EditProductComponent,canActivate:[PathRoleGuard]},
   {path: 'AddAddressComponent' , component:AddAddressComponent},
+  {path: 'Details/:id' , component:ProductDetailsComponent},
+
   // {path: 'admin/editCategory/:categoryId' , component:EditCategoryComponent},
 
 

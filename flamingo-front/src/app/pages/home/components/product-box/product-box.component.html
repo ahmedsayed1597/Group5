@@ -1,11 +1,12 @@
 <mat-card *ngIf="product" [ngClass]="{ 'text-center': !fullWidthMode }">
   <div [ngClass]="{ flex: fullWidthMode }">
+    <a routerLink="/Details/{{product.productId}}">
     <img
       class="mb-1 mx-auto"
       [ngClass]="{ 'h-[200px]': !fullWidthMode, 'h-[360px]': fullWidthMode }"
       src="../../../../../assets/images/{{product.image}}"
     />
-
+  </a>
     <div
       class="w-full"
       [ngClass]="{ 'px-8 flex flex-col justify-between': fullWidthMode }"

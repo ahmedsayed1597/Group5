@@ -7,5 +7,5 @@ export class ProductToAdd {
   quantity: number;
   categoryId: number;
   image:string;
-  id:number
+  productId:number
 }
