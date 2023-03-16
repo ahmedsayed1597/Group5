@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.flamingo.buisness.exception.notFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -25,7 +26,6 @@ import com.flamingo.persistence.entities.Cart;
 import com.flamingo.persistence.entities.CartItem;
 import com.flamingo.persistence.entities.Order;
 import com.flamingo.persistence.entities.OrderItem;
-import com.flamingo.persistence.entities.Payment;
 import com.flamingo.persistence.entities.Product;
 import com.flamingo.presentation.dto.OrderDTO;
 import com.flamingo.presentation.dto.OrderItemDTO;
@@ -44,7 +44,6 @@ public class OrderServiceImpl implements OrderService {
 
 	public final OrderRepo orderRepo;
 
-	private final PaymentRepo paymentRepo;
 
 	public final OrderItemRepo orderItemRepo;
 
@@ -57,9 +56,9 @@ public class OrderServiceImpl implements OrderService {
 	public final ModelMapper modelMapper;
 
 	@Override
-	public OrderDTO placeOrder(String emailId, Long cartId, String paymentMethod) {
+	public OrderDTO placeOrder(String emailId, Long cartId) {
 
-		Cart cart = cartRepo.findCartByEmailAndCartId(emailId, cartId);
+		Cart cart = cartRepo.findById( cartId).orElseThrow(()->new notFoundException("not found "));
 
 		if (cart == null) {
 			throw new ResourceNotFoundException("Cart", "cartId", cartId);
@@ -73,13 +72,6 @@ public class OrderServiceImpl implements OrderService {
 		order.setTotalAmount(cart.getTotalPrice());
 		order.setOrderStatus("Order Accepted !");
 
-		Payment payment = new Payment();
-		payment.setOrder(order);
-		payment.setPaymentMethod(paymentMethod);
-
-		payment = paymentRepo.save(payment);
-
-		order.setPayment(payment);
 
 		Order savedOrder = orderRepo.save(order);
 

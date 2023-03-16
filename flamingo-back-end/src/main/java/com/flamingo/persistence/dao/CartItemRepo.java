@@ -10,6 +10,7 @@ import com.flamingo.persistence.entities.Cart;
 import com.flamingo.persistence.entities.CartItem;
 import com.flamingo.persistence.entities.Order;
 import com.flamingo.persistence.entities.Product;
+import org.springframework.transaction.annotation.Transactional;
 
 public interface CartItemRepo extends JpaRepository<CartItem, Long>{
     
@@ -27,7 +28,8 @@ public interface CartItemRepo extends JpaRepository<CartItem, Long>{
 	
 	// @Query("SELECT ci.order FROM CartItem ci WHERE ci.order.user.email = ?1 AND ci.order.id = ?2")
 	// Order findOrderByEmailAndOrderId(String email, Integer orderId);
-	
+
+	@Transactional
 	@Modifying
     @Query("DELETE FROM CartItem ci WHERE ci.cart.id = ?1 AND ci.product.id = ?2")
     void deleteCartItemByProductIdAndCartId(Long productId, Long cartId);

@@ -9,7 +9,7 @@ import com.flamingo.presentation.responseviewmodel.OrderResponse;
 
 
 public interface OrderService  {
-	OrderDTO placeOrder(String emailId, Long cartId, String paymentMethod);
+	OrderDTO placeOrder(String emailId, Long cartId);
 	
 	OrderDTO getOrder(String emailId, Long orderId);
 	
