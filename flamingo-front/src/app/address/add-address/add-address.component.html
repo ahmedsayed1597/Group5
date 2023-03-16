@@ -1,0 +1,21 @@
+<form #AddressForm="ngForm" (ngSubmit)="onSubmit(AddressForm)">
+
+  <p>
+    <label for="firstname">Street Name</label>
+    <input type="text" name="street" ngModel>
+  </p>
+
+  <p>
+    <label for="lastname">city Name</label>
+    <input type="text" name="city" ngModel>
+  </p>
+
+  <p>
+    <label for="email">country Name</label>
+    <input type="text" id="email" name="country" ngModel>
+  </p>
+  <p>
+    <button type="submit">Submit</button>
+  </p>
+
+</form>

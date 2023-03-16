@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AddAddressComponent } from './address/add-address/add-address.component';
 import { AdminComponent } from './adminPages/admin/admin.component';
 import { AddCategoryComponent } from './categories/add-category/add-category.component';
 import { EditCategoryComponent } from './categories/edit-category/edit-category.component';
@@ -26,7 +27,7 @@ const routes: Routes = [
   {path: 'admin/editCategory/:categoryId' , component:EditCategoryComponent, canActivate:[PathRoleGuard]},
   {path: 'admin/dashboard' , component:AdminComponent, canActivate:[PathRoleGuard]},
   {path: 'admin/editProduct/:productId' , component:EditProductComponent,canActivate:[PathRoleGuard]},
-  // {path: 'admin/editCategory/:categoryId' , component:EditCategoryComponent},
+  {path: 'AddAddressComponent' , component:AddAddressComponent},
   // {path: 'admin/editCategory/:categoryId' , component:EditCategoryComponent},
 
 
